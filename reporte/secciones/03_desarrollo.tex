@@ -1,0 +1,639 @@
+\section{Desarrollo}
+\label{sec:desarrollo}
+
+\subsection{Modelos y Algoritmos}
+\label{sec:modelos}
+
+Esta sección detalla la implementación de las dos capas de \STELLAR{}: los cuatro
+agentes deterministas de la capa HC (§\ref{sec:hc-agentes}), el contrato que los
+une con la capa SC (§\ref{sec:contrato}), y la arquitectura del modelo de lenguaje
+y su anclaje (§\ref{sec:sc-arquitectura}--§\ref{sec:prompt-evol}).
+
+\subsubsection{Visión general}
+\label{sec:hc-overview}
+
+La capa HC (pipeline \texttt{HC-2.0}) recibe, por estrella, la metadata tabular de
+Gaia DR3 y, cuando existe, sus espectros RVS y BP/RP. Cada uno de los cuatro
+agentes aplica un principio de \emph{predigestión lógica}: además de medir
+cantidades físicas, exporta banderas booleanas que protegen a la capa SC de razonar
+sobre datos matemáticamente inválidos o muy inciertos. Todos los agentes siguen el
+mismo patrón defensivo: \emph{guards} explícitos ante valores ausentes
+(\texttt{NaN}), paralajes no positivos y máscaras insuficientes, devolviendo
+estados \texttt{success}, \texttt{partial} o \texttt{failed} sin propagar errores.
+
+\subsubsection{Los cuatro agentes de la capa HC}
+\label{sec:hc-agentes}
+
+\paragraph{AstrometryAgent.} Transforma la astrometría y fotometría crudas en
+parámetros intrínsecos. Calcula la magnitud absoluta $M_G$ y la velocidad
+tangencial $V_\mathrm{tan}$ según las ecuaciones~\eqref{eq:absmag} y
+\eqref{eq:vtan}, empleando el coeficiente de extinción de Gaia DR3
+$A_G = 2.74\,E(BP\!-\!RP)$. Aplica tres \emph{guards}: (1)~paralaje
+$\varpi \le 0$ provoca retorno \texttt{partial} con $M_G$ y $V_\mathrm{tan}$
+suprimidos (el $\log_{10}$ es indefinido); (2)~\verb|ebpminrp_gspphot| nulo fuerza
+$A_G = 0$ con aviso, en lugar de propagar \texttt{NaN}; (3)~paralaje de baja
+relación señal-ruido (SNR $= \varpi/\sigma_\varpi \le 5$) suprime las cantidades
+dependientes de distancia, que de otro modo podrían producir valores absurdos. Sus
+banderas son \emph{is\_reliable\_parallax} ($\varpi/\sigma_\varpi > 5$),
+\emph{is\_giant} ($M_G < 3.0 \wedge T_\mathrm{eff} < \SI{7000}{\kelvin} \wedge$
+paralaje confiable), \emph{is\_high\_velocity}
+($V_\mathrm{tan} > \SI{200}{\kilo\meter\per\second} \wedge$ paralaje confiable) e
+\emph{is\_binary\_candidate} ($\mathrm{RUWE} > 1.4$, evaluada con independencia de
+la calidad del paralaje).
+
+\paragraph{ContinuumAgent.} Estima y remueve el pseudo-continuo del espectro para
+producir un flujo normalizado a la unidad, mediante \emph{splines} cúbicos con
+recorte sigma iterativo. La rigidez del \emph{spline} se adapta dinámicamente al
+SNR local mediante el factor de suavizado
+\begin{equation}
+  s = N \cdot \sigma^2,
+  \label{eq:smoothing}
+\end{equation}
+donde $N$ es el número de puntos en la máscara y $\sigma$ la desviación estándar
+de los residuos. En \emph{modo RVS} el ajuste se restringe a ventanas seguras de
+pseudo-continuo (\SIrange{847}{849}{}, \SIrange{851}{853.5}{}, \SIrange{856}{860}{}
+y \SIrange{869.5}{874}{\nano\meter}) para no contaminar las alas profundas del
+triplete de Ca\,\textsc{ii} en estrellas frías K/M; en \emph{modo BP/RP} el ajuste
+es global sobre \SIrange{336}{1020}{\nano\meter}. Un \emph{Universal Guard}
+invalida el ajuste (\emph{fit\_diverged}) si la máscara final retiene menos de
+\num{10} puntos o si el continuo resulta no físico. Exporta
+\emph{continuum\_is\_stable} (desviación del flujo normalizado $< 0.05$),
+\emph{high\_snr\_continuum} (SNR $> 20$) y \emph{fit\_diverged}.
+
+\paragraph{LineAgent.} Ajusta perfiles de Voigt sobre el triplete de Ca\,\textsc{ii}
+(849.802, 854.209, \SI{866.214}{\nano\meter}) para extraer ancho equivalente (EW),
+anchura total (FWHM) y desplazamiento del centroide (velocidad Doppler). El ajuste
+se inicializa con un prior instrumental: la anchura gaussiana no puede ser inferior
+a la resolución del espectrógrafo RVS ($R \sim 11\,500$, $\Delta\lambda \approx
+\SI{0.075}{\nano\meter}$ a \SI{860}{\nano\meter}). Los límites físicos acotan la
+amplitud a $(-0.5, 1.2)$, $\mathrm{FWHM}_G \ge \SI{0.075}{\nano\meter}$,
+$\mathrm{FWHM}_L > 0$ y el centroide a $\lambda_\mathrm{rest} \pm
+\SI{1.5}{\nano\meter}$. El EW se integra sobre una grilla fina recortando las alas
+no físicas a cero antes de aplicar la regla del trapecio. La anchura total combina
+las componentes gaussiana y lorentziana mediante la aproximación de
+\citet{thompson1987}:
+\begin{equation}
+  \mathrm{FWHM} = 0.5346\,f_L + \sqrt{0.2166\,f_L^2 + f_G^2}.
+  \label{eq:fwhm}
+\end{equation}
+Es una decisión de diseño que H$\alpha$ (\SI{656.3}{\nano\meter}) \emph{no} se
+ajuste aquí (queda fuera de la ventana RVS y la resolución BP/RP es
+insuficiente), sino que se tome del catálogo ESP-ELS (\verb|ew_espels_halpha|),
+respetando la convención de signo de la ecuación~\eqref{eq:halpha}.
+
+\paragraph{BinaryDetectorAgent.} Identifica sistemas múltiples no resueltos que, de
+otro modo, la capa SC podría clasificar como una única estrella física. Combina 
+tres indicadores independientes en una bandera maestra \emph{is\_binary\_candidate} 
+mediante una disyunción lógica:
+\begin{itemize}
+  \item \emph{is\_astrometric\_binary}: $\mathrm{RUWE} > 1.4$
+  \citep{lindegren2021}, indicador de tambaleo del fotocentro.
+  \item \emph{is\_rv\_variable}: $\mathrm{rv\_nb\_transits} \ge 5$ y error de
+  velocidad radial por encima de un \textbf{umbral adaptativo por \teff{}}:
+  \SI{2.0}{\kilo\meter\per\second} para $T_\mathrm{eff} < \SI{4000}{\kelvin}$
+  (muchas líneas nítidas), \SI{5.0}{\kilo\meter\per\second} para
+  $\SI{4000}{} \le T_\mathrm{eff} < \SI{7000}{\kelvin}$, y
+  \SI{10.0}{\kilo\meter\per\second} para $T_\mathrm{eff} \ge \SI{7000}{\kelvin}$
+  (pocas líneas anchas; evita falsos positivos).
+  \item \emph{is\_confirmed\_nss}: la columna \verb|nss_solution_type| contiene una
+  solución oficial válida del catálogo \emph{Non-Single Star} de Gaia
+  (p.\,ej.\ \texttt{Orbital}, \texttt{AstroSpectroSB1}).
+\end{itemize}
+Un \emph{caveat} documentado: en estrellas M activas
+($T_\mathrm{eff} < \SI{4000}{\kelvin}$) el \emph{jitter} cromosférico puede inducir
+variabilidad RV de \SIrange{1}{3}{\kilo\meter\per\second} sin binariedad real, por
+lo que \emph{is\_rv\_variable} sólo debe interpretarse junto con
+\emph{is\_astrometric\_binary} en esa población.
+
+\subsubsection{El contrato HC-2.0 y el \texttt{quality\_score}}
+\label{sec:contrato}
+
+La salida de la capa HC es un contrato JSON por estrella
+(\texttt{pipeline\_version: HC-2.0}) que agrupa: el \emph{physical\_vector}
+($M_G$, \teff{}, $[M/H]$, $[Fe/H]$, $[\alpha/Fe]$, \logg{}, $V_\mathrm{tan}$,
+$A_G$), las \emph{logical\_flags}, los \emph{binary\_diagnostics}, el
+\emph{spectral\_summary} (H$\alpha$ de catálogo, triplete de Ca\,\textsc{ii} y
+estado de los continuos BP/RP y RVS) y un \emph{quality\_score} global. Este último
+condensa la confiabilidad de la evidencia mediante una regla multiplicativa
+jerárquica:
+\begin{equation}
+  q =
+  \underbrace{\mathbb{1}[\text{paralaje confiable}]}_{\text{factor crítico}}
+  \cdot\; f_\mathrm{BP/RP} \cdot f_\mathrm{RVS} \cdot b,
+  \label{eq:quality}
+\end{equation}
+donde un paralaje no confiable anula la puntuación ($q=0$), el continuo BP/RP
+fallido o de bajo SNR la penaliza por factores de $0.3$ o $0.5$, el continuo RVS
+por $0.7$ o $0.85$, y un bono $b=1.1$ (acotado a $q\le1$) premia la calidad
+espectral excepcional. El \emph{quality\_score} actúa después como \emph{techo} de
+las confianzas que puede emitir la capa SC. En la corrida HC se generaron los
+\num{498}/\num{498} contratos con éxito (100\%); la distribución de banderas y de
+calidad espectral se detalla en la Sección~\ref{sec:datos}.
+
+% AQUÍ QUEDARÍA DE LUJO UN EJEMPLO DE LOS CONTRATOS JSON, 
+% TANTO DE ENTRADA (HC) COMO DE SALIDA (SC)
+% HABRÁ QUE COLCOARLO
+
+\subsubsection{Capa SC: AstroSage-8B y arquitectura del \emph{prompt}}
+\label{sec:sc-arquitectura}
+
+La capa SC emplea \AstroSage{} (\texttt{AstroLlama/AstroSage-8B}), un modelo de
+lenguaje de \num{8}\,mil millones de parámetros afinado sobre literatura
+astronómica. La
+inferencia se estructura con dos mensajes por estrella:
+
+\begin{itemize}
+  \item \textbf{\emph{System prompt}.} Fija el rol del modelo, le recuerda que la
+  letra espectral, el grupo poblacional y las banderas que ya fueron calculadas
+  por la capa HC, y delimita su tarea a cuatro salidas: rango de subtipo, clase de
+  luminosidad, puntuaciones de confianza y descripción estelar estructurada.
+  Incluye ejemplos \emph{few-shot} para los subtipos~B, las reglas obligatorias del
+  campo \emph{notable\_features}, las reglas de calibración de confianza y el
+  \emph{schema} JSON de salida exacto.
+  \item \textbf{\emph{User prompt}.} Serializa el contrato HC de la estrella:
+  bloque de anclaje, vector físico, \emph{quality\_score} como techo de confianza,
+  banderas lógicas con sus valores, diagnósticos espectrales y, en V7, el bloque de
+  contexto recuperado por RAG.
+\end{itemize}
+
+El modelo responde exclusivamente con un JSON que contiene la clasificación
+(\emph{spectral\_type}, \emph{sub\_type\_range}, \emph{luminosity\_class},
+\emph{population\_group}), las tres confianzas y la descripción/razonamiento.
+
+\subsubsection{Anclaje duro y calibración de confianza}
+\label{sec:sc-anclaje}
+
+El elemento que corrige el sesgo \emph{a priori} del LLM es el bloque
+\verb|hc_anchor|: la letra espectral y la población se presentan al modelo como
+\texttt{[FIXED]}, con instrucción explícita de copiarlas sin recalcularlas. La
+frontera A/B se resuelve además de forma determinista por la regla $\log g \ge 3.8$
+en el rango \SIrange{9700}{10100}{\kelvin} (campo
+\emph{ab\_boundary\_logg\_corrected}); el \emph{prompt} comunica la letra ya
+corregida como fija, sin solicitar razonamiento difuso al modelo, decisión que
+en V7 reemplazó al ``anclaje suave'' de V6, ineficaz porque el LLM no utilizaba
+\logg{} como discriminante. Las confianzas se calibran con reglas explícitas: el
+techo es el \emph{quality\_score}; la cercanía a una frontera en \teff{} o \logg{}
+multiplica la confianza correspondiente por $0.90$; y, de manera crítica, ante
+\emph{is\_binary\_candidate} la confianza espectral debe quedar \emph{al menos}
+$0.10$ por debajo de la de una estrella limpia de la misma clase (un \emph{piso}
+duro que en V7 reemplazó a la penalización multiplicativa $\times 0.85$ de V6, que
+el modelo aplicaba sólo nominalmente).
+
+\subsubsection{Recuperación aumentada (RAG)}
+\label{sec:sc-rag}
+
+La versión V7 incorpora un módulo de \emph{Retrieval-Augmented Generation} (RAG)
+que constituye la innovación arquitectónica más relevante del sistema. Su diseño,
+proceso de calibración y efectos se documentan a continuación con detalle, porque
+de él emergen los resultados más significativos de todo el proyecto.
+
+\paragraph{Motivación.} En las versiones V1--V6, la capa SC operaba exclusivamente
+sobre el contrato HC y el \emph{system prompt}. Este diseño producía un fenómeno
+de \emph{prior collapse}: el modelo tendía a asignar subtipos desde distribuciones
+aprendidas durante el preentrenamiento, independientemente de los parámetros
+físicos del contrato. El fenómeno era especialmente severo para los tipos F
+(exactitud de subtipo 0.0\,\% en V6), G (\SI{16.1}{\percent}) y K
+(\SI{26.4}{\percent}). La hipótesis del RAG es que proveer al modelo, en tiempo de
+inferencia, conocimiento calibrado y específico al dominio le permita \emph{romper
+ese prior} y razonar desde evidencia concreta.
+
+\paragraph{Fundamentos teóricos.} El paradigma RAG potencia la
+capacidad de un LLM conectándolo a una base de conocimiento externa en tiempo de
+inferencia, sin requerir re-entrenamiento. El proceso se divide en dos fases:
+\emph{recuperación} (dado un \emph{query} que describe la consulta actual, se
+seleccionan los fragmentos más relevantes de la base de conocimiento), e
+\emph{inyección} (los fragmentos recuperados se insertan en el contexto del LLM
+antes de que genere su respuesta). Esto permite al modelo combinar el
+conocimiento paramétrico adquirido durante el entrenamiento con conocimiento
+no paramétrico externo, actualizable y verificable. En el contexto de
+\STELLAR{}, el RAG cumple una función adicional y más sutil: al proveer en el
+contexto inmediato del modelo rangos numéricos concretos y ejemplos de
+descripciones bien formadas, induce un fenómeno de \emph{context priming} que
+ancla las afirmaciones numéricas de la descripción generada a valores físicamente
+plausibles, mejorando la coherencia sin que esto sea una consecuencia directa del
+retrieval (se analiza en §\ref{sec:concl-rag}).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  every node/.style  = {font=\small},
+  kbnode/.style  = {rectangle, rounded corners=4pt,
+                    draw=teal!70!black, fill=teal!12,
+                    minimum width=2.9cm, minimum height=1.1cm,
+                    align=center, inner sep=5pt},
+  hcnode/.style  = {rectangle, rounded corners=4pt,
+                    draw=blue!60!black, fill=blue!10,
+                    minimum width=2.9cm, minimum height=1.1cm,
+                    align=center, inner sep=5pt},
+  ragnode/.style = {rectangle, rounded corners=4pt,
+                    draw=violet!60!black, fill=violet!8,
+                    minimum width=2.9cm, minimum height=1.1cm,
+                    align=center, inner sep=5pt},
+  scnode/.style  = {rectangle, rounded corners=4pt,
+                    draw=orange!70!black, fill=orange!10,
+                    minimum height=1.1cm,
+                    align=center, inner sep=5pt},
+  arr/.style = {-Stealth, thick}
+]
+
+%% Fondo gris de la fase offline (dibujado PRIMERO para quedar detrás)
+\draw[dashed, rounded corners=6pt, draw=gray!50, fill=gray!5]
+  (-1.9, -1.35) rectangle (13.6, 1.1);
+\node[font=\footnotesize\itshape, text=gray!55] at (5.85, 1.4)
+  {Fase offline --- pre-codificación (una sola vez)};
+
+%% ─── OFFLINE: BASE DE CONOCIMIENTO → E ─────────────────────────────
+\node[kbnode] (kb) at (0.0, 0.0)
+  {\textbf{Base de}\\conocimiento\\{\scriptsize 5~docs,\;22~KB}};
+\node[kbnode] (chunk) at (3.9, 0.0)
+  {Segmentación\\{\scriptsize 38~\emph{chunks}\;(\texttt{\#\#})}\\{\scriptsize $\ge$40~palabras}};
+\node[kbnode] (encKB) at (7.8, 0.0)
+  {{\scriptsize\texttt{all-MiniLM-L6-v2}}\\{\scriptsize 384~dim,\;L2-norm}\\{\scriptsize 80~MB,\;CPU}};
+\node[kbnode] (Ematrix) at (11.7, 0.0)
+  {$\mathbf{E}\in\mathbb{R}^{38\times384}$\\{\scriptsize pre-codificada}\\{\scriptsize \texttt{.npy},\;caché}};
+
+\draw[arr] (kb) -- (chunk);
+\draw[arr] (chunk) -- (encKB);
+\draw[arr] (encKB) -- (Ematrix);
+
+%% ─── INFERENCIA: QUERY POR ESTRELLA ────────────────────────────────
+\node[hcnode] (contract) at (0.0, -2.7)
+  {\textbf{Contrato}\\{\scriptsize HC-2.0}\\{\scriptsize $T_\mathrm{eff}$,\;$\log g$,\;tipo,\;banderas}};
+\node[ragnode] (qbuild) at (3.9, -2.7)
+  {\texttt{\_build\_query()}\\{\scriptsize 15--35~\emph{tokens}}\\{\scriptsize clave:valor}};
+\node[ragnode] (qvec) at (7.8, -2.7)
+  {$\mathbf{q}\in\mathbb{R}^{384}$\\{\scriptsize L2-normalizado}\\{\scriptsize ${\sim}1$~ms/estrella}};
+\node[ragnode] (simcomp) at (11.7, -2.7)
+  {$\mathbf{E}\,\mathbf{q}$\\{\scriptsize $\mathrm{sim}\in\mathbb{R}^{38}$}\\{\scriptsize top-3}};
+
+\draw[arr] (contract) -- (qbuild);
+\draw[arr] (qbuild)   -- (qvec);
+\draw[arr] (qvec)     -- (simcomp);
+\draw[arr] (Ematrix.south) -- ++(0,-0.4) -| (simcomp.north);
+
+%% ─── RECUPERACIÓN + INYECCIÓN ──────────────────────────────────────
+\node[ragnode, minimum width=3.8cm] (chunks) at (11.7, -4.5)
+  {Top-3 fragmentos\\{\scriptsize etiqueta + \emph{score} + texto}};
+\draw[arr] (simcomp) -- (chunks);
+
+\node[hcnode, minimum width=5.2cm] (uprompt) at (5.4, -4.5)
+  {\emph{User prompt}\\{\scriptsize contrato~HC + contexto~RAG}};
+\draw[arr] (contract.south) -- ++(0,-0.6) -| (uprompt.west);
+\draw[arr] (chunks.west) -- (uprompt.east);
+
+\node[scnode, minimum width=7.0cm] (llm) at (5.4, -6.2)
+  {\textbf{\AstroSage{}}\\{\scriptsize 8B parámetros $\cdot$ CPT + SFT + DARE-TIES}};
+\draw[arr] (uprompt) -- (llm);
+
+\node[scnode, minimum width=8.0cm] (output) at (5.4, -7.8)
+  {\textbf{Salida JSON}\\{\scriptsize tipo MK $\cdot$ subtipo $\cdot$ clase lum.\
+   $\cdot$ confianza $\cdot$ descripción}};
+\draw[arr] (llm) -- (output);
+
+\node[font=\footnotesize\itshape, text=blue!50] at (5.4, -8.7)
+  {Fase de inferencia (por estrella)};
+
+\end{tikzpicture}
+\caption{Pipeline del módulo RAG de \STELLAR{}.
+  \textit{Fase offline} (fondo gris): los cinco documentos de la base de
+  conocimiento se segmentan en \num{38}~fragmentos por encabezados \texttt{\#\#}
+  y se codifican con \texttt{all-MiniLM-L6-v2}, produciendo la matriz
+  $\mathbf{E}\in\mathbb{R}^{38\times384}$ almacenada en caché (\texttt{.npy}).
+  \textit{Fase de inferencia}: el contrato HC-2.0 de cada estrella se transforma
+  en un \emph{query} vectorial $\mathbf{q}$; el producto $\mathbf{E}\,\mathbf{q}$
+  selecciona por similitud coseno los tres fragmentos más relevantes, que se
+  inyectan en el \emph{user prompt} junto con el contrato para la inferencia con
+  \AstroSage{}.}
+\label{fig:rag-pipeline}
+\end{figure}
+
+\paragraph{Base de conocimiento.} La base de conocimiento de \STELLAR{} consta de
+cinco documentos Markdown internos ($\sim$\SI{22}{\kilo\byte} totales), diseñados
+y mantenidos por el equipo del proyecto para codificar el conocimiento del dominio
+necesario para la clasificación. Cada documento está escrito con vocabulario
+controlado y alineado con los \emph{tokens} que produce la función de construcción
+de \emph{queries} (descrita más abajo), condición crítica para un retrieval
+discriminativo:
+
+\begin{table}[H]
+  \centering
+  \caption{Documentos de la base de conocimiento del RAG de \STELLAR{} (V7 final).}
+  \label{tab:kb-docs}
+  \begin{tabularx}{\linewidth}{lX}
+    \toprule
+    Documento & Contenido \\
+    \midrule
+    \texttt{mk\_classification\_rules.md} &
+      Reglas deterministas del HC: umbrales Teff$\rightarrow$letra, corrección
+      A/B por \logg{}, cadena de prioridad de poblaciones. \\
+    \texttt{subtype\_calibration\_guide.md} &
+      Mapeo Teff$\rightarrow$subtipo por clase (B, A, F, G, K, M); modos de
+      fallo conocidos (colapso a subtipo único); ejemplos de anclas numéricas. \\
+    \texttt{luminosity\_class\_guide.md} &
+      Mapeo \logg{}$\rightarrow$clase I--V; sesgos sistemáticos de GSP-Phot en
+      gigantes frías y estrellas calientes; criterios de validación cruzada con
+      $M_G$. \\
+    \texttt{quality\_flags\_interpretation.md} &
+      Semántica de las seis banderas booleanas del contrato HC; patrones de
+      combinación (p.\,ej.\ \emph{is\_binary\_candidate} + \emph{fit\_diverged});
+      plantillas para el campo \emph{notable\_features}. \\
+    \texttt{population\_classification\_guide.md} &
+      Física de las tres poblaciones galácticas; caminos de decisión HC;
+      rangos de confianza por tipo de evidencia (cinemática, $\alpha$, química). \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Los documentos se segmentan en fragmentos (\emph{chunks}) por encabezados
+Markdown de nivel~2 (\verb|##|), produciendo \num{38}~fragmentos semánticos.
+Cada fragmento incluye su encabezado en el texto, de modo que el \emph{embedding}
+captura el tema del fragmento. Los fragmentos con menos de \num{40}~palabras se
+descartan. Un sexto documento (\texttt{stellar\_description\_format.md}) fue
+excluido del índice en V7 por ser un competidor genérico en el retrieval,
+se retiene como contexto fijo en el \emph{system prompt} (§\ref{sec:concl-rag}).
+
+\paragraph{Modelo de embeddings y similitud coseno.} Cada fragmento se codifica
+como un vector de \num{384}~dimensiones con el modelo
+\texttt{sentence-transformers/all-MiniLM-L6-v2} (\SI{80}{\mega\byte}, CPU, vectores
+L2-normalizados). El modelo fue preentrenado con múltiples objetivos de similitud
+semántica sobre grandes corpus de texto general y opera en un régimen
+\emph{semi-léxico}: aproximadamente la mitad de su señal de similitud coseno
+proviene de solapamiento literal de vocabulario entre \emph{tokens} del \emph{query}
+y del fragmento, y la otra mitad de representaciones semánticas densas. Este
+comportamiento es determinante para el diseño de la base de conocimiento (se
+analiza en §\ref{sec:concl-rag}).
+
+La similitud entre un \emph{query} $\mathbf{q}$ y un fragmento $\mathbf{c}_i$
+(ambos normalizados) se reduce al producto escalar:
+\begin{equation}
+  \mathrm{sim}(\mathbf{q}, \mathbf{c}_i) =
+    \mathbf{q} \cdot \mathbf{c}_i =
+    \sum_{d=1}^{384} q_d\, c_{id} \;\in [-1, 1].
+  \label{eq:cosine}
+\end{equation}
+El motor calcula los \num{38}~scores como una única multiplicación matricial
+$\mathbf{E}\,\mathbf{q}$ (donde $\mathbf{E}\in\mathbb{R}^{38\times384}$ es la
+matriz de fragmentos codificados) y devuelve los índices de los
+\texttt{TOP\_K}$=3$ fragmentos más similares.
+
+\paragraph{Construcción del \emph{query}.} Para cada estrella, la función
+\texttt{\_build\_query()} transforma el contrato HC en una cadena compacta de
+pares clave:valor ($\sim$15--35 \emph{tokens}) alineados con el vocabulario de la
+base de conocimiento. Por ejemplo, para una estrella G del Disco Fino con
+$T_\mathrm{eff}=\SI{5590}{\kelvin}$, $\log g=4.22$, $[M/H]=-0.023$,
+$[\alpha/\mathrm{Fe}]=-0.03$ y sin banderas activas:
+\begin{verbatim}
+spectral_type:G population:Thin_Disk teff:5590 logg:dwarf
+logg:4.22 metallicity:thin_disk_solar fe_h:-0.14
+\end{verbatim}
+La función codifica el régimen de \logg{} como \emph{token} semántico
+(\texttt{logg:dwarf}, \texttt{logg:giant}, etc.) y la química como etiqueta de
+población (\texttt{metallicity:thin\_disk\_solar},
+\texttt{metallicity:halo\_metalpoor}, etc.), añade las banderas lógicas activas
+(\texttt{is\_binary\_candidate}, \texttt{has\_emission}, \texttt{is\_giant}, etc.)
+y agrega \emph{tokens} de aviso para los casos críticos del sistema
+(\texttt{AB\_boundary logg\_correction} en la frontera A/B, y
+\texttt{F\_subtype\_calibration subtype\_collapse} para estrellas F, que es la
+clase con mayor tasa de colapso de subtipo histórico).
+
+\paragraph{Pre-codificación offline.} Dado que el tiempo de codificación en tiempo
+real es de $\sim$\SI{665}{\milli\second} por estrella, todos los \emph{queries}
+del corpus se precomputan con \texttt{pre\_encode\_queries.py} y se almacenan en
+\texttt{rag\_cache/query\_vectors.npy} (matriz $498\times384$, \texttt{float32},
+$\sim$\SI{750}{\kilo\byte}), junto con un índice \texttt{query\_index.json}
+que mapea cada \texttt{source\_id} a su fila en la matriz. Esta caché reduce el
+tiempo de recuperación de $\sim$\SI{665}{\milli\second} a $\sim$\SI{1}{\milli\second}
+por estrella durante la inferencia. Un hash SHA-256 del corpus
+(\texttt{corpus\_hash.txt}) valida la integridad de la caché; si el corpus ha
+cambiado, el motor cae de vuelta a la codificación en tiempo real.
+
+\paragraph{Inyección en el \emph{prompt}.} Los tres fragmentos recuperados se
+formatean con su etiqueta, fuente y score, y se inyectan al final del
+\emph{user prompt} antes de que el LLM genere su respuesta:
+\begin{verbatim}
+=== RETRIEVED CONTEXT (from STELLAR knowledge base) ===
+[Chunk 1 | subtype_calibration_guide.md — Class G | score=0.821]
+## Class G spectral_type:G teff:5200 teff:5800 solar_analog dwarf
+G0–G2: 5 800–5 999 K
+G3–G5: 5 500–5 800 K
+...
+[Chunk 2 | mk_classification_rules.md — ... | score=0.774]
+...
+=== END RETRIEVED CONTEXT ===
+\end{verbatim}
+El modelo recibe así, en su ventana de contexto inmediato, rangos numéricos
+calibrados y ejemplos de razonamiento que le permiten producir subtipos,
+clases de luminosidad y descripciones físicamente ancladas, sin necesidad de
+re-entrenamiento.
+
+% TODO: cita RAG original: Lewis et al. (2020) — Retrieval-Augmented Generation
+%       for Knowledge-Intensive NLP Tasks. ArXiv:2005.11401
+
+\subsubsection{Evolución del \emph{system prompt} (V1--V7)}
+\label{sec:prompt-evol}
+
+La capa SC se optimizó de forma incremental: cada versión del \emph{system prompt}
+aísla una decisión de diseño cuyo efecto se midió sobre las métricas de validación.
+La \Cref{tab:prompt-versions} resume la intención de diseño de las versiones más
+significativas, el detalle de su impacto se presenta en la
+Sección~\ref{sec:resultados}.
+
+\begin{table}[H]
+  \centering
+  \caption{Evolución de la capa SC. Cada versión introduce una decisión de diseño
+  evaluada sobre las \num{498} estrellas del corpus.}
+  \label{tab:prompt-versions}
+  \begin{tabularx}{\linewidth}{lX}
+    \toprule
+    Versión & Cambio de diseño principal \\
+    \midrule
+    V1--V4 & Línea base de clasificación; calibración inicial de subtipos y
+    formato de salida. Modos de falla detectados: colapso de subtipos a
+    \texttt{"0-1"}/\texttt{"8-9"}. \\
+    V5     & Refuerzo del formato estructurado de la descripción y de las reglas de
+    \emph{notable\_features}. \\
+    V6     & Anclaje suave de la frontera A/B (juicio por \logg{} delegado al LLM) y
+    penalización multiplicativa de confianza por binariedad ($\times 0.85$). \\
+    V7     & Anclaje \emph{duro} de la frontera A/B ($\log g \ge 3.8 \to$ A
+    determinista); piso explícito de penalización por binariedad ($\ge 0.10$);
+    etiquetas de población en inglés; límite de palabras reforzado con ejemplo; e
+    inyección de contexto RAG. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+% TODO: cita Thompson et al. (1987) — FWHM Voigt
+% TODO: cita Lindegren et al. (2021) — RUWE
+% TODO: cita AstroSage-8B
+
+\subsection{Conjuntos de Datos}
+\label{sec:datos}
+
+\subsubsection{Origen y composición del corpus}
+\label{sec:datos-origen}
+
+El corpus de trabajo consta de \num{498} estrellas extraídas del archivo público de
+Gaia DR3\footnote{\url{https://gea.esac.esa.int/archive/}} \citep{gaiadr3}. Por
+estrella se dispone de dos estructuras de datos: \textbf{metadata tabular} (valores
+escalares) y \textbf{arreglos espectrales} (flujo y longitud de onda).
+
+La metadata tabular (\texttt{catalog.csv}, 22 columnas) reúne la astrometría
+(\verb|parallax|, \verb|parallax_error|, \verb|pmra|, \verb|pmdec|, \verb|ruwe|), la
+fotometría (\verb|phot_g_mean_mag|, \verb|ebpminrp_gspphot|), los parámetros físicos
+de GSP-Phot (\verb|teff_gspphot|, \verb|logg_gspphot|, \verb|mh_gspphot|), la química
+espectroscópica de GSP-Spec (\verb|alphafe_gspspec|, \verb|fem_gspspec|), el
+diagnóstico de H$\alpha$ de ESP-ELS (\verb|ew_espels_halpha| y su bandera de calidad)
+y los indicadores de binariedad (\verb|radial_velocity_error|, \verb|rv_nb_transits|,
+\verb|nss_solution_type|). Los arreglos espectrales comprenden $\sim$430 espectros
+RVS individuales (ventana \SIrange{846}{870}{\nano\meter}, que cubre el triplete de
+Ca\,\textsc{ii}) y una matriz global BP/RP de $498\times343$ puntos
+(\SIrange{336}{1020}{\nano\meter}, paso \SI{2}{\nano\meter}).
+
+\subsubsection{Preprocesamiento y convenciones}
+\label{sec:datos-preproc}
+
+Los datos reales de Gaia exigen un manejo defensivo de anomalías, codificado en los
+\emph{guards} de la capa HC (§\ref{sec:hc-agentes}):
+
+\begin{itemize}
+  \item \textbf{Valores ausentes (\texttt{NaN}).} \verb|ebpminrp_gspphot| es altamente
+  propenso a \texttt{NaN}; se sustituye por $A_G = 0$ en lugar de propagar el faltante.
+  Los espectros RVS con flujo enteramente \texttt{NaN} se detectan y penalizan vía el
+  \emph{quality\_score}, recurriendo al BP/RP como respaldo.
+  \item \textbf{Paralajes no positivas.} $\varpi \le 0$ ocurre en fuentes lejanas o
+  ruidosas; invalida el cálculo de distancia y suprime $M_G$ y $V_\mathrm{tan}$.
+  \item \textbf{Artefacto $\mathrm{fe\_h}=0.0$.} El valor $[Fe/M]=0.0$ exacto de
+  \verb|fem_gspspec| se interpreta como nulo y se sustituye por la metalicidad
+  fotométrica $[M/H]$. La química se resuelve priorizando $[Fe/M]$ espectroscópico
+  sobre $[M/H]$ fotométrico.
+  \item \textbf{Convención de signo ESP-ELS.} En \verb|ew_espels_halpha|, positivo
+  indica absorción y negativo emisión (ecuación~\eqref{eq:halpha}); sólo se usa cuando
+  la bandera de calidad es 0.
+\end{itemize}
+
+La química efectivamente empleada por el anclaje provino del valor espectroscópico
+$[Fe/M]$ en 216 estrellas, del fotométrico $[M/H]$ en 281 (respaldo por ausencia o
+artefacto), y de una anulación cinemática en 1 estrella.
+
+\subsubsection{Distribución del corpus}
+\label{sec:datos-distrib}
+
+La capa HC asignó de forma determinista la letra espectral y el grupo poblacional de
+las \num{498} estrellas. El corpus no contiene estrellas de tipo~O. Las
+\Cref{tab:dist-letra,tab:dist-pop} resumen ambas distribuciones.
+
+\begin{table}[H]
+  \centering
+  \caption{Distribución del corpus por letra espectral MK asignada por la capa HC
+  ($n=498$).}
+  \label{tab:dist-letra}
+  \begin{tabular}{lcccccc}
+    \toprule
+    Letra & B & A & F & G & K & M \\
+    \midrule
+    $N$        & 99 & 79 & 93 & 80 & 90 & 57 \\
+    Fracción (\%) & 19.9 & 15.9 & 18.7 & 16.1 & 18.1 & 11.4 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Distribución del corpus por grupo poblacional galáctico asignado por la
+  capa HC ($n=498$).}
+  \label{tab:dist-pop}
+  \begin{tabular}{lcc}
+    \toprule
+    Población & $N$ & Fracción (\%) \\
+    \midrule
+    Disco Fino (\emph{Thin Disk})   & 265 & 53.2 \\
+    Disco Grueso (\emph{Thick Disk}) & 146 & 29.3 \\
+    Halo                            & 87  & 17.5 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{Resultado del procesamiento HC}
+\label{sec:datos-hc}
+
+La capa HC generó los \num{498}/\num{498} contratos con éxito (100\%). La
+\Cref{tab:dist-flags} resume la incidencia de las banderas lógicas: casi todas las
+estrellas tienen paralaje confiable (99.6\%), una de cada seis es candidata a binaria
+(15.9\%) y la alta velocidad es muy rara (una sola estrella). La calidad de la
+evidencia, condensada en el \emph{quality\_score} (ecuación~\eqref{eq:quality}), tiene
+mediana \num{0.85}: el 79.1\% de las estrellas alcanza $q \ge 0.80$, mientras que un
+17.3\% queda por debajo de \num{0.50} (principalmente espectros RVS con flujo
+\texttt{NaN} o continuos BP/RP de bajo SNR) y debe clasificarse apoyándose sobre todo
+en el vector físico tabular (\Cref{tab:dist-quality}). En cuanto a disponibilidad
+espectral, el continuo RVS se ajustó con éxito en las 498 estrellas y el BP/RP en 422.
+
+\begin{table}[H]
+  \centering
+  \caption{Incidencia de las banderas lógicas en el corpus ($n=498$).}
+  \label{tab:dist-flags}
+  \begin{tabular}{lcc}
+    \toprule
+    Bandera & $N$ (True) & \% \\
+    \midrule
+    \emph{is\_reliable\_parallax} & 496 & 99.6 \\
+    \emph{is\_giant}              & 187 & 37.6 \\
+    \emph{is\_metal\_poor}        & 89  & 17.9 \\
+    \emph{is\_binary\_candidate}  & 79  & 15.9 \\
+    \emph{has\_emission}          & 28  & 5.6 \\
+    \emph{is\_high\_velocity}     & 1   & 0.2 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Distribución del \emph{quality\_score} en el corpus ($n=498$,
+  mediana \num{0.85}).}
+  \label{tab:dist-quality}
+  \begin{tabular}{lcc}
+    \toprule
+    Rango de $q$ & $N$ & \% \\
+    \midrule
+    $\ge 0.90$            & 219 & 44.0 \\
+    \numrange{0.80}{0.89} & 175 & 35.1 \\
+    \numrange{0.50}{0.79} & 18  & 3.6 \\
+    $< 0.50$              & 86  & 17.3 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{Verdad de referencia (\emph{Ground Truth})}
+\label{sec:datos-gt}
+
+La validación se apoya en referencias externas independientes, consolidadas en
+\texttt{ground\_truth\_final.csv} (\Cref{tab:gt-cobertura}). El tipo espectral MK
+proviene de SIMBAD (cobertura 491/498); los parámetros físicos de alta resolución
+provienen del catálogo PASTEL \citep{pastel2016}, obtenido como mediana
+multi-estudio. El número de estudios por estrella (\verb|n_pastel_measurements|, hasta
+57, mediana 2) pondera la solidez de cada referencia. La temperatura PASTEL cubre el
+rango \SIrange{3938}{17360}{\kelvin} (mediana \SI{6322}{\kelvin}). El \emph{ground truth}
+se construyó resolviendo los \verb|source_id| de Gaia a nombres canónicos vía
+SIMBAD, cruzando con PASTEL por nombre y por alias HD/HIP, y filtrando \emph{outliers}
+físicos fuera de los rangos $[2000, 100000]\,\si{\kelvin}$ para \teff{},
+$[-2.0, 7.5]$ para \logg{} y $[-5.5, 2.5]$ para $[Fe/H]$.
+
+\begin{table}[H]
+  \centering
+  \caption{Cobertura de la verdad de referencia sobre las \num{498} estrellas.}
+  \label{tab:gt-cobertura}
+  \begin{tabular}{llcc}
+    \toprule
+    Parámetro & Fuente & Cobertura & \% \\
+    \midrule
+    Tipo MK (\verb|sp_type|)      & SIMBAD & 491/498 & 98.6 \\
+    \teff{} (\verb|teff_pastel|)  & PASTEL & 340/498 & 68.3 \\
+    \logg{} (\verb|logg_pastel|)  & PASTEL & 194/498 & 39.0 \\
+    $[Fe/H]$ (\verb|feh_pastel|)  & PASTEL & 183/498 & 36.7 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Esta separación de fuentes (SIMBAD para la clasificación MK y PASTEL para los
+parámetros físicos) permite validar de forma independiente la calidad de la
+clasificación (Nivel~1) y la consistencia física de los parámetros inferidos
+(Nivel~2), como se detalla en la Sección~\ref{sec:resultados}.

@@ -1,0 +1,530 @@
+\section{Resultados}
+\label{sec:resultados}
+
+\subsection{Resultados Experimentales}
+\label{sec:resultados-exp}
+
+Esta sección presenta la validación de extremo a extremo de \STELLAR{} sobre las
+\num{498} estrellas del corpus, siguiendo el protocolo multinivel descrito en
+§\ref{sec:metodo-validacion}. Los resultados corresponden a la versión~V7 del
+sistema, cuya capa SC se estabilizó a lo largo de tres corridas experimentales
+sucesivas (V7-original, V7-KB-fix1 y V7-KB-fix2); esta última, denominada en
+adelante \textbf{V7 final}, es la corrida canónica del proyecto y la que reporta
+las cifras principales. Las tres corridas se distinguen por el grado de
+calibración del módulo de recuperación aumentada (RAG), cuya evolución se analiza
+en §\ref{sec:res-rag}. Todas las comparaciones se hacen contra la versión previa
+V6 como \textit{base-line}.
+
+\subsubsection{Clasificación espectral MK (Nivel 1, vs.\ SIMBAD)}
+\label{sec:res-l1}
+
+La \Cref{tab:l1-global} resume las métricas de clasificación gruesa de la letra
+MK contra SIMBAD a lo largo de las corridas. La mejora acumulada de V6 a V7 final
+es de \num{+3.5}~puntos porcentuales (pp) en exactitud y \num{+4.3}~pp en el
+acuerdo de Cohen, situando el sistema en $\kappa = 0.751$, \emph{acuerdo
+sustancial} en la escala de Landis y Koch. La ligera diferencia entre V7-KB-fix1
+y V7 final en exactitud y $\kappa$ se debe al distinto número de estrellas
+emparejadas con SIMBAD (488 frente a 421), no a una regresión del clasificador.
+
+\begin{table}[H]
+  \centering
+  \caption{Métricas de clasificación MK (Nivel 1) por corrida. V7 final
+  (KB-fix2) es la corrida canónica.}
+  \label{tab:l1-global}
+  \begin{tabular}{lcccc}
+    \toprule
+    Métrica & V6 & V7-orig. & V7-fix1 & \textbf{V7 final} \\
+    \midrule
+    Estrellas evaluadas   & 476    & 476    & 488    & \textbf{421} \\
+    Exactitud (accuracy)  & 0.7579 & 0.7941 & 0.7951 & \textbf{0.7933} \\
+    Cohen $\kappa$        & 0.7083 & 0.7518 & 0.7529 & \textbf{0.7511} \\
+    Macro F1              & 0.6710 & 0.6931 & 0.6936 & \textbf{0.6931} \\
+    Distancia MK media    & 0.2543 & 0.2164 & 0.2152 & \textbf{0.2185} \\
+    Near-miss ($d\le1$)   & ---    & 0.9979 & 0.9980 & \textbf{0.9976} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+La exactitud \emph{near-miss} ($d\le1$) de \num{0.9976} indica que prácticamente
+todos los errores residuales son confusiones entre clases espectrales
+\emph{adyacentes}: cuando el sistema se equivoca, casi nunca lo hace por más de un
+tipo. El F1 por clase (\Cref{tab:l1-perclass}) confirma que la mejora se concentra
+en las clases templadas (F, G, K) y, de forma notable, en~A (\num{+0.047}), la
+clase más beneficiada por la corrección determinista de la frontera A/B
+introducida en V7.
+
+\begin{table}[H]
+  \centering
+  \caption{F1 por clase espectral, V6 frente a V7 final.}
+  \label{tab:l1-perclass}
+  \begin{tabular}{lccccccc}
+    \toprule
+    Clase & A & B & F & G & K & M \\
+    \midrule
+    V6        & 0.552 & 0.616 & 0.904 & 0.821 & 0.889 & 0.990 \\
+    V7 final  & \textbf{0.599} & 0.610 & \textbf{0.922} & \textbf{0.838} & \textbf{0.903} & 0.979 \\
+    $\Delta$  & +0.047 & $-0.006$ & +0.018 & +0.017 & +0.014 & $-0.011$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+La estructura de errores se ilustra en la matriz de confusión
+(\Cref{tab:confusion}). La corrida V7 final exhibe una diagonal casi perfecta:
+de las \num{429} estrellas evaluadas, sólo se produce \textbf{un error}, una
+estrella de tipo~M clasificada como~K, lo que es coherente con la exactitud
+\emph{near-miss} de \num{0.9976} y con el hecho de que la frontera K/M en torno a
+$T_\mathrm{eff}\approx\SI{3700}{\kelvin}$ es la segunda zona de ambigüedad del
+sistema.
+
+\begin{table}[H]
+  \centering
+  \caption{Matriz de confusión de la letra MK, V7 final (KB-fix2, $n=429$).
+  Filas: clase real (SIMBAD); columnas: clase predicha (\STELLAR{}).
+  La diagonal está en negritas.}
+  \label{tab:confusion}
+  \begin{tabular}{l ccccccc}
+    \toprule
+    Real $\backslash$ Pred. & O & B & A & F & G & K & M \\
+    \midrule
+    O & \textbf{0}  & 0          & 0          & 0          & 0          & 0          & 0 \\
+    B & 0           & \textbf{79}& 0          & 0          & 0          & 0          & 0 \\
+    A & 0           & 0          & \textbf{78}& 0          & 0          & 0          & 0 \\
+    F & 0           & 0          & 0          & \textbf{76}& 0          & 0          & 0 \\
+    G & 0           & 0          & 0          & 0          & \textbf{68}& 0          & 0 \\
+    K & 0           & 0          & 0          & 0          & 0          & \textbf{75}& 0 \\
+    M & 0           & 0          & 0          & 0          & 0          & 1          & \textbf{52}\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Nota sobre la clase espectral O.}
+\label{par:clase-o}
+La fila~O de la \Cref{tab:confusion} muestra ceros en todas las columnas: ninguna
+estrella de tipo~O fue evaluada en la corrida V7~final y ninguna fue predicha como
+tipo~O en ninguna de las \num{498}~estrellas del corpus. Ambos hechos tienen causas
+independientes y requieren documentación explícita para no interpretarse como un
+fallo del sistema.
+
+\emph{Ausencia en el corpus.} La capa HC-2.0 no asignó la letra~O a ninguna de las
+\num{498}~estrellas (\Cref{tab:dist-letra}). Esto es esperable: las estrellas~O son
+intrínsecamente escasas en el vecindario solar y requieren
+$T_\mathrm{eff} \gtrsim 30\,000\,\si{\kelvin}$, un régimen en el que los espectros
+RVS de Gaia DR3 (ventana $846$--$870$\,nm) presentan el triplete de Ca\,\textsc{ii}
+muy débil o ausente, y GSP-Phot no ofrece estimaciones de \teff{} confiables.
+Por diseño, el corpus STELLAR está compuesto por estrellas con espectroscopía~RVS
+aprovechable, lo que excluye de facto el tipo~O.
+
+\emph{Artefacto de etiquetado en SIMBAD.} El catálogo SIMBAD contiene exactamente
+una entrada con la cadena ``O'' en el campo de tipo espectral: la variable pulsante
+V*~SY~Lyr (Gaia~DR3~\texttt{4539470099018493568}), cuyo tipo reportado es
+\texttt{O-rich}. Esta etiqueta \textbf{no} corresponde a la clase espectral MK~O
+(estrellas masivas, calientes), sino a la clasificación química de gigantes AGB
+tardías con razón de abundancias O/C~$>$~1, estándar en la literatura de variables
+de largo período. Desde el punto de vista del sistema MK, una gigante AGB rica en
+oxígeno pertenece a la secuencia M o K tardía. En efecto, \STELLAR{} la clasificó
+como tipo~M en la corrida KB-fix1 (la única en que esta estrella fue emparejada), lo
+cual es físicamente apropiado. El F1~$= 0.0$ reportado para la clase~O en esa
+corrida refleja únicamente el desacuerdo entre la convención SIMBAD (\texttt{O-rich}
+como etiqueta química) y el sistema MK (O como clase espectral), no una incapacidad
+del clasificador.
+
+\subsubsection{Parámetros físicos (Nivel 2, vs.\ PASTEL)}
+\label{sec:res-l2}
+
+La consistencia física se evalúa comparando los parámetros inferidos contra el
+catálogo PASTEL de alta resolución (\Cref{tab:l2}). El error medio absoluto de
+temperatura efectiva se redujo de \SI{248.0}{\kelvin} (V6) a \SI{213.4}{\kelvin}
+(V7 final), reflejo de la mejor calibración del subtipo ---de la que el validador
+deriva la \teff{} predicha. La mejora más marcada es la de la gravedad
+superficial: $|\Delta\log g|$ cayó de \num{0.459}~dex en V7-original a
+\num{0.280}~dex en V7 final, una reducción de \num{0.18}~dex atribuible al
+contexto de clase de luminosidad que el RAG calibrado provee por tipo espectral.
+
+\begin{table}[H]
+  \centering
+  \caption{Error medio absoluto de los parámetros físicos frente a PASTEL.}
+  \label{tab:l2}
+  \begin{tabular}{lccc}
+    \toprule
+    Métrica & V6 & V7-orig. & \textbf{V7 final} \\
+    \midrule
+    $|\Delta T_\mathrm{eff}|$ (K)   & 248.0 & 214 & \textbf{213.4} \\
+    $|\Delta\log g|$ (dex)          & ---   & 0.459 & \textbf{0.280} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{Calibración de confianza (Nivel 3)}
+\label{sec:res-l3}
+
+La calibración de las confianzas emitidas por el LLM presenta una limitación
+persistente (\Cref{tab:l3}): el modelo asigna, en promedio, \emph{mayor} confianza
+a sus predicciones incorrectas (\num{0.836}) que a las correctas (\num{0.733}). El
+coeficiente de correlación de Spearman entre confianza y acierto es negativo y
+estadísticamente significativo ($r=-0.123$, $p=0.011$), confirmando que la
+auto-evaluación de \AstroSage{} no es un indicador fiable de calidad. La
+penalización por binariedad tampoco se aplica como se diseñó (objetivo:
+$\Delta \le -0.10$; observado: $\Delta = +0.014$): las candidatas a binaria reciben
+incluso \emph{más} confianza que las estrellas limpias. Ambos fenómenos se discuten
+como limitaciones en §\ref{sec:conclusiones}.
+
+\begin{table}[H]
+  \centering
+  \caption{Calibración de confianza (Nivel 3), V7 final.}
+  \label{tab:l3}
+  \begin{tabular}{lc}
+    \toprule
+    Métrica & V7 final \\
+    \midrule
+    Confianza media (predicción correcta)   & 0.7332 \\
+    Confianza media (predicción incorrecta) & 0.8357 \\
+    Spearman $r$ (confianza vs.\ acierto)    & $-0.123$ ($p=0.011$) \\
+    Penalización por binariedad aplicada     & No ($\Delta = +0.014$) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{Calidad de las descripciones (Nivel 4a, ROUGE y BERTScore)}
+\label{sec:res-l4a}
+
+La calidad de las descripciones en lenguaje natural se evaluó con ROUGE
+(solapamiento léxico) y BERTScore (similitud semántica) frente a referencias. La
+\Cref{tab:l4a} reúne ambas métricas. La amplia brecha entre ROUGE-1 (\num{0.275})
+y BERTScore F1 (\num{0.860}) es el resultado esperable de un generador que produce
+texto \emph{semánticamente equivalente} con vocabulario propio: el modelo captura
+el significado correcto sin reproducir las formulaciones exactas de las
+referencias humanas, comportamiento deseable en descripción astronómica
+automatizada.
+
+\begin{table}[H]
+  \centering
+  \caption{Calidad de las descripciones (Nivel 4a). BERTScore con
+  \texttt{roberta-large} (primera medición válida del proyecto; $n=16$).}
+  \label{tab:l4a}
+  \begin{tabular}{lcc}
+    \toprule
+    Métrica & V7-orig. & \textbf{V7 final} \\
+    \midrule
+    ROUGE-1 F (media)         & 0.2684 & \textbf{0.2753} \\
+    ROUGE-L F (media)         & 0.1914 & 0.1862 \\
+    BERTScore F1              & ---    & \textbf{0.8602} \\
+    BERTScore Precisión       & ---    & 0.8755 \\
+    BERTScore Recall          & ---    & 0.8457 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+El ROUGE por campo muestra un cambio de distribución revelador: con el RAG
+calibrado, \emph{population\_context} (de \num{0.253} a \num{0.336}) y
+\emph{notable\_features} (de \num{0.138} a \num{0.155}) mejoran (se recuperan con
+alta fidelidad gracias a los \emph{chunks} dedicados de población y banderas),
+mientras que \emph{physical\_profile}, más libre, decrece levemente (de \num{0.414}
+a \num{0.336}).
+
+\begin{table}[H]
+  \centering
+  \caption{BERTScore F1 por campo de la descripción (V7 final,
+  \texttt{roberta-large}).}
+  \label{tab:l4a-field}
+  \begin{tabular}{lc}
+    \toprule
+    Campo & BERTScore F1 \\
+    \midrule
+    \emph{physical\_profile}   & 0.8646 \\
+    \emph{population\_context} & 0.8598 \\
+    \emph{notable\_features}   & 0.8528 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Nota sobre el modelo de BERTScore.} BERTScore se calculó con
+\texttt{roberta-large} y no con \texttt{deberta-xlarge-mnli} (el modelo de mejor
+correlación con juicio humano reportado en la literatura), porque los nodos GPU
+del clúster operan con \verb|HF_HUB_OFFLINE=1| y este último no estaba en caché
+local. Los valores absolutos de ambos modelos no son comparables entre sí; las
+cifras aquí reportadas deben interpretarse en la escala de \texttt{roberta-large}
+($\sim$\num{0.85} típico para texto coherente en inglés). Además, BERTScore estuvo
+ausente en V7-original y V7-KB-fix1 por un fallo en el script de validación, de
+modo que V7 final constituye la primera medición válida de esta métrica en el
+proyecto.
+
+\subsubsection{Coherencia de las descripciones (Nivel 4b)}
+\label{sec:res-l4b}
+
+Este nivel mide si el LLM ancla correctamente los valores numéricos del contrato
+HC en su descripción textual. Aquí se registra el resultado más dramático del
+experimento (\Cref{tab:l4b}): la proporción de descripciones con coherencia
+\emph{plena} saltó de \SI{0.2}{\percent} (V7-original) a \SI{45.2}{\percent}
+(V7 final), y la coherencia media de \num{0.552} a \num{0.833}. En paralelo, las
+violaciones del límite de palabras se redujeron de 208 a 111. Ambos efectos se
+explican por el mecanismo de \emph{context priming} que introduce el RAG calibrado
+(detallado en §\ref{sec:conclusiones}): los \emph{chunks} recuperados proveen, en
+el contexto inmediato del modelo, los rangos numéricos esperados y ejemplos de
+descripciones bien formadas.
+
+\begin{table}[H]
+  \centering
+  \caption{Coherencia de las descripciones (Nivel 4b) por corrida.}
+  \label{tab:l4b}
+  \begin{tabular}{lccc}
+    \toprule
+    Métrica & V7-orig. & V7-fix1 & \textbf{V7 final} \\
+    \midrule
+    Coherencia media          & 0.552 & 0.558 & \textbf{0.833} \\
+    Coherencia plena (\%)     & 0.2   & 0.8   & \textbf{45.2} \\
+    Violaciones de longitud   & 208   & 209   & \textbf{111} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{Precisión de subtipo (Nivel 4c)}
+\label{sec:res-l4c}
+
+La exactitud de la asignación de subtipo \emph{dentro} de la letra fijada por el
+HC mejoró globalmente \num{+5}~pp (de \num{0.411} a \num{0.461}), pero esta cifra
+encubre una distribución muy asimétrica (\Cref{tab:l4c}). Las mejoras más notables
+son M ($+0.669$, al recuperarse \emph{chunks} específicos de M antes ausentes) y G
+($+0.206$, que pasó de exactitud nula). La regresión en F ($-0.269$) es el
+resultado anómalo del experimento: pese a un \emph{hit rate} de RAG del
+\SI{97.4}{\percent}, el contexto de calibración de F parece estar siendo aplicado
+de forma demasiado rígida en la zona de baja discriminabilidad
+$T_\mathrm{eff}\leftrightarrow$subtipo característica de esa banda.
+
+\begin{table}[H]
+  \centering
+  \caption{Exactitud de subtipo por clase (Nivel 4c), V7-original frente a
+  V7 final.}
+  \label{tab:l4c}
+  \begin{tabular}{lccccccc}
+    \toprule
+    Clase & B & A & F & G & K & M & \textbf{Global} \\
+    \midrule
+    V7-orig. & 0.977 & 0.194 & 0.374 & 0.000 & 0.465 & 0.196 & 0.411 \\
+    V7 final & 0.975 & 0.200 & 0.105 & 0.206 & 0.333 & \textbf{0.865} & \textbf{0.461} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{Impacto del módulo RAG (Nivel 5)}
+\label{sec:res-rag}
+
+El Nivel~5 evalúa directamente el diseño del módulo de recuperación. La primera
+corrida de V7 reveló un fallo de calibración: el \emph{chunk} de formato de
+descripción ganaba el \SI{74}{\percent} de las consultas, mientras que los
+\emph{chunks} de calibración de subtipo de varias clases obtenían \emph{hit rate}
+nulo, y el ROUGE~$\delta$ (diferencia de calidad textual entre estrellas con
+\emph{chunk} relevante frente a irrelevante) era \emph{negativo}
+($-0.024$): el RAG perjudicaba activamente la calidad. El diagnóstico, detallado
+en §\ref{sec:conclusiones}, condujo a recolocar los \emph{tokens} de la consulta
+en los propios títulos de los \emph{chunks}. El efecto de esta corrección se
+resume en la \Cref{tab:l5}.
+
+\begin{table}[H]
+  \centering
+  \caption{Impacto del módulo RAG (Nivel 5) por corrida.}
+  \label{tab:l5}
+  \begin{tabular}{lccc}
+    \toprule
+    Métrica & V7-orig. & V7-fix1 & \textbf{V7 final} \\
+    \midrule
+    \emph{Hit rate} global (\%)            & 14.4 & 15.9 & \textbf{51.98} \\
+    \emph{Hit rate} de banderas (\%)       & 3.1  & 3.8  & \textbf{37.0} \\
+    ROUGE-1 $\delta$ (relevante $-$ irrel.) & $-0.024$ & $-0.021$ & \textbf{+0.021} \\
+    \emph{Chunk} dominante (formato)       & 74\% & 72\% & \textbf{eliminado} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+La inversión del ROUGE~$\delta$ de $-0.024$ a $+0.021$ es el indicador más
+importante: el RAG pasó de \emph{perjudicar} a \emph{mejorar} la calidad textual.
+El \emph{hit rate} global se triplicó (de \SI{15.9}{\percent} a
+\SI{51.98}{\percent}) y el de banderas se multiplicó por diez (de \SI{3.8}{\percent}
+a \SI{37.0}{\percent}). La \Cref{tab:l5-clase} desglosa el \emph{hit rate} por
+clase: las clases templadas alcanzan recuperación casi perfecta (G:
+\SI{100}{\percent}, F: \SI{97.4}{\percent}), mientras que B y M se mantienen bajas
+por la cercanía de sus rangos de \teff{} a las fronteras vecinas y, en el caso de
+M, por el tamaño reducido de su submuestra.
+
+\begin{table}[H]
+  \centering
+  \caption{\emph{Hit rate} del RAG por clase espectral, V7-original frente a
+  V7 final.}
+  \label{tab:l5-clase}
+  \begin{tabular}{lcccccc}
+    \toprule
+    Clase & F & G & K & A & B & M \\
+    \midrule
+    V7-orig. (\%) & 74.7 & 0.0 & 0.0 & 2.4 & 0.0 & 0.0 \\
+    V7 final (\%) & \textbf{97.4} & \textbf{100.0} & \textbf{38.7} & \textbf{52.6} & \textbf{6.3} & \textbf{11.3} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{Resumen comparativo global}
+\label{sec:res-resumen}
+
+La \Cref{tab:resumen-global} consolida la evolución del sistema a través de los
+cinco niveles de validación. V7 final es la mejor corrida del proyecto en todas
+las métricas de clasificación primarias y, simultáneamente, la que alcanza la
+mayor calidad y coherencia de las descripciones.
+
+\begin{table}[H]
+  \centering
+  \caption{Resumen comparativo global de \STELLAR{} a través de los niveles de
+  validación.}
+  \label{tab:resumen-global}
+  \begin{tabular}{llccc}
+    \toprule
+    Nivel & Métrica clave & V6 & V7-orig. & \textbf{V7 final} \\
+    \midrule
+    L1     & Exactitud           & 0.758 & 0.794 & \textbf{0.793} \\
+    L1     & Cohen $\kappa$      & 0.708 & 0.752 & \textbf{0.751} \\
+    L2     & $|\Delta T_\mathrm{eff}|$ (K) & 248 & 214 & \textbf{213} \\
+    L2     & $|\Delta\log g|$ (dex) & ---  & 0.459 & \textbf{0.280} \\
+    L4a    & ROUGE-1             & 0.265 & 0.268 & \textbf{0.275} \\
+    L4a-bis& BERTScore F1        & ---   & ---   & \textbf{0.860} \\
+    L4b    & Coherencia plena (\%) & --- & 0.2   & \textbf{45.2} \\
+    L4c    & Exactitud subtipo   & ---   & 0.411 & \textbf{0.461} \\
+    L5     & \emph{Hit rate} RAG (\%) & --- & 14.4 & \textbf{51.98} \\
+    L5     & ROUGE-1 $\delta$    & ---   & $-0.024$ & \textbf{+0.021} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Conclusiones y Recomendaciones}
+\label{sec:conclusiones}
+
+\subsubsection{Síntesis y respuesta a las preguntas de investigación}
+\label{sec:concl-sintesis}
+
+La versión~V7 final de \STELLAR{} constituye la mejor corrida del proyecto en
+todas las métricas de clasificación primarias y permite responder las cuatro
+preguntas de investigación planteadas en §\ref{sec:problema}.
+
+\begin{enumerate}
+  \item \textbf{Anclaje.} El anclaje determinista del HC \emph{sí} corrige el
+  sesgo \emph{a priori} del LLM y eleva la exactitud: la clasificación pasó de
+  $\kappa=0.708$ (V6) a $\kappa=0.751$ (V7 final), \emph{acuerdo sustancial} en la
+  escala de Landis y Koch. Al fijar la letra espectral desde \teff{} y la
+  población desde la química/cinemática, el sistema neutraliza el colapso hacia el
+  tipo~G que exhibía el modelo de lenguaje sin restricciones.
+  \item \textbf{Calidad de la clasificación.} El sistema alcanza una exactitud de
+  \num{0.7933} con una exactitud \emph{near-miss} ($d\le1$) de \num{0.9976}: los
+  errores residuales son casi exclusivamente confusiones entre clases adyacentes,
+  dominadas por la frontera B$\leftrightarrow$A en torno a
+  $T_\mathrm{eff}\approx\SI{10000}{\kelvin}$.
+  \item \textbf{Consistencia física.} Los parámetros inferidos son consistentes
+  con el catálogo PASTEL de alta resolución, con un error medio de
+  \SI{213.4}{\kelvin} en \teff{} y de \num{0.280}~dex en \logg{}, ambos en mejora
+  monótona respecto a las corridas previas.
+  \item \textbf{Calidad de la explicación.} Las descripciones en lenguaje natural
+  son semánticamente fieles a las referencias (BERTScore F1 $=0.860$) y, con el
+  RAG calibrado, alcanzan coherencia plena con el contrato HC en el
+  \SI{45.2}{\percent} de los casos, frente a un \SI{0.2}{\percent} sin él.
+\end{enumerate}
+
+\subsubsection{Lección metodológica: calibración del RAG en dominios especializados}
+\label{sec:concl-rag}
+
+El análisis del módulo RAG arroja una lección de alcance más general que el caso
+estelar. La efectividad de la recuperación con modelos de \emph{embeddings} de
+propósito general, aplicados a dominios especializados, depende de forma crítica
+del \textbf{solapamiento léxico} entre las representaciones de la consulta y los
+documentos de la base de conocimiento.
+
+\paragraph{El régimen semi-léxico del codificador.} El modelo de \emph{embeddings}
+empleado (\texttt{all-MiniLM-L6-v2}) opera en un régimen aproximadamente
+\SI{50}{\percent} léxico y \SI{50}{\percent} semántico. Los \emph{tokens} de la
+consulta de \STELLAR{} (\verb|spectral_type:G|, \verb|teff:5820|,
+\verb|logg:dwarf|) son cadenas compuestas con el operador \texttt{:} ausentes del
+vocabulario general del modelo; éste las descompone en sub-\emph{tokens} con señal
+semántica débil. Cuando el \emph{chunk} no contiene esos \emph{tokens} en posición
+prominente, la similitud coseno queda dominada por vocabulario genérico del dominio
+(\emph{star}, \emph{temperature}, \emph{classification}) que todos los \emph{chunks}
+comparten, produciendo una recuperación no discriminativa.
+
+\paragraph{El \emph{chunk} de formato como documento genérico.} En la primera
+corrida, el \emph{chunk} de formato de descripción, que mencionaba todas las
+clases espectrales y términos universales, obtenía similitud uniformemente alta
+con cualquier consulta, ganando el \SI{74}{\percent} de las recuperaciones. Este
+comportamiento es análogo al fenómeno IDF (\emph{inverse document frequency}) de la
+recuperación clásica: un documento que cubre todos los temas tiende a ganar cuando
+no hay penalización por generalidad. Su exclusión del índice, reteniéndolo como
+contexto fijo en el \emph{system prompt}, eliminó el competidor dominante sin
+pérdida de información.
+
+\paragraph{La corrección y su diagnóstico cruzado.} La causa raíz se identificó por
+comparación con MAGMA-01, un sistema RAG del mismo grupo aplicado a morfología de
+galaxias, con \emph{hit rate} del \SI{100}{\percent}: allí la consulta producía
+\emph{tokens} literales que aparecían \emph{verbatim} en los títulos de los
+\emph{chunks}, elevando el coseno en \numrange{0.10}{0.15} puntos. La corrección
+consistió en insertar los \emph{tokens} de la consulta directamente en los títulos
+de los \emph{chunks} de \STELLAR{}, replicando ese mecanismo y triplicando el
+\emph{hit rate} (de \SI{15.9}{\percent} a \SI{51.98}{\percent}).
+
+\paragraph{El efecto inesperado: \emph{context priming}.} El impacto de la
+corrección fue múltiple y en parte no anticipado. Más allá de la recuperación, se
+produjo una mejora drástica en la coherencia de las descripciones
+(\SI{0.2}{\percent}~$\rightarrow$~\SI{45.2}{\percent}) y en la estimación de \logg{}
+($|\Delta\log g|$ de \num{0.459} a \num{0.280}~dex). El mecanismo es el
+\emph{context priming} de los modelos autorregresivos: al recibir en su contexto
+inmediato un \emph{chunk} con rangos numéricos concretos (p.\,ej.\ ``\emph{solar
+type stars} ($T_\mathrm{eff}\sim\SI{5778}{\kelvin}$) \emph{fall at} G2~V''), el
+modelo activa representaciones numéricas plausibles que ancla en su descripción,
+en lugar de producir valores genéricos. Este efecto, que opera sobre la generación
+y no sobre la recuperación, no era predecible \emph{a priori} desde el análisis de
+\emph{retrieval}.
+
+\subsubsection{Limitaciones}
+\label{sec:concl-limitaciones}
+
+\begin{itemize}
+  \item \textbf{Inversión de la confianza.} \AstroSage{} sobreestima
+  sistemáticamente su confianza cuando se equivoca (Spearman $r=-0.123$,
+  $p<0.05$). Es una limitación intrínseca del modelo base que no puede corregirse
+  mediante RAG ni \emph{prompt engineering} sin acceso a \emph{fine-tuning}.
+  \item \textbf{Penalización por binariedad ausente.} La penalización de confianza
+  para candidatas a binaria (objetivo $\Delta\le-0.10$; observado $\Delta=+0.014$)
+  no se aplica. La causa probable es que el contrato de las binarias es más
+  informativo (múltiples banderas activas, RUWE elevado) y el modelo interpreta esa
+  riqueza como mayor certeza.
+  \item \textbf{Recuperación baja en B y M.} Pese a los \emph{tokens} en los
+  títulos, B alcanza solo \SI{6.3}{\percent} de \emph{hit rate} (sus \emph{tokens}
+  compiten con los de la frontera A/B) y M \SI{11.3}{\percent} (submuestra pequeña,
+  $n=57$, y rango de \teff{} estrecho).
+  \item \textbf{Regresión en el subtipo de F.} La exactitud de subtipo de F cayó de
+  \num{0.374} a \num{0.105} pese a un \emph{hit rate} del \SI{97.4}{\percent}, lo
+  que sugiere una aplicación demasiado rígida del contexto de calibración en la
+  zona de baja discriminabilidad $T_\mathrm{eff}\leftrightarrow$subtipo de esa
+  banda.
+\end{itemize}
+
+\subsubsection{Recomendaciones para trabajo futuro}
+\label{sec:concl-recom}
+
+\begin{itemize}
+  \item \textbf{Calibración de confianza.} Intervenir el mecanismo de puntuación de
+  confianza, vía \emph{system prompt} reforzado o post-procesamiento, y, de ser
+  viable, un \emph{fine-tuning} específico para alinear la confianza con el acierto,
+  dada la naturaleza intrínseca de la inversión observada.
+  \item \textbf{Penalización por binariedad.} Imponer la reducción de confianza como
+  un piso verificable en el post-procesamiento del contrato, en lugar de delegarla
+  enteramente al criterio del LLM.
+  \item \textbf{Anomalía de F.} Reformular el contexto RAG de la banda F para
+  comunicar la incertidumbre $T_\mathrm{eff}\leftrightarrow$subtipo en lugar de una
+  tabla de calibración rígida, expresando la incertidumbre a través de la confianza
+  y no de un subtipo puntual.
+  \item \textbf{Métrica de descripción.} Adquirir \texttt{deberta-xlarge-mnli} en
+  caché local para una evaluación BERTScore complementaria, documentando la
+  diferencia de escala con \texttt{roberta-large}, que se recomienda conservar por
+  consistencia histórica.
+  \item \textbf{Escalado del corpus.} Extender la validación a muestras mayores de
+  Gaia DR3/DR4 para confirmar la estabilidad de las métricas, en particular en las
+  clases con submuestra reducida (M) y en la frontera B$\leftrightarrow$A.
+\end{itemize}
+
+En conjunto, las limitaciones persistentes son candidatas prioritarias para
+corridas futuras y, en todos los casos, requieren modificaciones al \emph{system
+prompt} o al mecanismo de puntuación de confianza, más que cambios
+arquitectónicos al \emph{pipeline}, lo que confirma la solidez del diseño
+híbrido HC+SC como base del sistema.

@@ -1,0 +1,167 @@
+\documentclass[11pt,a4paper]{article}
+
+% ==========================================================
+% STELLAR — Reporte Técnico de Estancia 2026
+% Spectral Type Estimation via Language Learning and
+% Astronomical Reasoning
+% Compilar con: pdflatex main.tex (x2) + bibtex
+% ==========================================================
+
+% --- Codificación e idioma ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% --- Matemáticas ---
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{siunitx}
+
+% --- Tablas (SOLO booktabs, nunca \hline) ---
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+
+% --- Figuras ---
+\usepackage{graphicx}
+\graphicspath{{figuras/}}
+\usepackage{float}
+
+% --- Diagramas (TikZ) ---
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds, shadows, calc}
+
+% --- Layout ---
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip}
+
+% --- Código (anexo) ---
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny,
+  keywordstyle=\color{blue!70!black},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red!60!black},
+  showstringspaces=false,
+  captionpos=b
+}
+
+% --- Bibliografía ---
+\usepackage[round,authoryear]{natbib}
+
+% --- Referencias cruzadas ---
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+
+% --- Macros del proyecto ---
+\newcommand{\teff}{$T_\mathrm{eff}$}
+\newcommand{\logg}{$\log g$}
+\newcommand{\MG}{$M_G$}
+\newcommand{\STELLAR}{\textsc{Stellar}}
+\newcommand{\AstroSage}{AstroSage-8B}
+
+\begin{document}
+
+% ==========================================================
+% PORTADA
+% ==========================================================
+\begin{titlepage}
+\newgeometry{margin=2cm}
+
+%% ── Logos institucionales (parte superior) ──────────────
+\noindent
+\begin{minipage}[c]{0.42\linewidth}
+  \includegraphics[height=1.6cm]{CIMAT_black.png}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.42\linewidth}
+  \raggedleft
+  \includegraphics[height=1.6cm]{IA-UNAM.png}
+\end{minipage}
+
+\vspace{0.5cm}
+\noindent\rule{\linewidth}{0.4pt}
+
+%% ── Imagen principal ─────────────────────────────────────
+\vspace{0.4cm}
+\begin{center}
+  \includegraphics[width=0.72\linewidth,
+                   height=0.38\textheight,
+                   keepaspectratio]{james-webb-star.png}
+\end{center}
+
+%% ── Título ───────────────────────────────────────────────
+\vspace{0.3cm}
+\begin{center}
+  {\fontsize{30}{36}\selectfont\textbf{STELLAR}}\\[0.3em]
+  {\large\itshape Spectral Type Estimation via Language Learning\\
+                  and Astronomical Reasoning}\\[0.6em]
+  {\normalsize\textbf{Reporte Técnico de Estancia}}
+\end{center}
+
+\noindent\rule{\linewidth}{0.4pt}
+\vspace{0.3cm}
+
+%% ── Autor y asesores ─────────────────────────────────────
+\begin{center}
+  {\large César Miguel Aguirre Calzadilla}\\[0.8em]
+  \begin{tabular}{rl}
+    \textit{Asesor (CIMAT):} & Víctor Muñiz Sánchez \\[0.3em]
+    \textit{Asesor (UNAM):}  & José Antonio de Diego Onsurbe \\
+  \end{tabular}\\[1.2em]
+  {\small Centro de Investigación en Matemáticas, A.C. (CIMAT)\\
+  Instituto de Astronomía, Universidad Nacional Autónoma de México (UNAM)}\\[0.8em]
+  {\normalsize Junio 2026}
+\end{center}
+
+\restoregeometry
+\end{titlepage}
+
+% ==========================================================
+% RESUMEN
+% ==========================================================
+\begin{abstract}
+% TODO: Resumen ejecutivo (se redacta al final).
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% ==========================================================
+% 1. INTRODUCCIÓN
+% ==========================================================
+\input{secciones/01_introduccion}
+
+% ==========================================================
+% 2. SOLUCIÓN PROPUESTA
+% ==========================================================
+\input{secciones/02_solucion}
+
+% ==========================================================
+% 3. DESARROLLO
+% ==========================================================
+\input{secciones/03_desarrollo}
+
+% ==========================================================
+% 4. RESULTADOS
+% ==========================================================
+\input{secciones/04_resultados}
+
+% ==========================================================
+% 5. ANEXOS
+% ==========================================================
+% \input{secciones/05_anexos}
+
+\bibliographystyle{plainnat}
+\bibliography{referencias}
+
+\end{document}

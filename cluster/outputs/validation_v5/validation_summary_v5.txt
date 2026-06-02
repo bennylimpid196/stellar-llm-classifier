@@ -1,0 +1,59 @@
+============================================================
+SC V5 VALIDATION SUMMARY — STELLAR HC+SC
+============================================================
+
+LEVEL 1 — MK Coarse (vs SIMBAD)
+  Stars evaluated     : 310
+  Overall accuracy    : 0.8323
+  95% Bootstrap CI    : [0.1323, 0.2129]
+  Macro F1            : 0.7044
+  Weighted F1         : 0.8182
+  Cohen Kappa         : 0.7978
+  Mean MK distance    : 0.1839
+  Near-miss acc (d≤1) : 0.9968
+
+  Per-class F1:
+    O: 0.0000
+    B: 0.7328
+    A: 0.5000
+    F: 0.9375
+    G: 0.8800
+    K: 0.8919
+    M: 0.9888
+
+LEVEL 2 — Physical Parameters (vs PASTEL)
+  Mean |ΔTeff| (K)    : 220.6
+  Mean |Δlogg| (dex)  : 0.2164
+  Population acc      : 0.5315
+  Population kappa    : -0.1251
+
+LEVEL 3 — Confidence Calibration
+  Conf (correct)      : 0.7364
+  Conf (incorrect)    : 0.8183
+  Spearman r          : -0.0663  (p=0.244565)
+  Binary penalty      : True
+
+LEVEL 4a — Stellar Description (ROUGE vs references)
+  Stars evaluated     : 11
+  Mean ROUGE-1 F      : 0.2107
+  Mean ROUGE-L F      : 0.1364
+  Std ROUGE-1         : 0.0376
+  Std ROUGE-L         : 0.0318
+
+LEVEL 4b — Description Coherence
+  Mean coherence      : 0.998
+  Full coherence pct  : 0.994
+  Word limit viol.    : 68
+
+LEVEL 4c — Sub-type Accuracy (within HC letter class)
+  Stars evaluated     : 302
+  Overall accuracy    : 0.3046
+  Per-class:
+    B: 0.0000 (n=70)
+    A: 0.3684 (n=19)
+    F: 0.1613 (n=62)
+    G: 0.3385 (n=65)
+    K: 0.3421 (n=38)
+    M: 0.8333 (n=48)
+
+============================================================

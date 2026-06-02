@@ -1,0 +1,41 @@
+{
+  "n_stars": 497,
+  "n_with_rag_context": 497,
+  "n_no_rag_context": 0,
+  "overall_hit_rate": 0.159,
+  "flag_retrieval": {
+    "n_stars_with_active_flags": 105,
+    "n_flag_chunk_retrieved": 4,
+    "flag_hit_rate": 0.0381
+  },
+  "hit_rate_by_class": {
+    "F": {
+      "hit_rate": 0.7527,
+      "n": 93
+    },
+    "G": {
+      "hit_rate": 0.0125,
+      "n": 80
+    },
+    "K": {
+      "hit_rate": 0.0444,
+      "n": 90
+    },
+    "A": {
+      "hit_rate": 0.0345,
+      "n": 87
+    },
+    "B": {
+      "hit_rate": 0.0111,
+      "n": 90
+    },
+    "M": {
+      "hit_rate": 0.0,
+      "n": 57
+    }
+  },
+  "rouge1_relevant_chunk": 0.2524,
+  "rouge1_irrelevant_chunk": 0.2734,
+  "rouge1_delta_relevant_vs_irrelevant": -0.021,
+  "note": "relevant = top chunk label contains keywords consistent with the star's spectral class. rouge1_delta > 0 indicates RAG improves description quality on matched references."
+}

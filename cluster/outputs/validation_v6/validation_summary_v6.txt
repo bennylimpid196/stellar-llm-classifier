@@ -1,0 +1,76 @@
+============================================================
+SC V6 VALIDATION SUMMARY — STELLAR HC+SC
+============================================================
+
+LEVEL 1 — MK Coarse (vs SIMBAD)
+  Stars evaluated     : 409
+  Overall accuracy    : 0.7579
+  95% Bootstrap CI    : [0.1345, 0.2054]
+  Macro F1            : 0.6710
+  Weighted F1         : 0.7546
+  Cohen Kappa         : 0.7083
+  Mean MK distance    : 0.2543
+  Near-miss acc (d≤1) : 0.9976
+
+  Per-class F1:
+    O: 0.0000
+    B: 0.5732
+    A: 0.5316
+    F: 0.9037
+    G: 0.8095
+    K: 0.8889
+    M: 0.9899
+
+LEVEL 2 — Physical Parameters (vs PASTEL)
+  Mean |ΔTeff| (K)    : 248.0
+  Mean |Δlogg| (dex)  : 0.3196
+  Population acc      : 0.5282
+  Population kappa    : -0.1368
+  Population note     : kappa vs PASTEL reflects chemistry-only GT vs HC kinematics+chemistry. LLM vs HC kappa=1.0.
+
+LEVEL 3 — Confidence Calibration
+  Conf (correct)      : 0.7337
+  Conf (incorrect)    : 0.8607
+  Spearman r          : -0.171  (p=0.000516)
+  Binary penalty      : False
+
+LEVEL 4a — Stellar Description (ROUGE vs references)
+  Stars evaluated     : 17
+  Mean ROUGE-1 F      : 0.2654
+  Mean ROUGE-L F      : 0.1828
+  Std ROUGE-1         : 0.0674
+  Std ROUGE-L         : 0.0476
+  Per-field ROUGE-1 F:
+    physical_profile: 0.2832
+    population_context: 0.3254
+    notable_features: 0.1877
+
+LEVEL 4b — Description Coherence
+  Mean coherence      : 0.959
+  Full coherence pct  : 0.837
+  Word limit viol.    : 232
+
+LEVEL 4c — Sub-type Accuracy (within HC letter class)
+  Stars evaluated     : 373
+  Overall accuracy    : 0.4182
+  Per-class:
+    B: 0.9080 (n=87)
+    A: 0.2667 (n=30)
+    F: 0.0000 (n=68)
+    G: 0.1613 (n=62)
+    K: 0.2639 (n=72)
+    M: 0.7407 (n=54)
+
+LEVEL 5 — Soft A/B Anchor Disambiguation (V6 NEW)
+  Boundary stars total: 52
+  Stars evaluated     : 51
+  logg threshold      : 3.8
+  HC forced A acc     : 0.4314
+  LLM V6 acc          : 0.4314
+  logg rule acc       : 0.7647
+  LLM improvement     : +0.0pp vs HC
+  logg rule improv.   : +33.3pp vs HC
+  mean logg LLM✓      : 3.871
+  mean logg LLM✗      : 3.707
+
+============================================================

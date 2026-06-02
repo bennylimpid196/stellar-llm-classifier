@@ -1,0 +1,242 @@
+{
+  "n_results": 317,
+  "n_corpus": 498,
+  "n_matched": 317,
+  "level1_mk_coarse": {
+    "n_stars": 310,
+    "overall_accuracy": 0.8323,
+    "bootstrap_ci_95": [
+      0.1323,
+      0.2129
+    ],
+    "macro_f1": 0.7044,
+    "weighted_f1": 0.8182,
+    "cohen_kappa": 0.7978,
+    "mean_mk_letter_distance": 0.1839,
+    "near_miss_accuracy_d1": 0.9968,
+    "per_class_f1": {
+      "O": 0.0,
+      "B": 0.7328,
+      "A": 0.5,
+      "F": 0.9375,
+      "G": 0.88,
+      "K": 0.8919,
+      "M": 0.9888
+    },
+    "confusion_matrix": {
+      "labels": [
+        "O",
+        "B",
+        "A",
+        "F",
+        "G",
+        "K",
+        "M"
+      ],
+      "matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          48,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          34,
+          18,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          60,
+          7,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          55,
+          5,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3,
+          33,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          44
+        ]
+      ]
+    }
+  },
+  "level2_pastel": {
+    "teff_validation": {
+      "n_stars": 216,
+      "mean_abs_delta_teff_k": 220.6
+    },
+    "logg_validation": {
+      "n_stars": 119,
+      "mean_abs_delta_logg": 0.2164
+    },
+    "population_validation": {
+      "n_stars": 111,
+      "accuracy": 0.5315,
+      "cohen_kappa": -0.1251,
+      "confusion_matrix": {
+        "labels": [
+          "Halo",
+          "Disco Grueso",
+          "Disco Fino"
+        ],
+        "matrix": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            2,
+            28
+          ],
+          [
+            6,
+            15,
+            57
+          ]
+        ]
+      }
+    }
+  },
+  "level3_confidence": {
+    "n_stars": 310,
+    "mean_confidence_correct": 0.7364,
+    "mean_confidence_incorrect": 0.8183,
+    "spearman_confidence_correctness": {
+      "r": -0.0663,
+      "p_value": 0.244565
+    },
+    "binary_penalty_check": {
+      "n_binary": 32,
+      "n_non_binary": 278,
+      "mean_confidence_binary": 0.7094,
+      "mean_confidence_non_binary": 0.7549,
+      "penalty_applied": true
+    }
+  },
+  "level4a_rouge_summary": {
+    "n_evaluated": 11,
+    "mean_rouge1_f": 0.2107,
+    "mean_rougeL_f": 0.1364,
+    "std_rouge1_f": 0.0376,
+    "std_rougeL_f": 0.0318,
+    "min_rouge1_f": 0.1653,
+    "max_rouge1_f": 0.2733,
+    "min_rougeL_f": 0.088,
+    "max_rougeL_f": 0.2009
+  },
+  "level4b_coherence": {
+    "n_stars": 317,
+    "mean_coherence": 0.998,
+    "pct_full_coherence": 0.994,
+    "n_word_limit_violations": 68,
+    "word_limit_violation_sample": [
+      {
+        "source_id": "1244571953471006720",
+        "violations": [
+          "physical_profile: 111 words (limit 60)",
+          "population_context: 88 words (limit 30)"
+        ]
+      },
+      {
+        "source_id": "5945941905576552064",
+        "violations": [
+          "physical_profile: 97 words (limit 60)",
+          "population_context: 109 words (limit 30)"
+        ]
+      },
+      {
+        "source_id": "3212075924646082176",
+        "violations": [
+          "physical_profile: 92 words (limit 60)",
+          "population_context: 88 words (limit 30)"
+        ]
+      },
+      {
+        "source_id": "746545172372256384",
+        "violations": [
+          "physical_profile: 108 words (limit 60)",
+          "population_context: 74 words (limit 30)"
+        ]
+      },
+      {
+        "source_id": "1333760419707327744",
+        "violations": [
+          "physical_profile: 96 words (limit 60)",
+          "population_context: 106 words (limit 30)"
+        ]
+      }
+    ]
+  },
+  "level4c_subtype": {
+    "n_evaluated": 302,
+    "overall_accuracy": 0.3046,
+    "per_class": {
+      "B": {
+        "n": 70,
+        "accuracy": 0.0
+      },
+      "A": {
+        "n": 19,
+        "accuracy": 0.3684
+      },
+      "F": {
+        "n": 62,
+        "accuracy": 0.1613
+      },
+      "G": {
+        "n": 65,
+        "accuracy": 0.3385
+      },
+      "K": {
+        "n": 38,
+        "accuracy": 0.3421
+      },
+      "M": {
+        "n": 48,
+        "accuracy": 0.8333
+      }
+    }
+  }
+}

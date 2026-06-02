@@ -1,0 +1,662 @@
+[
+  {
+    "physical_profile": {
+      "rouge1_f": 0.4459,
+      "rougeL_f": 0.3185,
+      "rouge1_p": 0.5385,
+      "rouge1_r": 0.3804,
+      "rougeL_p": 0.3846,
+      "rougeL_r": 0.2717
+    },
+    "population_context": {
+      "rouge1_f": 0.24,
+      "rougeL_f": 0.2,
+      "rouge1_p": 0.4286,
+      "rouge1_r": 0.1667,
+      "rougeL_p": 0.3571,
+      "rougeL_r": 0.1389
+    },
+    "notable_features": {
+      "rouge1_f": 0.2,
+      "rougeL_f": 0.2,
+      "rouge1_p": 1.0,
+      "rouge1_r": 0.1111,
+      "rougeL_p": 1.0,
+      "rougeL_r": 0.1111
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.2953,
+      "mean_rougeL_f": 0.2395
+    },
+    "source_id": "4447348307551626624",
+    "main_id": "* iot Oph",
+    "category": "B_class"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.3529,
+      "rougeL_f": 0.1345,
+      "rouge1_p": 0.5676,
+      "rouge1_r": 0.2561,
+      "rougeL_p": 0.2162,
+      "rougeL_r": 0.0976
+    },
+    "population_context": {
+      "rouge1_f": 0.16,
+      "rougeL_f": 0.12,
+      "rouge1_p": 0.2105,
+      "rouge1_r": 0.129,
+      "rougeL_p": 0.1579,
+      "rougeL_r": 0.0968
+    },
+    "notable_features": {
+      "rouge1_f": 0.1967,
+      "rougeL_f": 0.1639,
+      "rouge1_p": 0.2069,
+      "rouge1_r": 0.1875,
+      "rougeL_p": 0.1724,
+      "rougeL_r": 0.1562
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.2365,
+      "mean_rougeL_f": 0.1395
+    },
+    "source_id": "1386158505321789696",
+    "main_id": "* phi Her",
+    "category": "A_boundary_binary_metalpoor"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.336,
+      "rougeL_f": 0.224,
+      "rouge1_p": 0.35,
+      "rouge1_r": 0.3231,
+      "rougeL_p": 0.2333,
+      "rougeL_r": 0.2154
+    },
+    "population_context": {
+      "rouge1_f": 0.3667,
+      "rougeL_f": 0.2667,
+      "rouge1_p": 0.5238,
+      "rouge1_r": 0.2821,
+      "rougeL_p": 0.381,
+      "rougeL_r": 0.2051
+    },
+    "notable_features": {
+      "rouge1_f": 0.0,
+      "rougeL_f": 0.0,
+      "rouge1_p": 0.0,
+      "rouge1_r": 0.0,
+      "rougeL_p": 0.0,
+      "rougeL_r": 0.0
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.2342,
+      "mean_rougeL_f": 0.1636
+    },
+    "source_id": "4350921790633365760",
+    "main_id": "HD 148515",
+    "category": "F_metalpoor"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.4231,
+      "rougeL_f": 0.2821,
+      "rouge1_p": 0.4648,
+      "rouge1_r": 0.3882,
+      "rougeL_p": 0.3099,
+      "rougeL_r": 0.2588
+    },
+    "population_context": {
+      "rouge1_f": 0.2264,
+      "rougeL_f": 0.1887,
+      "rouge1_p": 0.4286,
+      "rouge1_r": 0.1538,
+      "rougeL_p": 0.3571,
+      "rougeL_r": 0.1282
+    },
+    "notable_features": {
+      "rouge1_f": 0.0,
+      "rougeL_f": 0.0,
+      "rouge1_p": 0.0,
+      "rouge1_r": 0.0,
+      "rougeL_p": 0.0,
+      "rougeL_r": 0.0
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.2165,
+      "mean_rougeL_f": 0.1569
+    },
+    "source_id": "3212075924646082176",
+    "main_id": "* 68 Eri",
+    "category": "F_giant_flag"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.4397,
+      "rougeL_f": 0.3121,
+      "rouge1_p": 0.4921,
+      "rouge1_r": 0.3974,
+      "rougeL_p": 0.3492,
+      "rougeL_r": 0.2821
+    },
+    "population_context": {
+      "rouge1_f": 0.1961,
+      "rougeL_f": 0.1961,
+      "rouge1_p": 0.3846,
+      "rouge1_r": 0.1316,
+      "rougeL_p": 0.3846,
+      "rougeL_r": 0.1316
+    },
+    "notable_features": {
+      "rouge1_f": 0.1333,
+      "rougeL_f": 0.1333,
+      "rouge1_p": 1.0,
+      "rouge1_r": 0.0714,
+      "rougeL_p": 1.0,
+      "rougeL_r": 0.0714
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.2564,
+      "mean_rougeL_f": 0.2138
+    },
+    "source_id": "5945941905576552064",
+    "main_id": "* mu. Ara",
+    "category": "G_class"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.3537,
+      "rougeL_f": 0.2073,
+      "rouge1_p": 0.3494,
+      "rouge1_r": 0.358,
+      "rougeL_p": 0.2048,
+      "rougeL_r": 0.2099
+    },
+    "population_context": {
+      "rouge1_f": 0.2857,
+      "rougeL_f": 0.1429,
+      "rouge1_p": 0.4211,
+      "rouge1_r": 0.2162,
+      "rougeL_p": 0.2105,
+      "rougeL_r": 0.1081
+    },
+    "notable_features": {
+      "rouge1_f": 0.1905,
+      "rougeL_f": 0.1905,
+      "rouge1_p": 1.0,
+      "rouge1_r": 0.1053,
+      "rougeL_p": 1.0,
+      "rougeL_r": 0.1053
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.2766,
+      "mean_rougeL_f": 0.1802
+    },
+    "source_id": "5528866839863569024",
+    "main_id": "HD 74576",
+    "category": "K_class"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.4286,
+      "rougeL_f": 0.2857,
+      "rouge1_p": 0.4177,
+      "rouge1_r": 0.44,
+      "rougeL_p": 0.2785,
+      "rougeL_r": 0.2933
+    },
+    "population_context": {
+      "rouge1_f": 0.2338,
+      "rougeL_f": 0.1558,
+      "rouge1_p": 0.45,
+      "rouge1_r": 0.1579,
+      "rougeL_p": 0.3,
+      "rougeL_r": 0.1053
+    },
+    "notable_features": {
+      "rouge1_f": 0.2909,
+      "rougeL_f": 0.2545,
+      "rouge1_p": 0.6154,
+      "rouge1_r": 0.1905,
+      "rougeL_p": 0.5385,
+      "rougeL_r": 0.1667
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.3178,
+      "mean_rougeL_f": 0.232
+    },
+    "source_id": "4034171629042489088",
+    "main_id": "HD 103095",
+    "category": "K_halo_highvelocity"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.3889,
+      "rougeL_f": 0.2222,
+      "rouge1_p": 0.3836,
+      "rouge1_r": 0.3944,
+      "rougeL_p": 0.2192,
+      "rougeL_r": 0.2254
+    },
+    "population_context": {
+      "rouge1_f": 0.3043,
+      "rougeL_f": 0.2609,
+      "rouge1_p": 0.5,
+      "rouge1_r": 0.2188,
+      "rougeL_p": 0.4286,
+      "rougeL_r": 0.1875
+    },
+    "notable_features": {
+      "rouge1_f": 0.037,
+      "rougeL_f": 0.037,
+      "rouge1_p": 0.0625,
+      "rouge1_r": 0.0263,
+      "rougeL_p": 0.0625,
+      "rougeL_r": 0.0263
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.2434,
+      "mean_rougeL_f": 0.1734
+    },
+    "source_id": "4597175424176955008",
+    "main_id": "HD 218356",
+    "category": "M_giant"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.3616,
+      "rougeL_f": 0.2034,
+      "rouge1_p": 0.2991,
+      "rouge1_r": 0.4571,
+      "rougeL_p": 0.1682,
+      "rougeL_r": 0.2571
+    },
+    "population_context": {
+      "rouge1_f": 0.3333,
+      "rougeL_f": 0.2963,
+      "rouge1_p": 0.6429,
+      "rouge1_r": 0.225,
+      "rougeL_p": 0.5714,
+      "rougeL_r": 0.2
+    },
+    "notable_features": {
+      "rouge1_f": 0.3509,
+      "rougeL_f": 0.2807,
+      "rouge1_p": 0.625,
+      "rouge1_r": 0.2439,
+      "rougeL_p": 0.5,
+      "rougeL_r": 0.1951
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.3486,
+      "mean_rougeL_f": 0.2601
+    },
+    "source_id": "4315804351350378496",
+    "main_id": "* b Aql",
+    "category": "G_emission"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.4677,
+      "rougeL_f": 0.2903,
+      "rouge1_p": 0.4833,
+      "rouge1_r": 0.4531,
+      "rougeL_p": 0.3,
+      "rougeL_r": 0.2812
+    },
+    "population_context": {
+      "rouge1_f": 0.2128,
+      "rougeL_f": 0.2128,
+      "rouge1_p": 0.3571,
+      "rouge1_r": 0.1515,
+      "rougeL_p": 0.3571,
+      "rougeL_r": 0.1515
+    },
+    "notable_features": {
+      "rouge1_f": 0.2254,
+      "rougeL_f": 0.169,
+      "rouge1_p": 0.2667,
+      "rouge1_r": 0.1951,
+      "rougeL_p": 0.2,
+      "rougeL_r": 0.1463
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.302,
+      "mean_rougeL_f": 0.224
+    },
+    "source_id": "798068905726303232",
+    "main_id": "* 11 LMi",
+    "category": "G_binary_emission"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.406,
+      "rougeL_f": 0.2556,
+      "rouge1_p": 0.3649,
+      "rouge1_r": 0.4576,
+      "rougeL_p": 0.2297,
+      "rougeL_r": 0.2881
+    },
+    "population_context": {
+      "rouge1_f": 0.0968,
+      "rougeL_f": 0.0645,
+      "rouge1_p": 0.15,
+      "rouge1_r": 0.0714,
+      "rougeL_p": 0.1,
+      "rougeL_r": 0.0476
+    },
+    "notable_features": {
+      "rouge1_f": 0.2,
+      "rougeL_f": 0.1143,
+      "rouge1_p": 0.2414,
+      "rouge1_r": 0.1707,
+      "rougeL_p": 0.1379,
+      "rougeL_r": 0.0976
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.2343,
+      "mean_rougeL_f": 0.1448
+    },
+    "source_id": "502542170414672128",
+    "main_id": "HD 31590",
+    "category": "low_quality_score"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.4054,
+      "rougeL_f": 0.2162,
+      "rouge1_p": 0.4167,
+      "rouge1_r": 0.3947,
+      "rougeL_p": 0.2222,
+      "rougeL_r": 0.2105
+    },
+    "population_context": {
+      "rouge1_f": 0.2258,
+      "rougeL_f": 0.1935,
+      "rouge1_p": 0.4375,
+      "rouge1_r": 0.1522,
+      "rougeL_p": 0.375,
+      "rougeL_r": 0.1304
+    },
+    "notable_features": {
+      "rouge1_f": 0.0,
+      "rougeL_f": 0.0,
+      "rouge1_p": 0.0,
+      "rouge1_r": 0.0,
+      "rougeL_p": 0.0,
+      "rougeL_r": 0.0
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.2104,
+      "mean_rougeL_f": 0.1366
+    },
+    "source_id": "1896396703077703936",
+    "main_id": "* 15 Peg",
+    "category": "F_thickdisk"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.4431,
+      "rougeL_f": 0.2036,
+      "rouge1_p": 0.3895,
+      "rouge1_r": 0.5139,
+      "rougeL_p": 0.1789,
+      "rougeL_r": 0.2361
+    },
+    "population_context": {
+      "rouge1_f": 0.2933,
+      "rougeL_f": 0.2933,
+      "rouge1_p": 0.5238,
+      "rouge1_r": 0.2037,
+      "rougeL_p": 0.5238,
+      "rougeL_r": 0.2037
+    },
+    "notable_features": {
+      "rouge1_f": 0.2667,
+      "rougeL_f": 0.2,
+      "rouge1_p": 0.381,
+      "rouge1_r": 0.2051,
+      "rougeL_p": 0.2857,
+      "rougeL_r": 0.1538
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.3344,
+      "mean_rougeL_f": 0.2323
+    },
+    "source_id": "5730371484020807808",
+    "main_id": "HD 76932",
+    "category": "G_halo_metalpoor"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.4493,
+      "rougeL_f": 0.3043,
+      "rouge1_p": 0.5,
+      "rouge1_r": 0.4079,
+      "rougeL_p": 0.3387,
+      "rougeL_r": 0.2763
+    },
+    "population_context": {
+      "rouge1_f": 0.3704,
+      "rougeL_f": 0.2963,
+      "rouge1_p": 0.5,
+      "rouge1_r": 0.2941,
+      "rougeL_p": 0.4,
+      "rougeL_r": 0.2353
+    },
+    "notable_features": {
+      "rouge1_f": 0.0,
+      "rougeL_f": 0.0,
+      "rouge1_p": 0.0,
+      "rouge1_r": 0.0,
+      "rougeL_p": 0.0,
+      "rougeL_r": 0.0
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.2732,
+      "mean_rougeL_f": 0.2002
+    },
+    "source_id": "4939205900704478592",
+    "main_id": "* kap Eri",
+    "category": "B_giant"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.3857,
+      "rougeL_f": 0.2571,
+      "rouge1_p": 0.3803,
+      "rouge1_r": 0.3913,
+      "rougeL_p": 0.2535,
+      "rougeL_r": 0.2609
+    },
+    "population_context": {
+      "rouge1_f": 0.32,
+      "rougeL_f": 0.32,
+      "rouge1_p": 0.5333,
+      "rouge1_r": 0.2286,
+      "rougeL_p": 0.5333,
+      "rougeL_r": 0.2286
+    },
+    "notable_features": {
+      "rouge1_f": 0.4,
+      "rougeL_f": 0.2667,
+      "rouge1_p": 0.4138,
+      "rouge1_r": 0.3871,
+      "rougeL_p": 0.2759,
+      "rougeL_r": 0.2581
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.3686,
+      "mean_rougeL_f": 0.2813
+    },
+    "source_id": "3586141394007639424",
+    "main_id": "HD 188512",
+    "category": "G_binary_highruwe"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.4444,
+      "rougeL_f": 0.2917,
+      "rouge1_p": 0.4923,
+      "rouge1_r": 0.4051,
+      "rougeL_p": 0.3231,
+      "rougeL_r": 0.2658
+    },
+    "population_context": {
+      "rouge1_f": 0.25,
+      "rougeL_f": 0.1667,
+      "rouge1_p": 0.4286,
+      "rouge1_r": 0.1765,
+      "rougeL_p": 0.2857,
+      "rougeL_r": 0.1176
+    },
+    "notable_features": {
+      "rouge1_f": 0.1379,
+      "rougeL_f": 0.1379,
+      "rouge1_p": 1.0,
+      "rouge1_r": 0.0741,
+      "rougeL_p": 1.0,
+      "rougeL_r": 0.0741
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.2774,
+      "mean_rougeL_f": 0.1988
+    },
+    "source_id": "2967287596507432704",
+    "main_id": "HD 224885",
+    "category": "A_class_clear"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.5,
+      "rougeL_f": 0.2571,
+      "rouge1_p": 0.4795,
+      "rouge1_r": 0.5224,
+      "rougeL_p": 0.2466,
+      "rougeL_r": 0.2687
+    },
+    "population_context": {
+      "rouge1_f": 0.2857,
+      "rougeL_f": 0.2449,
+      "rouge1_p": 0.35,
+      "rouge1_r": 0.2414,
+      "rougeL_p": 0.3,
+      "rougeL_r": 0.2069
+    },
+    "notable_features": {
+      "rouge1_f": 0.0,
+      "rougeL_f": 0.0,
+      "rouge1_p": 0.0,
+      "rouge1_r": 0.0,
+      "rougeL_p": 0.0,
+      "rougeL_r": 0.0
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.2619,
+      "mean_rougeL_f": 0.1673
+    },
+    "source_id": "4231133434759619200",
+    "main_id": "HD 196426",
+    "category": "B_peculiar"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.4167,
+      "rougeL_f": 0.2778,
+      "rouge1_p": 0.4167,
+      "rouge1_r": 0.4167,
+      "rougeL_p": 0.2778,
+      "rougeL_r": 0.2778
+    },
+    "population_context": {
+      "rouge1_f": 0.2807,
+      "rougeL_f": 0.1754,
+      "rouge1_p": 0.4444,
+      "rouge1_r": 0.2051,
+      "rougeL_p": 0.2778,
+      "rougeL_r": 0.1282
+    },
+    "notable_features": {
+      "rouge1_f": 0.0,
+      "rougeL_f": 0.0,
+      "rouge1_p": 0.0,
+      "rouge1_r": 0.0,
+      "rougeL_p": 0.0,
+      "rougeL_r": 0.0
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.2325,
+      "mean_rougeL_f": 0.1511
+    },
+    "source_id": "2104376989694932608",
+    "main_id": "HD 175132",
+    "category": "B_silicon_peculiar"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.4143,
+      "rougeL_f": 0.3,
+      "rouge1_p": 0.4028,
+      "rouge1_r": 0.4265,
+      "rougeL_p": 0.2917,
+      "rougeL_r": 0.3088
+    },
+    "population_context": {
+      "rouge1_f": 0.1224,
+      "rougeL_f": 0.1224,
+      "rouge1_p": 0.2,
+      "rouge1_r": 0.0882,
+      "rougeL_p": 0.2,
+      "rougeL_r": 0.0882
+    },
+    "notable_features": {
+      "rouge1_f": 0.0,
+      "rougeL_f": 0.0,
+      "rouge1_p": 0.0,
+      "rouge1_r": 0.0,
+      "rougeL_p": 0.0,
+      "rougeL_r": 0.0
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.1789,
+      "mean_rougeL_f": 0.1408
+    },
+    "source_id": "1244571953471006720",
+    "main_id": "* tau Boo",
+    "category": "F_solar_analog"
+  },
+  {
+    "physical_profile": {
+      "rouge1_f": 0.1978,
+      "rougeL_f": 0.1978,
+      "rouge1_p": 0.4091,
+      "rouge1_r": 0.1304,
+      "rougeL_p": 0.4091,
+      "rougeL_r": 0.1304
+    },
+    "population_context": {
+      "rouge1_f": 0.2909,
+      "rougeL_f": 0.2182,
+      "rouge1_p": 0.4211,
+      "rouge1_r": 0.2222,
+      "rougeL_p": 0.3158,
+      "rougeL_r": 0.1667
+    },
+    "notable_features": {
+      "rouge1_f": 0.303,
+      "rougeL_f": 0.2727,
+      "rouge1_p": 0.7692,
+      "rouge1_r": 0.1887,
+      "rougeL_p": 0.6923,
+      "rougeL_r": 0.1698
+    },
+    "aggregate": {
+      "mean_rouge1_f": 0.2639,
+      "mean_rougeL_f": 0.2296
+    },
+    "source_id": "3712538811193759744",
+    "main_id": "HD 180617",
+    "category": "M_dwarf_emission"
+  }
+]

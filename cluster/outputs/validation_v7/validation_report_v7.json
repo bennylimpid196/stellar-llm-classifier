@@ -1,0 +1,457 @@
+{
+  "prompt_version": "v7",
+  "n_results": 497,
+  "n_corpus": 498,
+  "n_matched": 497,
+  "level1_mk_coarse": {
+    "n_stars": 488,
+    "overall_accuracy": 0.7951,
+    "bootstrap_ci_95": [
+      0.1413,
+      0.2049
+    ],
+    "macro_f1": 0.6936,
+    "weighted_f1": 0.7924,
+    "cohen_kappa": 0.7529,
+    "mean_mk_letter_distance": 0.2152,
+    "near_miss_accuracy_d1": 0.998,
+    "per_class_f1": {
+      "O": 0.0,
+      "B": 0.625,
+      "A": 0.5989,
+      "F": 0.914,
+      "G": 0.8272,
+      "K": 0.8994,
+      "M": 0.9905
+    },
+    "confusion_matrix": {
+      "labels": [
+        "O",
+        "B",
+        "A",
+        "F",
+        "G",
+        "K",
+        "M"
+      ],
+      "matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          55,
+          33,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          33,
+          53,
+          5,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          85,
+          10,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          67,
+          14,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3,
+          76,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          52
+        ]
+      ]
+    }
+  },
+  "level2_pastel": {
+    "teff_validation": {
+      "n_stars": 314,
+      "mean_abs_delta_teff_k": 212.2
+    },
+    "logg_validation": {
+      "n_stars": 190,
+      "mean_abs_delta_logg": 0.46
+    },
+    "population_validation": {
+      "n_stars": 176,
+      "accuracy": 0.5398,
+      "cohen_kappa": -0.1264,
+      "confusion_matrix": {
+        "labels": [
+          "Halo",
+          "Thick Disk",
+          "Thin Disk"
+        ],
+        "matrix": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            3,
+            4,
+            36
+          ],
+          [
+            7,
+            35,
+            90
+          ]
+        ]
+      }
+    }
+  },
+  "level3_confidence": {
+    "n_stars": 488,
+    "mean_confidence_correct": 0.7367,
+    "mean_confidence_incorrect": 0.8375,
+    "spearman_confidence_correctness": {
+      "r": -0.1164,
+      "p_value": 0.010064
+    },
+    "binary_penalty_check": {
+      "n_binary": 78,
+      "n_non_binary": 410,
+      "mean_confidence_binary": 0.7649,
+      "mean_confidence_non_binary": 0.7559,
+      "penalty_applied": false,
+      "mean_delta": 0.0089,
+      "note": "V7 target: delta <= -0.10 (explicit floor in system_prompt_v7). Positive delta = penalty not applied."
+    }
+  },
+  "level4a_rouge_summary": {
+    "n_evaluated": 20,
+    "mean_rouge1_f": 0.2681,
+    "mean_rougeL_f": 0.1933,
+    "std_rouge1_f": 0.0473,
+    "std_rougeL_f": 0.0428,
+    "min_rouge1_f": 0.1789,
+    "max_rouge1_f": 0.3686,
+    "per_field": {
+      "physical_profile": {
+        "mean_rouge1_f": 0.403
+      },
+      "population_context": {
+        "mean_rouge1_f": 0.2548
+      },
+      "notable_features": {
+        "mean_rouge1_f": 0.1466
+      }
+    }
+  },
+  "level4a_bis_bertscore": {
+    "n_evaluated": 20,
+    "model": "roberta-large",
+    "mean_f1": 0.8659,
+    "mean_p": 0.8752,
+    "mean_r": 0.8568,
+    "std_f1": 0.0081,
+    "per_field": {
+      "physical_profile": {
+        "mean_f1": 0.8706,
+        "mean_p": 0.8737,
+        "mean_r": 0.8676
+      },
+      "population_context": {
+        "mean_f1": 0.8535,
+        "mean_p": 0.8589,
+        "mean_r": 0.8484
+      },
+      "notable_features": {
+        "mean_f1": 0.8548,
+        "mean_p": 0.8878,
+        "mean_r": 0.8252
+      }
+    },
+    "per_star": [
+      {
+        "source_id": "4447348307551626624",
+        "main_id": "* iot Oph",
+        "f1": 0.8778,
+        "p": 0.8951,
+        "r": 0.8611
+      },
+      {
+        "source_id": "1386158505321789696",
+        "main_id": "* phi Her",
+        "f1": 0.8495,
+        "p": 0.8538,
+        "r": 0.8452
+      },
+      {
+        "source_id": "4350921790633365760",
+        "main_id": "HD 148515",
+        "f1": 0.8632,
+        "p": 0.8714,
+        "r": 0.8552
+      },
+      {
+        "source_id": "3212075924646082176",
+        "main_id": "* 68 Eri",
+        "f1": 0.8586,
+        "p": 0.8668,
+        "r": 0.8505
+      },
+      {
+        "source_id": "5945941905576552064",
+        "main_id": "* mu. Ara",
+        "f1": 0.8686,
+        "p": 0.8793,
+        "r": 0.8581
+      },
+      {
+        "source_id": "5528866839863569024",
+        "main_id": "HD 74576",
+        "f1": 0.873,
+        "p": 0.884,
+        "r": 0.8622
+      },
+      {
+        "source_id": "4034171629042489088",
+        "main_id": "HD 103095",
+        "f1": 0.868,
+        "p": 0.8818,
+        "r": 0.8546
+      },
+      {
+        "source_id": "4597175424176955008",
+        "main_id": "HD 218356",
+        "f1": 0.853,
+        "p": 0.8552,
+        "r": 0.8508
+      },
+      {
+        "source_id": "4315804351350378496",
+        "main_id": "* b Aql",
+        "f1": 0.8689,
+        "p": 0.8717,
+        "r": 0.8662
+      },
+      {
+        "source_id": "798068905726303232",
+        "main_id": "* 11 LMi",
+        "f1": 0.8691,
+        "p": 0.8755,
+        "r": 0.8627
+      },
+      {
+        "source_id": "502542170414672128",
+        "main_id": "HD 31590",
+        "f1": 0.8591,
+        "p": 0.8606,
+        "r": 0.8576
+      },
+      {
+        "source_id": "1896396703077703936",
+        "main_id": "* 15 Peg",
+        "f1": 0.8594,
+        "p": 0.873,
+        "r": 0.8463
+      },
+      {
+        "source_id": "5730371484020807808",
+        "main_id": "HD 76932",
+        "f1": 0.8665,
+        "p": 0.8677,
+        "r": 0.8653
+      },
+      {
+        "source_id": "4939205900704478592",
+        "main_id": "* kap Eri",
+        "f1": 0.8815,
+        "p": 0.9016,
+        "r": 0.8623
+      },
+      {
+        "source_id": "3586141394007639424",
+        "main_id": "HD 188512",
+        "f1": 0.8663,
+        "p": 0.866,
+        "r": 0.8665
+      },
+      {
+        "source_id": "2967287596507432704",
+        "main_id": "HD 224885",
+        "f1": 0.8758,
+        "p": 0.8904,
+        "r": 0.8617
+      },
+      {
+        "source_id": "4231133434759619200",
+        "main_id": "HD 196426",
+        "f1": 0.8744,
+        "p": 0.8873,
+        "r": 0.8618
+      },
+      {
+        "source_id": "2104376989694932608",
+        "main_id": "HD 175132",
+        "f1": 0.8663,
+        "p": 0.8817,
+        "r": 0.8514
+      },
+      {
+        "source_id": "1244571953471006720",
+        "main_id": "* tau Boo",
+        "f1": 0.8624,
+        "p": 0.8741,
+        "r": 0.851
+      },
+      {
+        "source_id": "3712538811193759744",
+        "main_id": "HD 180617",
+        "f1": 0.857,
+        "p": 0.868,
+        "r": 0.8462
+      }
+    ]
+  },
+  "level4b_coherence": {
+    "n_stars": 497,
+    "mean_coherence": 0.558,
+    "pct_full_coherence": 0.008,
+    "n_word_limit_violations": 209,
+    "word_limit_violation_sample": [
+      {
+        "source_id": "1244571953471006720",
+        "violations": [
+          "physical_profile: 65 words (limit 60)"
+        ]
+      },
+      {
+        "source_id": "3400292798990117888",
+        "violations": [
+          "physical_profile: 66 words (limit 60)"
+        ]
+      },
+      {
+        "source_id": "4315804351350378496",
+        "violations": [
+          "physical_profile: 102 words (limit 60)"
+        ]
+      },
+      {
+        "source_id": "3212075924646082176",
+        "violations": [
+          "physical_profile: 65 words (limit 60)"
+        ]
+      },
+      {
+        "source_id": "4772547941122028672",
+        "violations": [
+          "physical_profile: 63 words (limit 60)"
+        ]
+      }
+    ]
+  },
+  "level4c_subtype": {
+    "n_evaluated": 443,
+    "overall_accuracy": 0.4063,
+    "per_class": {
+      "B": {
+        "n": 90,
+        "accuracy": 0.9778
+      },
+      "A": {
+        "n": 33,
+        "accuracy": 0.1818
+      },
+      "F": {
+        "n": 93,
+        "accuracy": 0.3763
+      },
+      "G": {
+        "n": 80,
+        "accuracy": 0.0
+      },
+      "K": {
+        "n": 90,
+        "accuracy": 0.4444
+      },
+      "M": {
+        "n": 57,
+        "accuracy": 0.193
+      }
+    }
+  },
+  "level5_rag_impact": {
+    "n_stars": 497,
+    "n_with_rag_context": 497,
+    "n_no_rag_context": 0,
+    "overall_hit_rate": 0.159,
+    "flag_retrieval": {
+      "n_stars_with_active_flags": 105,
+      "n_flag_chunk_retrieved": 4,
+      "flag_hit_rate": 0.0381
+    },
+    "hit_rate_by_class": {
+      "F": {
+        "hit_rate": 0.7527,
+        "n": 93
+      },
+      "G": {
+        "hit_rate": 0.0125,
+        "n": 80
+      },
+      "K": {
+        "hit_rate": 0.0444,
+        "n": 90
+      },
+      "A": {
+        "hit_rate": 0.0345,
+        "n": 87
+      },
+      "B": {
+        "hit_rate": 0.0111,
+        "n": 90
+      },
+      "M": {
+        "hit_rate": 0.0,
+        "n": 57
+      }
+    },
+    "rouge1_relevant_chunk": 0.2524,
+    "rouge1_irrelevant_chunk": 0.2734,
+    "rouge1_delta_relevant_vs_irrelevant": -0.021,
+    "note": "relevant = top chunk label contains keywords consistent with the star's spectral class. rouge1_delta > 0 indicates RAG improves description quality on matched references."
+  }
+}

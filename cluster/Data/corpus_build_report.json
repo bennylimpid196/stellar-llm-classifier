@@ -1,0 +1,3002 @@
+{
+  "total_contracts": 498,
+  "valid_contracts": 496,
+  "contracts_with_warnings": 2,
+  "gt_matched": 498,
+  "gt_unmatched": 0,
+  "zero_quality_score": 2,
+  "entries": [
+    {
+      "source_id": "1244571953471006720",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3400292798990117888",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5945941905576552064",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4315804351350378496",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3212075924646082176",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "798068905726303232",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "746545172372256384",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1333760419707327744",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4772547941122028672",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4345775217221821312",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3575733210781078016",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5979460655025099776",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2029433521248546304",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2306216916182228224",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6384510877400590336",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2899947933845777920",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1805044913356835328",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5956907713041688960",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4367026303085396352",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3179824465465177984",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2898239468873596800",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5528866839863569024",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5866992641380992256",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4111078309939315840",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4691995692046507520",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4922906809055232640",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3579784327012046336",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2041085973668754176",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5476519984615508224",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4775347916201249792",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4101951676226387584",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3683160646477904512",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3313947704182762240",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3532823773073745536",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5927236979422123264",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3852570413083923072",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3057712223051571200",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4739858154758206720",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5047659906603781376",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1999127682240390528",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "145373377272257664",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1362295082910131200",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1833199729671740800",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3586141394007639424",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2917842141990377088",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6189254689097655552",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4354950641755249024",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6848935999040583168",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6799948220537687424",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3712538811193759744",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1240498331609669120",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5566964814680494080",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4750843684668806528",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4480059809287681792",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4062932688663275264",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6466670337598422912",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4338453363133559808",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4716158250340258944",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3113909602378333056",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "145293181643038336",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6780562524869079040",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4364527594192166400",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2505825177666430592",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3312709379213017728",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4802108448674124544",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4399875827873768192",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6517095109079262336",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6835987497274270848",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "48203487411427456",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4827523900468374272",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3581409233399344896",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6454954010413575296",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4219436280307870464",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5549734058723830016",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5194203331750283392",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3208926854625048064",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4922570530295523840",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6421555485729063424",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "146677879098433152",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2072596018435832960",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4973139402225747072",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3056203899255907328",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5935496128485727616",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3309493720019304576",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3996424359773549568",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6687540473903265920",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4039697293585955584",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3311151233797884416",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "582221750852254080",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4707740973434034048",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4176501313320676992",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5279589377547576704",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2315657456161729408",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6364189321243796864",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5049243375145251072",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3615366756669561472",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1606148310770764288",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6810655436564988928",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1834788970646666112",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4060239400532063232",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4110294529931299840",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3405113740864365440",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6849734656799640192",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4707634458245031552",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3514974782343927040",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2343647384368388608",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5941651920460883328",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5482551183847322496",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3307815006281475200",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4102845029464582656",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5607942273021322880",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1727457085066129664",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4090011426635298688",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2313818699058718208",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6417553057243290112",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "45367056650753280",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "719021574535141120",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6145755844441101440",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1585629190413334528",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6359764233617410816",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5685269001653018368",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "63561740706077056",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3404850790083594368",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3608753056789641600",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4635412796456855424",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6528247455519551232",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3312575685471393664",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4461045267503021696",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5269366221504073088",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2487084684870159488",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3605478986040028544",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6177355018346589696",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1471958448518765696",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "623408253837371392",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6534858166102087040",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6667552039706187776",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4704957491028733824",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6425860864023661184",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6759168021467638912",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6042173465333496448",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6780224734281075072",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3304412601908736512",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6051817591054336896",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6542969984934147968",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4235683797996186752",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6441658818889259008",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2382836143445759488",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6566237914427842944",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1386158505321789696",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2989514155341556224",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5344985442961439872",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1944475838303255424",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3307782570688378496",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2960561059245715968",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5843993572548726400",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5753752736224380544",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "526024715129959296",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4383869275034264192",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6346617755337978240",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5540043306840497408",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5264684329193948672",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1684760402859121792",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4231133434759619200",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2051256181345048832",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "448776116237692928",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4940622209122354560",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5020974003482641536",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4350921790633365760",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3311024789960504576",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4112490185933375744",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5952444383044606336",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5814186190262735232",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1143461757535195392",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4917533117773655552",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5862028930545927936",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2560096418778511744",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2796126449609364352",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "49231668222673920",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3574381842269217152",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4521623650911913984",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "887091483144696448",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5759268882981466112",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "987326227307654016",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6698005866097076096",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2002489026721005312",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4756779466921672192",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4704810671866569344",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "987827226653323520",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6485278403666781696",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2379409584176933504",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5495799474328130688",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4652758898057680128",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5965927316104213120",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3314244361868283520",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2685592648748354304",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6477415349341523328",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "566016942325467648",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4720137211122571520",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6780403645438489088",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5675713833291363968",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4804440203598953984",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2344599900739825280",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1058306574827519872",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5041659287534663552",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4048927998510291328",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1820763806471758848",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2097463810335670144",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6434438154232430848",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2918427773671030784",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "519852297367322624",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5794744282062130176",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5056243519004167552",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4715737240466538240",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "410831080909479680",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3208325490484138880",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6494429359770704384",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5469850931193066496",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "65231486552803328",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3543041809509098112",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4103438009822537472",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1839380943503207552",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5670584955144424576",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2165235439355225344",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3313984606542996096",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4065567285929073792",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5496317756622132224",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "533245311067368064",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4753584178745296896",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3406010774850360064",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6293246911169554944",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4923164300935338752",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1151693835451136128",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3396049817979070464",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1862291604743234560",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6359958537938555904",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1033349172706023936",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3925893063969232768",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2667963113668165248",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3026774336672103424",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2400829445076185344",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5599139754735553280",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5278947331468328576",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3481441464402658176",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3235052006815657728",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1820589155956553472",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5717645186692551936",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4968841037609849472",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "6427921245737540352",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2562091860584132096",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5726736979617591808",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1999333119114597632",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "398030875774246656",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1126897477422999936",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "580275512191589760",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "589907543288859264",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4648162939452971008",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4231171058672649856",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "841920040781646080",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2078403295235690112",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "545900827338842752",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3617798051756565760",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1366858193604257792",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3240367801938009728",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2229499729308170368",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3063621307772865920",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1687031134888475008",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1419240920415509376",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "850196545840227328",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4236110752105660032",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1792369296632990848",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2768591448634694912",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2278464551206789504",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1044566355973270400",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1603662211901473408",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3443049576380598400",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3738318338775659648",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1859271143221902592",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "469395399534137728",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "357623445496975872",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4575302701925636480",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "166534337543253120",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2006866663560075776",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "675727793092702080",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4037358426191922688",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1693159194226600192",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "373069831518646528",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1112863173567966336",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2527541872345889792",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1357489495541554688",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1004358968092652544",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1033475857061476608",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2559260652502356608",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2069603800593460224",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4027931110281084416",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5148062498087925248",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1597757387783227008",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1762381079059254400",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3208587277330249856",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3202157848727653760",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4236276194243977344",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4921421918602162688",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1478371380150987520",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1501230643506053632",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "157092247079651456",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2853679286254061696",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2191950853167526272",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4633431991899353856",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1969079610002745728",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5723917007169042816",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2153625661689553408",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1640438603811339008",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1085344665266177920",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3316311138787345664",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "961506567552649984",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2888135575488124800",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2181544426593974400",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1060651214654122112",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2063197186858948992",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2994131313904384256",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2483442385100118656",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "214878111469201664",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2205585660645440000",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1227200425666121856",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1580115929873555200",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4801768974458903040",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2133597988670827776",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "765568407160116096",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "898666832324034688",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3225773709225508736",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4695167130257543424",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4939205900704478592",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4447348307551626624",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4900927434176620160",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2099679223187100800",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2290599311287582464",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5251098523021221376",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "375010813139050368",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1053778957742409984",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5069213731825915648",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1320255698202371072",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2956064297206301312",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "418030923572427520",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1556189972738829184",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5334154806761557504",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5240584404406985472",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5647071417958187392",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2949098787968203520",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2304182888391818240",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1139165175331616768",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5266581089830743296",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2077959092540451456",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2221245661158478336",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1643563042195991424",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "65287458566524928",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1704123214941238656",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "49415527182759296",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4703064819200500096",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "314142055583243904",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1820154058573970944",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5309205822766572032",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2871009135696800896",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "523449792035598848",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2349591516026681088",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1588975588412216576",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1562168842092340352",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5221286296008492416",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1901075056335332608",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1808075236135604736",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2066350345686053888",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1735906350890358144",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4320279260621065472",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1893599923453399040",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5506275586760552320",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "358011366943014016",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2243143328580355584",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1953588728112369408",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1962740066469924096",
+      "quality_score": 0.425,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2160077939517532544",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1915667396702502400",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2967287596507432704",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2891625425395496576",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2171316219676385664",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5616608829834868992",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "429451138534730368",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4807662288064531456",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5580209153792109440",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5216186726719969792",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2042565400924276736",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1571425389967131264",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1872046574983497216",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4597175424176955008",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "196931367283396992",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5825432373172356864",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "823773494718931968",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1916175611589231488",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5758942014494552704",
+      "quality_score": 0.425,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1139801311528690944",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5695211919674043648",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1495803832068560128",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4540070535438247296",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5930155701777380224",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2674490811123264384",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3712495827161288832",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1561555314603877888",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5487368728405486464",
+      "quality_score": 0.425,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1734190008942812928",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2001546126793754112",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1112652170415227648",
+      "quality_score": 0.425,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1771165249250651264",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1942451637396845312",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2921337940429882752",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5376744836311996672",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2174386159219988480",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4049682027375908608",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3347793554008217088",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2090705421599882496",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3742617188722475904",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3351587732414107008",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1022456139210632064",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2196260668167965440",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1096023878111446912",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4764377470216070272",
+      "quality_score": 0.425,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5629919723754166272",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "385334230892516480",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4233318061284406400",
+      "quality_score": 0.425,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1905767771962623872",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "155179371724750592",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1618206276835241600",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "803925724992902400",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5595272875418286976",
+      "quality_score": 0.425,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1421610952089051136",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "529452923667976704",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4539470099018493568",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3137814565712405248",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5652784785309486592",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4575130078599912576",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4968911165835266816",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4054393812563869056",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5721052813742839936",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "634044448288505600",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2898836160091765248",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3330298644683142656",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "243000148577643264",
+      "quality_score": 0.255,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1737183296206147200",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5359580806977103104",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3551277598276854016",
+      "quality_score": 0.425,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5692957577243866880",
+      "quality_score": 0.3,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3984674879735331200",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5400737039021509632",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1896396703077703936",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "448103803535751680",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5730371484020807808",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3532312225289255040",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "369934093075424640",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4449357115297455872",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1335756411268494080",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5423801425726635264",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3348206012606519168",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1285476672242623488",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2032861317502068224",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "63478624499091968",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4297359494014043264",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "579147000944785792",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1512260909796696832",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5793326324379141248",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2701125861831057792",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4034171629042489088",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2746298781663140352",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5802431174006919296",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3177358226524915456",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2104376989694932608",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5318412686452956800",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "249350103106450048",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3022709854493303680",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2061344097469904384",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "502542170414672128",
+      "quality_score": 0.0,
+      "has_gt": true,
+      "warnings": [
+        "quality_score == 0.0 (parallax unreliable — SC inference unreliable)."
+      ]
+    },
+    {
+      "source_id": "4515911103915737600",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1625998756259467264",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5239895633422585856",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5785993715692374656",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3237243196049815936",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "3225786594126540800",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "1587432458202711424",
+      "quality_score": 0.5,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2900979348769551744",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2230725272454627456",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5061926069975057408",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "317407124081631488",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "237515475339561984",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5740749121439641856",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5045432364765457792",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "450211563029092352",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5626255292023430400",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "503826399995055744",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "4793418733401275520",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "2180169006262367104",
+      "quality_score": 0.0,
+      "has_gt": true,
+      "warnings": [
+        "quality_score == 0.0 (parallax unreliable — SC inference unreliable)."
+      ]
+    },
+    {
+      "source_id": "2161752942410816128",
+      "quality_score": 1.0,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5383289266958512384",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    },
+    {
+      "source_id": "5201784945460884224",
+      "quality_score": 0.85,
+      "has_gt": true,
+      "warnings": []
+    }
+  ]
+}

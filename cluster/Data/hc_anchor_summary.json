@@ -1,0 +1,26 @@
+{
+  "total_stars": 498,
+  "mk_letter_distribution": {
+    "A": 79,
+    "B": 99,
+    "F": 93,
+    "G": 80,
+    "K": 90,
+    "M": 57
+  },
+  "population_distribution": {
+    "Disco Fino": 265,
+    "Disco Grueso": 146,
+    "Halo": 87
+  },
+  "chemistry_source": {
+    "metallicity_fallback": 281,
+    "fe_h": 216,
+    "kinematics_override": 1
+  },
+  "proximity_flags": {
+    "near_teff_boundary": 159,
+    "near_logg_boundary": 285,
+    "near_chemistry_boundary": 228
+  }
+}

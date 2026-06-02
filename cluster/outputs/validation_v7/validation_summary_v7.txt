@@ -1,0 +1,89 @@
+============================================================
+SC V7 VALIDATION SUMMARY — STELLAR HC+SC
+============================================================
+
+LEVEL 1 — MK Coarse (vs SIMBAD)
+  Stars evaluated     : 488
+  Overall accuracy    : 0.7951
+  95% Bootstrap CI    : [0.1413, 0.2049]
+  Macro F1            : 0.6936
+  Weighted F1         : 0.7924
+  Cohen Kappa         : 0.7529
+  Mean MK distance    : 0.2152
+  Near-miss acc (d≤1) : 0.998
+
+  Per-class F1:
+    O: 0.0000
+    B: 0.6250
+    A: 0.5989
+    F: 0.9140
+    G: 0.8272
+    K: 0.8994
+    M: 0.9905
+
+LEVEL 2 — Physical Parameters (vs PASTEL)
+  Mean |ΔTeff| (K)    : 212.2
+  Mean |Δlogg| (dex)  : 0.46
+  Population acc      : 0.5398
+  Population kappa    : -0.1264
+
+LEVEL 3 — Confidence Calibration
+  Conf (correct)      : 0.7367
+  Conf (incorrect)    : 0.8375
+  Spearman r          : -0.1164  (p=0.010064)
+  Binary penalty      : False  (delta=0.0089)
+  V7 target           : delta <= -0.10
+
+LEVEL 4a — Stellar Description (ROUGE vs references)
+  Stars evaluated     : 20
+  Mean ROUGE-1 F      : 0.2681
+  Mean ROUGE-L F      : 0.1933
+  Per-field ROUGE-1 F:
+    physical_profile: 0.403
+    population_context: 0.2548
+    notable_features: 0.1466
+
+LEVEL 4a-bis — BERTScore (semantic similarity)
+  Model               : roberta-large
+  Stars evaluated     : 20
+  Mean F1             : 0.8659
+  Mean Precision      : 0.8752
+  Mean Recall         : 0.8568
+  Per-field mean F1:
+    physical_profile: 0.8706
+    population_context: 0.8535
+    notable_features: 0.8548
+
+LEVEL 4b — Description Coherence
+  Mean coherence      : 0.558
+  Full coherence pct  : 0.008
+  Word limit viol.    : 209
+
+LEVEL 4c — Sub-type Accuracy (within HC letter class)
+  Stars evaluated     : 443
+  Overall accuracy    : 0.4063
+  Per-class:
+    B: 0.9778 (n=90)
+    A: 0.1818 (n=33)
+    F: 0.3763 (n=93)
+    G: 0.0000 (n=80)
+    K: 0.4444 (n=90)
+    M: 0.1930 (n=57)
+
+LEVEL 5 — RAG Retrieval Impact (V7 NEW)
+  Stars with RAG      : 497
+  Stars without RAG   : 0
+  Overall hit rate    : 0.159
+  Flag hit rate       : 0.0381 (n=105)
+  ROUGE-1 w/ relevant : 0.2524
+  ROUGE-1 w/o relevant: 0.2734
+  ROUGE-1 delta       : -0.021
+  Hit rate by class:
+    F: 0.7527 (n=93)
+    G: 0.0125 (n=80)
+    K: 0.0444 (n=90)
+    A: 0.0345 (n=87)
+    B: 0.0111 (n=90)
+    M: 0.0 (n=57)
+
+============================================================

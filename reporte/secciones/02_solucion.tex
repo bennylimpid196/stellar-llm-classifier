@@ -1,0 +1,466 @@
+\section{Solución Propuesta}
+\label{sec:solucion}
+
+\subsection{Objetivos}
+\label{sec:objetivos}
+
+\subsubsection{Objetivo general}
+
+Diseñar, implementar y validar \STELLAR{} (\emph{Spectral Type Estimation via
+Language Learning and Astronomical Reasoning}), un sistema de clasificación
+espectral estelar híbrido que combine una capa de \emph{Hard Computing} (HC)
+determinista con el modelo de lenguaje especializado \AstroSage{} (\emph{Soft
+Computing}, SC), de modo que el anclaje determinista corrija el sesgo \emph{a
+priori} del modelo de lenguaje y se obtenga una clasificación MK precisa,
+reproducible y acompañada de una justificación astrofísica en lenguaje natural,
+operando sobre \num{498} estrellas de Gaia DR3.
+
+\subsubsection{Objetivos específicos}
+
+\begin{enumerate}
+  \item \textbf{Capa HC determinista.} Implementar los cuatro agentes
+  deterministas del pipeline HC-2.0 (\texttt{AstrometryAgent},
+  \texttt{ContinuumAgent}, \texttt{LineAgent} y \texttt{BinaryDetectorAgent})
+  que, a partir de la metadata tabular de Gaia DR3, deriven los parámetros
+  físicos limpios (\MG{}, \teff{}, $[M/H]$, $[Fe/H]$, $[\alpha/Fe]$,
+  $V_\mathrm{tan}$) y un conjunto de banderas lógicas
+  (\emph{is\_reliable\_parallax}, \emph{is\_giant}, \emph{is\_metal\_poor},
+  \emph{is\_binary\_candidate}, \emph{is\_high\_velocity},
+  \emph{has\_emission}).
+
+  \item \textbf{Contrato de interfaz HC$\rightarrow$SC.} Definir y generar un
+  contrato JSON por estrella que sirva de entrada estructurada y predigerida al
+  modelo de lenguaje, respetando estrictamente las convenciones del catálogo
+  (signo de H$\alpha$ ESP-ELS, tratamiento de \texttt{NaN} y del artefacto
+  $\mathrm{fe\_h}=0.0$).
+
+  \item \textbf{Capa SC con anclaje.} Configurar la inferencia de \AstroSage{}
+  para que, recibiendo el contrato HC, emita la clasificación MK (tipo, rango de
+  subtipo y clase de luminosidad), el grupo poblacional, puntuaciones de
+  confianza y una descripción técnica, de forma que el anclaje HC acote el
+  espacio de respuestas y mitigue el prior hacia el tipo G.
+
+  \item \textbf{Optimización iterativa del \emph{prompt}.} Iterar el diseño del
+  \emph{system prompt} de la capa SC a lo largo de siete versiones (V1--V7),
+  aislando el efecto de cada decisión (anclaje, penalización por binariedad,
+  recuperación RAG, límites de extensión) sobre las métricas de validación.
+
+  \item \textbf{Validación multinivel.} Evaluar el sistema de extremo a extremo
+  contra referencias externas: clasificación MK gruesa frente a SIMBAD;
+  parámetros físicos (\teff{}, \logg{}) frente al catálogo PASTEL; calibración
+  de confianza; y calidad de las descripciones en lenguaje natural (ROUGE,
+  BERTScore y coherencia), reportando las métricas con intervalos de confianza
+  \emph{bootstrap}.
+
+  \item \textbf{Reproducibilidad.} Documentar el corpus ($n=498$), los supuestos,
+  los hiperparámetros (versiones de \emph{prompt}) y la infraestructura de
+  cómputo, de modo que los resultados sean verificables y el sistema extensible
+  a muestras mayores de Gaia DR3/DR4.
+\end{enumerate}
+
+\subsection{Marco Teórico y Metodología}
+\label{sec:marco-teorico}
+
+Esta sección establece, primero, los fundamentos astrofísicos sobre los que se
+sostiene la clasificación (§\ref{sec:fund-mk}--§\ref{sec:fund-lineas}) y, segundo,
+el marco metodológico que articula las capas HC y SC
+(§\ref{sec:metodo-arquitectura}--§\ref{sec:metodo-validacion}). El detalle de
+implementación y la formulación matemática de cada agente determinista se
+desarrolla en la Sección~\ref{sec:modelos}.
+
+\subsubsection{Clasificación espectral MK y temperatura efectiva}
+\label{sec:fund-mk}
+
+El sistema de Morgan--Keenan ordena las estrellas en la secuencia
+O--B--A--F--G--K--M según la temperatura efectiva \teff{} de su fotosfera, de las
+más calientes (O, $\gtrsim\SI{30000}{\kelvin}$) a las más frías
+(M, $<\SI{3700}{\kelvin}$). Cada letra se subdivide en diez subtipos (0--9) que
+refinan la escala de temperatura dentro de la clase. En \STELLAR{}, la asignación
+de la letra es competencia de la capa HC, que aplica umbrales estrictos sobre
+\teff{} (\Cref{tab:teff-letra}). El subtipo, en cambio, es tarea de la capa SC,
+que opera dentro de la letra ya fijada. La incertidumbre de
+\SIrange{100}{200}{\kelvin} propia de las estimaciones \teff{} de GSP-Phot motiva
+que el subtipo se exprese como un \emph{rango} (p.\,ej.\ \texttt{"3-5"}) y no como
+un entero único.
+
+\begin{table}[H]
+  \centering
+  \caption{Umbrales deterministas \teff{}$\rightarrow$letra MK aplicados por la
+  capa HC. La frontera B/A se fija en exactamente \SI{10000}{\kelvin}.}
+  \label{tab:teff-letra}
+  \begin{tabular}{lc}
+    \toprule
+    Rango \teff{} (K) & Letra asignada \\
+    \midrule
+    $\ge \num{30000}$        & O \\
+    \numrange{10000}{29999}  & B \\
+    \numrange{7500}{9999}    & A \\
+    \numrange{6000}{7499}    & F \\
+    \numrange{5200}{5999}    & G \\
+    \numrange{3700}{5199}    & K \\
+    $< \num{3700}$           & M \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+La frontera B/A en \SI{10000}{\kelvin} es la zona de confusión dominante del
+sistema. Para mitigarla, la versión V7 incorpora una corrección por gravedad: las
+estrellas con \teff{} en \SIrange{9700}{10100}{\kelvin} y $\log g \ge 3.8$ se
+asignan a~A (régimen enana/subgigante), regla que eleva la exactitud sobre
+estrellas frontera de \SI{43.1}{\percent} (umbral \teff{} estricto) a
+\SI{76.5}{\percent}.
+
+\subsubsection{Clase de luminosidad y gravedad superficial}
+\label{sec:fund-lum}
+
+La clase de luminosidad (I a V) distingue el estado evolutivo a igual temperatura:
+desde supergigantes (I) hasta enanas de secuencia principal (V). Uno de sus 
+discriminantes físicos directos es la gravedad superficial \logg{}: las gigantes 
+evolucionadas, de gran radio, tienen gravedades bajas, mientras que las enanas 
+compactas exhiben gravedades altas. Por ello \STELLAR{} delega la clase de 
+luminosidad enteramente a la capa SC, alimentándola con el valor crudo 
+\verb|logg_gspphot|, que evita toda transformación en HC. La \Cref{tab:logg-lum} 
+resume el mapeo empleado.
+
+\begin{table}[H]
+  \centering
+  \caption{Mapeo \logg{}$\rightarrow$clase de luminosidad sobre valores GSP-Phot
+  del corpus. La zona subgigante (IV) es la de mayor ambigüedad.}
+  \label{tab:logg-lum}
+  \begin{tabular}{llc}
+    \toprule
+    Clase & Denominación & Rango \logg{} (dex) \\
+    \midrule
+    I   & Supergigante          & $< 1.5$ \\
+    II  & Gigante brillante     & \numrange{1.5}{2.5} \\
+    III & Gigante               & \numrange{2.5}{3.5} \\
+    IV  & Subgigante            & \numrange{3.5}{4.0} \\
+    V   & Enana (sec.\ principal) & $> 4.0$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Dado que \logg{} llega sin procesar, la capa SC debe contemplar sesgos
+sistemáticos conocidos de GSP-Phot: la sobreestimación de \logg{} en gigantes
+frías K/M (tratar el valor como cota inferior) y su menor fiabilidad en estrellas
+calientes B/A (donde conviene contrastar con la magnitud absoluta \MG{}).
+
+\subsubsection{Poblaciones galácticas: química y cinemática}
+\label{sec:fund-pob}
+
+La Vía Láctea alberga poblaciones estelares con historias de formación
+distinguibles por su química y cinemática. \STELLAR{} discrimina tres grupos:
+
+\begin{itemize}
+  \item \textbf{Disco Fino:} poblaciones jóvenes a intermedias, metalicidad
+  cercana a la solar ($[M/H] \ge -0.2$), baja velocidad espacial.
+  \item \textbf{Disco Grueso:} estrellas viejas, cinemáticamente calientes,
+  metalicidad subsolar ($-1.0 \le [M/H] < -0.2$) con realce de elementos
+  $\alpha$ ($[\alpha/Fe] \ge 0.2$), reliquia de una época de formación estelar
+  rápida y temprana.
+  \item \textbf{Halo:} estrellas muy viejas y pobres en metales
+  ($[M/H] < -1.0$), o bien con alta velocidad tangencial
+  ($V_\mathrm{tan} > \SI{200}{\kilo\meter\per\second}$).
+\end{itemize}
+
+La población se asigna en HC mediante una \emph{cadena de prioridad}: el primer
+criterio que se cumple decide y los posteriores no se evalúan. La cinemática
+($V_\mathrm{tan}$) tiene prioridad sobre la química porque es un indicador más
+directo de pertenencia al Halo, le sigue la regla de realce $\alpha$ para el
+Disco Grueso y, finalmente, los umbrales de metalicidad. La química se resuelve
+priorizando el valor espectroscópico $[Fe/M]$ (\verb|fem_gspspec|, $\sim$44\%
+de cobertura) sobre el fotométrico $[M/H]$ (\verb|mh_gspphot|), el valor
+$\mathrm{fe\_h}=0.0$ exacto se trata como artefacto nulo y se recurre al
+fotométrico.
+
+\subsubsection{Magnitudes derivadas, extinción y diagrama HR}
+\label{sec:fund-hr}
+
+A partir de la astrometría de Gaia se derivan dos cantidades físicas clave. La
+magnitud absoluta en banda~G se obtiene del módulo de distancia corregido por
+extinción interestelar,
+\begin{equation}
+  M_G = G + 5 + 5\log_{10}\!\left(\frac{\varpi}{1000}\right) - A_G,
+  \qquad A_G = 2.74\,E(BP\!-\!RP),
+  \label{eq:absmag}
+\end{equation}
+donde $\varpi$ es el paralaje en mas y $A_G$ la extinción en banda~G. La velocidad
+tangencial se obtiene de los movimientos propios,
+\begin{equation}
+  V_\mathrm{tan} = \frac{4.74\,\sqrt{\mu_{\alpha*}^2 + \mu_\delta^2}}{\varpi}
+  \quad [\si{\kilo\meter\per\second}].
+  \label{eq:vtan}
+\end{equation}
+Ambas magnitudes sólo son físicamente válidas cuando el paralaje es confiable
+(SNR $=\varpi/\sigma_\varpi > 5$); en caso contrario se suprimen del contrato. La
+combinación de \MG{} y \teff{} sitúa a la estrella en el diagrama
+Hertzsprung--Russell, sobre el que descansa la distinción gigante/enana.
+
+\subsubsection{Diagnósticos espectrales de línea}
+\label{sec:fund-lineas}
+
+Dos diagnósticos espectrales complementan la fotometría. El \textbf{triplete de
+Ca\,\textsc{ii}} (849.8, 854.2, \SI{866.2}{\nano\meter}), presente en la ventana
+RVS de Gaia, es altamente sensible a la gravedad superficial y la metalicidad. La
+capa HC ajusta perfiles de Voigt sobre estas líneas para extraer ancho equivalente
+y anchura. La línea de \textbf{H$\alpha$} (\SI{656.3}{\nano\meter}) es un trazador
+de actividad cromosférica y emisión circumestelar, al quedar fuera de la ventana
+RVS y ser inalcanzable a la resolución BP/RP, se toma directamente del catálogo
+ESP-ELS (\verb|ew_espels_halpha|). Aquí rige una convención de signo crítica:
+\begin{equation}
+  \texttt{ew\_espels\_halpha} > 0 \Rightarrow \text{absorción}, \qquad
+  \texttt{ew\_espels\_halpha} < 0 \Rightarrow \text{emisión},
+  \label{eq:halpha}
+\end{equation}
+de modo que \emph{has\_emission} se activa cuando el ancho equivalente es negativo
+y la bandera de calidad es 0. El respeto estricto de esta convención evita errores
+sistemáticos en la identificación de estrellas activas, Be o simbióticas.
+
+\subsubsection{Hard Computing, Soft Computing y modelos de lenguaje}
+\label{sec:metodo-paradigmas}
+
+El trabajo se enmarca en la complementariedad de dos paradigmas de cómputo. El
+\emph{Hard Computing} agrupa los métodos deterministas, exactos y verificables
+(física clásica, álgebra, estadística) idóneos para extraer parámetros y
+aplicar reglas físicas duras. El \emph{Soft Computing} agrupa los métodos
+tolerantes a la imprecisión y orientados al razonamiento aproximado, en este
+trabajo lo encarna un modelo de lenguaje a gran escala. El uso de \AstroSage{}
+(un LLM de \num{8}\,mil millones de parámetros afinado sobre literatura
+astronómica) aporta la capacidad de integrar evidencia heterogénea y de
+articular el razonamiento en lenguaje natural, a costa de los riesgos propios de
+los LLM (alucinación, sensibilidad al formato y sesgo \emph{a priori}). La
+hipótesis metodológica de \STELLAR{} es que estos riesgos pueden acotarse
+anclando la decisión del LLM con la salida verificable del HC.
+
+\paragraph{El modelo AstroSage-8B.} \AstroSage{} (formalmente
+AstroSage-Llama-3.1-8B) es un asistente de inteligencia artificial de código
+abierto especializado en astronomía, astrofísica, cosmología e instrumentación
+astronómica, construido sobre la arquitectura de Meta-Llama-3.1-8B
+\citep{astrosage}. Su desarrollo se divide en construcción, entrenamiento y
+validación.
+
+\emph{Construcción.} El modelo conserva la arquitectura base y el tamaño de su
+modelo fundacional (\num{8}\,mil millones de parámetros) y mantiene el
+tokenizador original de Llama-3.1, sin añadir \emph{tokens} de vocabulario
+astronómico específicos. Su entrenamiento se ejecutó sobre el superordenador de
+clase exaescala \emph{Frontier} del \emph{Oak Ridge Leadership Computing
+Facility} (OLCF), empleando cientos de nodos con GPU AMD MI250X.
+
+\emph{Entrenamiento.} Se realizó en tres etapas consecutivas:
+\begin{itemize}
+  \item \textbf{Preentrenamiento continuo (\emph{Continued Pre-training}, CPT).}
+  Infunde conocimiento del dominio a partir de un corpus masivo de
+  $\sim$\num{250000} \emph{preprints} de arXiv (categorías \texttt{astro-ph} y
+  \texttt{gr-qc}, 2007--enero 2024), $\sim$\num{30000} artículos de Wikipedia de
+  astronomía y $\sim$\num{800} libros de texto, totalizando \num{3.3}\,mil
+  millones de \emph{tokens} (\SI{19.9}{\giga\byte} de texto). El texto se extrajo
+  de los PDF con herramientas OCR (Nougat) y se depuró mediante un filtrado por
+  \emph{perplejidad} que eliminó el \SI{2}{\percent} de los párrafos
+  estadísticamente anómalos.
+  \item \textbf{Ajuste fino supervisado (\emph{Supervised Fine-Tuning}, SFT).}
+  Enseña al modelo a seguir instrucciones en formato pregunta--respuesta sobre
+  \num{2}\,mil millones de \emph{tokens} (\SI{9.8}{\giga\byte}). El núcleo del
+  conjunto son \num{8.8}\,millones de pares pregunta--respuesta sintéticos,
+  generados a partir de artículos científicos y filtrados rigurosamente por otra
+  IA según corrección, relevancia y calidad; se complementó con instrucciones de
+  dominio general (Infinity-Instruct-7M) para refinar la habilidad
+  conversacional.
+  \item \textbf{Fusión de modelos (\emph{Model Merging}).} Para recuperar el
+  pulido conversacional sin sacrificar el conocimiento astronómico, se promediaron
+  los pesos mediante la técnica DARE-TIES (librería \texttt{mergekit}),
+  combinando \SI{75}{\percent} del modelo AstroSage afinado con
+  \SI{25}{\percent} de Meta-Llama-3.1-8B-Instruct.
+\end{itemize}
+
+\emph{Validación.} El rendimiento se verificó por tres vías:
+\begin{itemize}
+  \item \textbf{\emph{Benchmark} AstroMLab-1.} Batería de \num{4425} preguntas de
+  opción múltiple creadas por expertos a partir de artículos de \emph{Annual
+  Review of Astronomy and Astrophysics}, deliberadamente excluidos del corpus de
+  entrenamiento para evitar memorización. AstroSage-8B alcanzó una exactitud del
+  \SI{80.9}{\percent}, superando en 8 puntos a su base Llama-3.1-8B y empatando con
+  modelos corporativos como GPT-4o (\SI{80.4}{\percent}) a una fracción del coste.
+  \item \textbf{Métricas generales.} En \emph{benchmarks} de conocimiento general y
+  matemáticas (MATH, BBH, MMLU-PRO, GPQA) se comprobó que la fusión de modelos no
+  indujo \emph{olvido catastrófico}, preservando su capacidad de razonamiento
+  lógico fuera de la astronomía.
+  \item \textbf{Evaluación humana a ciegas.} Expertos del área compararon respuestas
+  de AstroSage-8B frente a Meta-Llama-3.1-8B-Instruct sin conocer su autoría; en el
+  \SI{73}{\percent} de los casos prefirieron las de AstroSage por su mayor exactitud
+  y calidad, especialmente en cosmología.
+\end{itemize}
+
+Estas propiedades ---conocimiento astronómico profundo y razonamiento preservado---
+hacen de \AstroSage{} un candidato idóneo para la capa SC de \STELLAR{}, en la que
+opera no como clasificador autónomo sino anclado por la evidencia verificable del HC.
+
+\subsubsection{Arquitectura híbrida y flujo de trabajo}
+\label{sec:metodo-arquitectura}
+
+\STELLAR{} se organiza en dos capas encadenadas por un contrato JSON
+(\Cref{fig:pipeline}):
+
+\begin{enumerate}
+  \item \textbf{Capa HC (pipeline HC-2.0).} Cuatro agentes deterministas
+  (\texttt{AstrometryAgent}, \texttt{ContinuumAgent}, \texttt{LineAgent} y
+  \texttt{BinaryDetectorAgent}) procesan la metadata tabular y los espectros
+  de cada estrella. Producen un \emph{contrato} por estrella que contiene un
+  vector físico ($M_G$, \teff{}, $[M/H]$, $[Fe/H]$, $[\alpha/Fe]$, \logg{},
+  $V_\mathrm{tan}$, $A_G$), un conjunto de banderas lógicas booleanas, los
+  diagnósticos de binariedad y espectrales, y un \emph{quality\_score} global.
+  \item \textbf{Capa SC (\AstroSage{}).} Recibe el contrato como entrada
+  predigerida y emite un JSON estructurado con la clasificación (tipo, rango de
+  subtipo, clase de luminosidad, grupo poblacional), puntuaciones de confianza y
+  una justificación técnica en lenguaje natural.
+\end{enumerate}
+
+\begin{figure}[H]
+  \centering
+  \resizebox{\textwidth}{!}{%
+  \begin{tikzpicture}[
+    node distance=1.0cm and 0.5cm,
+    % Datos de entrada / base de conocimiento -> ELIPSE GRIS
+    data/.style={ellipse, draw=gray!80, fill=gray!5, text width=2.2cm,
+      text centered, font=\sffamily\scriptsize, minimum height=1.1cm, thick},
+    % Agentes Hard Computing (deterministas) -> AZUL
+    hard/.style={rectangle, draw=blue!50!black, fill=blue!10, text width=2.7cm,
+      text centered, rounded corners=4pt, minimum height=1.5cm,
+      font=\sffamily\scriptsize\bfseries, drop shadow},
+    % Contrato JSON (handoff HC -> SC) -> MORADO
+    contract/.style={rectangle, draw=violet!60!black, fill=violet!10, text width=9cm,
+      text centered, rounded corners=4pt, minimum height=1.1cm,
+      font=\sffamily\scriptsize, drop shadow},
+    % Capa Soft Computing (AstroSage-8B) -> VERDE
+    soft/.style={rectangle, draw=green!40!black, fill=green!10, text width=9cm,
+      text centered, rounded corners=4pt, minimum height=1.4cm,
+      font=\sffamily\small\bfseries, drop shadow},
+    % Resultado final -> AMARILLO
+    result/.style={rectangle, draw=yellow!40!black, fill=yellow!15, text width=8cm,
+      text centered, font=\sffamily\footnotesize\itshape, drop shadow, rounded corners,
+      minimum height=1.1cm},
+    arrow/.style={-{Stealth[scale=1.0]}, thick, color=gray!70!black},
+    layerbox/.style={draw=gray!30, dashed, fill=gray!5, rounded corners=10pt, inner sep=10pt}
+  ]
+
+    % --- 1. AGENTES HC (fila central de referencia) ---
+    \node (cont)   [hard] {ContinuumAgent\\{\sffamily\tiny\mdseries spline + $\sigma$-clipping}};
+    \node (binary) [hard, left=of cont] {BinaryDetectorAgent\\{\sffamily\tiny\mdseries RUWE · RV · NSS}};
+    \node (astro)  [hard, left=of binary] {AstrometryAgent\\{\sffamily\tiny\mdseries $M_G$ · $V_\mathrm{tan}$ · flags}};
+    \node (line)   [hard, right=of cont] {LineAgent\\{\sffamily\tiny\mdseries Voigt · Ca\,\textsc{ii} · EW}};
+
+    % --- 2. ENTRADAS ---
+    \node (tab)  [data, above=1.5cm of binary] {Tabular CSV\\Gaia DR3\\{\tiny(astrometría, fotometría, química)}};
+    \node (rvs)  [data, above=1.5cm of cont] {Espectros RVS\\{\tiny846--870 nm}};
+    \node (bprp) [data, above=1.5cm of line] {Espectros BP/RP\\{\tiny336--1020 nm}};
+
+    % --- 3. CONTRATO (handoff) — centrado bajo el punto medio de la fila HC ---
+    \coordinate (hcmid) at ($(binary.south)!0.5!(cont.south)$);
+    \node (contract) [contract, below=1.7cm of hcmid]
+      {\textbf{Contrato JSON (HC-2.0)}\\
+       physical\_vector + logical\_flags + spectral\_summary + \texttt{hc\_anchor} + quality\_score};
+
+    % --- 4. CAPA SC (AstroSage-8B) ---
+    \node (sc) [soft, below=1.1cm of contract] {Capa SC: \AstroSage{}\\{\sffamily\tiny\mdseries inferencia + subtipo · luminosidad · confianzas · descripción}};
+
+    % --- Base de conocimiento (RAG) ---
+    \node (kb) [data, right=1.6cm of sc] {Base de conocimiento\\{\tiny(guías MK, luminosidad, poblaciones, flags)}};
+
+    % --- 5. SALIDA ---
+    \node (out) [result, below=1.1cm of sc]
+      {JSON final: clasificación MK (tipo · subtipo · luminosidad · población) + confianzas + razonamiento};
+
+    % --- Agrupaciones visuales por capa ---
+    \begin{scope}[on background layer]
+      \node [layerbox, fit=(astro)(binary)(cont)(line),
+        label={[gray!70, font=\sffamily\scriptsize\bfseries]north:CAPA HARD COMPUTING (HC-2.0)}] {};
+    \end{scope}
+
+    % --- Conexiones: entradas -> agentes ---
+    \draw [arrow] (tab) -- (astro);
+    \draw [arrow] (tab) -- (binary);
+    \draw [arrow] (rvs) -- (cont);
+    \draw [arrow] (bprp) -- (cont);
+    \draw [arrow] (cont) -- node[above, font=\tiny, color=gray] {flujo norm.} (line);
+
+    % --- Agentes -> contrato ---
+    \draw [arrow] (astro.south)  to[out=270, in=170] (contract.west);
+    \draw [arrow] (binary.south) -- (contract.north -| binary.south);
+    \draw [arrow] (cont.south)   -- (contract.north -| cont.south);
+    \draw [arrow] (line.south)   to[out=270, in=10] (contract.east);
+
+    % --- Contrato -> SC -> salida ---
+    \draw [arrow] (contract) -- node[right, font=\tiny\itshape, color=gray] {anclaje \texttt{hc\_anchor}} (sc);
+    \draw [arrow] (kb) -- node[above, font=\tiny\itshape, color=gray] {RAG top-3} (sc);
+    \draw [arrow] (sc) -- (out);
+
+  \end{tikzpicture}%
+  }
+  \caption{Arquitectura de dos capas de \STELLAR{}. Los cuatro agentes
+  deterministas de la capa HC procesan la metadata tabular y los espectros de
+  Gaia DR3 y consolidan un contrato JSON por estrella; este, a través del campo
+  \texttt{hc\_anchor}, ancla la inferencia de la capa SC (\AstroSage{}), que
+  ---apoyada por recuperación aumentada (RAG) sobre la base de conocimiento---
+  emite la clasificación MK final y su justificación en lenguaje natural.}
+  \label{fig:pipeline}
+\end{figure}
+
+El contrato HC, además del schema completo, transporta un campo \verb|hc_anchor|
+que comunica a la capa SC las decisiones ya tomadas de forma determinista.
+
+\subsubsection{Estrategia de anclaje (\texttt{hc\_anchor})}
+\label{sec:metodo-anclaje}
+
+El mecanismo central que corrige el sesgo del LLM es el \emph{anclaje}: cuando el
+contrato incluye un \verb|hc_anchor|, la \textbf{letra espectral} y el
+\textbf{grupo poblacional} ya han sido fijados por las reglas deterministas
+(\Cref{tab:teff-letra} y la cadena de prioridad de §\ref{sec:fund-pob}) y la capa
+SC tiene prohibido recalcularlos o sobrescribirlos. La tarea del LLM se restringe
+entonces a (i)~asignar el subtipo dentro de la letra fijada, (ii)~asignar la clase
+de luminosidad a partir de \logg{}, (iii)~justificar la población, y (iv)~emitir
+confianzas y descripción. El LLM puede expresar desacuerdo únicamente mediante
+confianzas más bajas, nunca cambiando la etiqueta anclada. Este diseño impide que
+el prior hacia el tipo~G distorsione la clasificación y convierte al LLM en un
+motor de refinamiento y explicación sobre un esqueleto verificable.
+
+\subsubsection{Optimización iterativa del \emph{system prompt}}
+\label{sec:metodo-prompt}
+
+La capa SC se desarrolla de forma incremental a lo largo de siete versiones del
+\emph{system prompt} (V1--V7). Cada versión aísla el efecto de una decisión de
+diseño sobre las métricas de validación: introducción del anclaje, corrección de
+la frontera A/B por \logg{}, penalización de confianza ante binariedad, límites de
+extensión de la descripción y la incorporación de recuperación aumentada
+(RAG) sobre una base de conocimiento astronómico. El detalle de cada versión y su
+impacto se presenta en la Sección~\ref{sec:resultados}.
+
+\subsubsection{Protocolo de validación multinivel}
+\label{sec:metodo-validacion}
+
+La credibilidad del sistema se evalúa de extremo a extremo contra referencias
+externas independientes:
+
+\begin{itemize}
+  \item \textbf{Nivel 1 --- MK gruesa (vs.\ SIMBAD).} Se contrasta la letra
+  espectral contra el tipo \verb|sp_type| de SIMBAD (cobertura 491/498). Métricas:
+  exactitud, Cohen $\kappa$, F1 macro y ponderado, distancia MK media y exactitud
+  \emph{near-miss} ($d\le1$), con intervalos de confianza \emph{bootstrap}.
+  \item \textbf{Nivel 2 --- Parámetros físicos (vs.\ PASTEL).} Se compara
+  \teff{} y \logg{} inferidos contra el catálogo PASTEL de alta resolución
+  (cobertura 340 y 194 estrellas respectivamente). El campo
+  \verb|n_pastel_measurements| pondera la solidez de cada referencia.
+  \item \textbf{Nivel 3 --- Calibración de confianza.} Se examina la correlación
+  entre las confianzas emitidas y la corrección efectiva de la predicción.
+  \item \textbf{Nivel 4 --- Calidad de la descripción.} Se evalúan las
+  descripciones en lenguaje natural mediante ROUGE y BERTScore frente a
+  referencias, coherencia interna y exactitud de subtipo.
+  \item \textbf{Nivel 5 --- Impacto del RAG.} Se mide la tasa de acierto de la
+  recuperación y su efecto sobre la calidad de las descripciones.
+\end{itemize}
+
+Esta batería multinivel cierra el lazo de validación científica, distinguiendo
+explícitamente la calidad de la \emph{clasificación} (niveles 1--2) de la calidad
+de la \emph{explicación} (niveles 4--5).
+
+% TODO: figura del pipeline conceptual HC->contrato->SC (figuras/pipeline.pdf)
+% TODO: citas formales — Wang & Chen (2019, A_G), Lindegren et al. (2021, RUWE),
+%       Soubiran et al. (PASTEL), Gaia DR3, AstroSage-8B.

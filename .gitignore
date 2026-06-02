@@ -1,0 +1,67 @@
+# =============================================================
+# STELLAR — .gitignore
+# =============================================================
+
+# --- Datos crudos y archivos de terceros ---
+data/
+Queries/*.csv
+Queries/*.parquet
+!Queries/galah_gaia_dr3_ids.csv
+Deprecated/
+
+# --- Artefactos intermedios del pipeline ---
+cluster/Data/stellar_corpus_v7.json
+cluster/Data/stellar_corpus_v5.json
+cluster/Data/reference_descriptions.json
+cluster/Data/rag_cache/
+cluster/Data/archive/
+
+# --- Salidas brutas de inferencia LLM (batches por job) ---
+cluster/outputs/sc/
+cluster/outputs/sc_v7/
+
+# --- Validaciones tempranas (V1–V4, sin valor reproducible) ---
+cluster/outputs/validation/
+cluster/outputs/validation_v3/
+cluster/outputs/validation_v4/
+
+# --- Logs SLURM ---
+cluster/logs/
+
+# --- Scripts viejos y dispensables ---
+scripts/previos/
+scripts/dispensable/
+scripts/__pycache__/
+scripts/data/
+
+# --- Artefactos LaTeX ---
+reporte/*.aux
+reporte/*.bbl
+reporte/*.blg
+reporte/*.log
+reporte/*.out
+reporte/*.toc
+reporte/*.pdf
+
+# --- Imagen duplicada (WebP → se usa el .png) ---
+reporte/figuras/james-webb-star.webp
+
+# --- Documentos internos no técnicos ---
+Context/Presentación Consultoría.md
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+env/
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+Notebooks/
+
+# --- Sistema ---
+.DS_Store
+*.swp
+*.swo

@@ -1,0 +1,945 @@
+{
+  "prompt_version": "v6",
+  "n_results": 418,
+  "n_corpus": 498,
+  "n_matched": 418,
+  "level1_mk_coarse": {
+    "n_stars": 409,
+    "overall_accuracy": 0.7579,
+    "bootstrap_ci_95": [
+      0.1345,
+      0.2054
+    ],
+    "macro_f1": 0.671,
+    "weighted_f1": 0.7546,
+    "cohen_kappa": 0.7083,
+    "mean_mk_letter_distance": 0.2543,
+    "near_miss_accuracy_d1": 0.9976,
+    "per_class_f1": {
+      "O": 0.0,
+      "B": 0.5732,
+      "A": 0.5316,
+      "F": 0.9037,
+      "G": 0.8095,
+      "K": 0.8889,
+      "M": 0.9899
+    },
+    "confusion_matrix": {
+      "labels": [
+        "O",
+        "B",
+        "A",
+        "F",
+        "G",
+        "K",
+        "M"
+      ],
+      "matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          47,
+          33,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          37,
+          42,
+          4,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          61,
+          8,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          51,
+          12,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          3,
+          60,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          49
+        ]
+      ]
+    }
+  },
+  "level2_pastel": {
+    "teff_validation": {
+      "n_stars": 261,
+      "mean_abs_delta_teff_k": 248.0
+    },
+    "logg_validation": {
+      "n_stars": 158,
+      "mean_abs_delta_logg": 0.3196
+    },
+    "population_validation": {
+      "n_stars": 142,
+      "accuracy": 0.5282,
+      "cohen_kappa": -0.1368,
+      "note": "kappa vs PASTEL reflects chemistry-only GT vs HC kinematics+chemistry. LLM vs HC kappa=1.0.",
+      "confusion_matrix": {
+        "labels": [
+          "Halo",
+          "Disco Grueso",
+          "Disco Fino"
+        ],
+        "matrix": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            3,
+            2,
+            27
+          ],
+          [
+            8,
+            29,
+            72
+          ]
+        ]
+      }
+    }
+  },
+  "level3_confidence": {
+    "n_stars": 409,
+    "mean_confidence_correct": 0.7337,
+    "mean_confidence_incorrect": 0.8607,
+    "spearman_confidence_correctness": {
+      "r": -0.171,
+      "p_value": 0.000516
+    },
+    "binary_penalty_check": {
+      "n_binary": 55,
+      "n_non_binary": 354,
+      "mean_confidence_binary": 0.7838,
+      "mean_confidence_non_binary": 0.7615,
+      "penalty_applied": false
+    }
+  },
+  "level4a_rouge_summary": {
+    "n_evaluated": 17,
+    "mean_rouge1_f": 0.2654,
+    "mean_rougeL_f": 0.1828,
+    "std_rouge1_f": 0.0674,
+    "std_rougeL_f": 0.0476,
+    "min_rouge1_f": 0.1654,
+    "max_rouge1_f": 0.3964,
+    "min_rougeL_f": 0.1075,
+    "max_rougeL_f": 0.2739,
+    "per_field": {
+      "physical_profile": {
+        "mean_rouge1_f": 0.2832
+      },
+      "population_context": {
+        "mean_rouge1_f": 0.3254
+      },
+      "notable_features": {
+        "mean_rouge1_f": 0.1877
+      }
+    }
+  },
+  "level4b_coherence": {
+    "n_stars": 418,
+    "mean_coherence": 0.959,
+    "pct_full_coherence": 0.837,
+    "n_word_limit_violations": 232,
+    "word_limit_violation_sample": [
+      {
+        "source_id": "1244571953471006720",
+        "violations": [
+          "population_context: 39 words (limit 30)"
+        ]
+      },
+      {
+        "source_id": "3400292798990117888",
+        "violations": [
+          "population_context: 37 words (limit 30)"
+        ]
+      },
+      {
+        "source_id": "5945941905576552064",
+        "violations": [
+          "population_context: 43 words (limit 30)"
+        ]
+      },
+      {
+        "source_id": "798068905726303232",
+        "violations": [
+          "population_context: 43 words (limit 30)",
+          "notable_features: 46 words (limit 30)"
+        ]
+      },
+      {
+        "source_id": "746545172372256384",
+        "violations": [
+          "physical_profile: 89 words (limit 60)",
+          "population_context: 92 words (limit 30)"
+        ]
+      }
+    ]
+  },
+  "level4c_subtype": {
+    "n_evaluated": 373,
+    "overall_accuracy": 0.4182,
+    "per_class": {
+      "B": {
+        "n": 87,
+        "accuracy": 0.908
+      },
+      "A": {
+        "n": 30,
+        "accuracy": 0.2667
+      },
+      "F": {
+        "n": 68,
+        "accuracy": 0.0
+      },
+      "G": {
+        "n": 62,
+        "accuracy": 0.1613
+      },
+      "K": {
+        "n": 72,
+        "accuracy": 0.2639
+      },
+      "M": {
+        "n": 54,
+        "accuracy": 0.7407
+      }
+    }
+  },
+  "level5_ab_boundary": {
+    "n_boundary_stars": 52,
+    "n_evaluated": 51,
+    "logg_threshold": 3.8,
+    "accuracy": {
+      "hc_forced_A": 0.4314,
+      "llm_v6": 0.4314,
+      "logg_rule": 0.7647
+    },
+    "llm_improvement_over_hc_pct": 0.0,
+    "logg_rule_improvement_over_hc_pct": 33.3,
+    "mean_logg_llm_correct": 3.871,
+    "mean_logg_llm_incorrect": 3.707,
+    "note": "hc_forced_A: HC always assigns A at this boundary. llm_v6: LLM with soft anchor (V6-CHG-1). logg_rule: deterministic logg>=3.80→A rule derived from V5 analysis. Validates thesis claim that LLM multi-parameter reasoning surpasses single-threshold HC in ambiguous zones.",
+    "per_star": [
+      {
+        "source_id": "1386158505321789696",
+        "teff_k": 9997,
+        "logg": 3.5662,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "2989514155341556224",
+        "teff_k": 9996,
+        "logg": 3.9194,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": false,
+        "had_result": true
+      },
+      {
+        "source_id": "5344985442961439872",
+        "teff_k": 9997,
+        "logg": 3.5356,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "1944475838303255424",
+        "teff_k": 9996,
+        "logg": 3.622,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "5843993572548726400",
+        "teff_k": 9999,
+        "logg": 3.7198,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": false,
+        "had_result": true
+      },
+      {
+        "source_id": "5753752736224380544",
+        "teff_k": 9995,
+        "logg": 3.8642,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "526024715129959296",
+        "teff_k": 9998,
+        "logg": 3.9123,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "4383869275034264192",
+        "teff_k": 9995,
+        "logg": 3.612,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "6346617755337978240",
+        "teff_k": 7691,
+        "logg": 3.9395,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "5264684329193948672",
+        "teff_k": 9999,
+        "logg": 3.8162,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "1684760402859121792",
+        "teff_k": 9997,
+        "logg": 3.8843,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": false,
+        "had_result": true
+      },
+      {
+        "source_id": "4231133434759619200",
+        "teff_k": 9987,
+        "logg": 3.6697,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "2051256181345048832",
+        "teff_k": 9997,
+        "logg": 3.65,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": false,
+        "had_result": true
+      },
+      {
+        "source_id": "448776116237692928",
+        "teff_k": 9988,
+        "logg": 3.9125,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": false,
+        "had_result": true
+      },
+      {
+        "source_id": "4940622209122354560",
+        "teff_k": 9998,
+        "logg": 3.6832,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "5020974003482641536",
+        "teff_k": 9905,
+        "logg": 3.9168,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "4112490185933375744",
+        "teff_k": 9982,
+        "logg": 3.9556,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "5862028930545927936",
+        "teff_k": 9995,
+        "logg": 4.1294,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "2560096418778511744",
+        "teff_k": 9988,
+        "logg": 3.7786,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "2796126449609364352",
+        "teff_k": 9989,
+        "logg": 3.6464,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "4521623650911913984",
+        "teff_k": 9989,
+        "logg": 3.786,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "887091483144696448",
+        "teff_k": 9994,
+        "logg": 3.646,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "5759268882981466112",
+        "teff_k": 9998,
+        "logg": 3.6912,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "987326227307654016",
+        "teff_k": 9993,
+        "logg": 3.8095,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": false,
+        "had_result": true
+      },
+      {
+        "source_id": "4756779466921672192",
+        "teff_k": 9995,
+        "logg": 3.9307,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "4704810671866569344",
+        "teff_k": 7686,
+        "logg": 3.973,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "987827226653323520",
+        "teff_k": 9998,
+        "logg": 3.7876,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "2379409584176933504",
+        "teff_k": 7649,
+        "logg": 4.0137,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "5965927316104213120",
+        "teff_k": 7648,
+        "logg": 4.0384,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "566016942325467648",
+        "teff_k": 9998,
+        "logg": 3.5728,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": false,
+        "had_result": true
+      },
+      {
+        "source_id": "4804440203598953984",
+        "teff_k": 7618,
+        "logg": 3.8383,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "1820763806471758848",
+        "teff_k": 9999,
+        "logg": 3.6537,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "2097463810335670144",
+        "teff_k": 9999,
+        "logg": 3.7065,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": false,
+        "had_result": true
+      },
+      {
+        "source_id": "6434438154232430848",
+        "teff_k": 9998,
+        "logg": 3.8382,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "2918427773671030784",
+        "teff_k": 9997,
+        "logg": 3.7274,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": false,
+        "had_result": true
+      },
+      {
+        "source_id": "5794744282062130176",
+        "teff_k": 9994,
+        "logg": 3.7869,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "410831080909479680",
+        "teff_k": 9999,
+        "logg": 3.6386,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "3208325490484138880",
+        "teff_k": 9984,
+        "logg": 3.7465,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "5469850931193066496",
+        "teff_k": 9947,
+        "logg": 4.3039,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "1839380943503207552",
+        "teff_k": 9998,
+        "logg": 3.779,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "2165235439355225344",
+        "teff_k": 9998,
+        "logg": 3.6549,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": false,
+        "had_result": true
+      },
+      {
+        "source_id": "4753584178745296896",
+        "teff_k": 7668,
+        "logg": 3.8555,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "1151693835451136128",
+        "teff_k": 9997,
+        "logg": 3.8241,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": false,
+        "had_result": true
+      },
+      {
+        "source_id": "3396049817979070464",
+        "teff_k": 9995,
+        "logg": 3.756,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "1862291604743234560",
+        "teff_k": 9998,
+        "logg": 3.8034,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": true,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "2667963113668165248",
+        "teff_k": 9812,
+        "logg": 4.1681,
+        "gt_letter": "A",
+        "hc_pred": "A",
+        "llm_pred": null,
+        "logg_rule_pred": "A",
+        "hc_correct": true,
+        "llm_correct": null,
+        "logg_rule_correct": true,
+        "had_result": false
+      },
+      {
+        "source_id": "5599139754735553280",
+        "teff_k": 9999,
+        "logg": 3.9344,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "A",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": false,
+        "had_result": true
+      },
+      {
+        "source_id": "3235052006815657728",
+        "teff_k": 9999,
+        "logg": 3.7303,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "1820589155956553472",
+        "teff_k": 9998,
+        "logg": 3.7602,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "5717645186692551936",
+        "teff_k": 9998,
+        "logg": 3.6187,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "369934093075424640",
+        "teff_k": 9998,
+        "logg": 3.4857,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      },
+      {
+        "source_id": "3348206012606519168",
+        "teff_k": 9999,
+        "logg": 3.2413,
+        "gt_letter": "B",
+        "hc_pred": "A",
+        "llm_pred": "A",
+        "logg_rule_pred": "B",
+        "hc_correct": false,
+        "llm_correct": false,
+        "logg_rule_correct": true,
+        "had_result": true
+      }
+    ]
+  }
+}

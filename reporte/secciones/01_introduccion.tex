@@ -1,0 +1,222 @@
+\section{Introducción}
+\label{sec:introduccion}
+
+\subsection{Antecedentes}
+\label{sec:antecedentes}
+
+La clasificación espectral es uno de los pilares de la astrofísica estelar
+moderna. El sistema de Morgan--Keenan (MK) ordena a las estrellas en una
+secuencia de tipos espectrales (O, B, A, F, G, K, M), de las más calientes y
+azules a las más frías y rojas, complementada por una clase de luminosidad
+(I--V) que distingue gigantes de estrellas de secuencia principal. Cada tipo se
+correlaciona con la temperatura efectiva (\teff) de la fotosfera y, junto con la
+clase de luminosidad, codifica de forma compacta los parámetros físicos
+fundamentales de un objeto: temperatura, gravedad superficial (\logg) y, de
+manera indirecta, su estado evolutivo. A pesar de tener más de un siglo de
+antigüedad, el esquema MK sigue siendo el lenguaje de referencia con el que se
+comunican los resultados de la espectroscopía estelar.
+
+El problema de asignar un tipo MK a partir de observaciones reales dista de
+ser trivial. Los espectros y fotometría reales presentan ruido instrumental,
+\emph{enrojecimiento} por extinción interestelar, y contaminación por
+binariedad o por fuentes problemáticas, factores que confunden a los métodos
+tradicionales de plantillas y de ajuste de continuo. La estimación fotométrica
+de la extinction $E(BP-RP)$ \verb|ebpminrp_gspphot|, por ejemplo, es
+propensa a valores ausentes (\texttt{NaN}) y arrastra incertidumbres
+significativas, especialmente para estrellas frías o de baja gravedad
+superficial. Cualquier sistema de clasificación que aspire a operar sobre datos
+reales debe manejar de manera explícita estas anomalías (
+paralajes negativas, campos químicos vacíos y banderas de calidad), en lugar
+de suponer entradas limpias.
+
+\subsubsection{Gaia DR3}
+
+La tercera entrega de datos de la misión \emph{Gaia} de la Agencia Espacial
+Europea (Gaia DR3) marcó un cambio de escala en la astronomía estelar al
+publicar astrometría, fotometría y parámetros astrofísicos para más de mil
+millones de fuentes. Para una fracción importante de ellas, los \emph{pipelines}
+de procesamiento de Gaia (GSP-Phot, GSP-Spec, ESP-ELS) entregan no sólo
+posiciones y movimientos propios, sino también estimaciones de \teff, \logg,
+metalicidad global $[M/H]$, abundancia de hierro y anchos equivalentes de
+líneas como H$\alpha$. Este volumen de datos hace inviable la clasificación
+visual estrella por estrella que históricamente realizaban los expertos, y crea
+la necesidad de sistemas automáticos que sean, a la vez: precisos,
+reproducibles y \emph{explicables}.
+
+Es justo la última necesidad, la de explicabilidad, uno de los principales motores
+que impulsan la propuesta de este proyecto. Dentro del campo de la astronomía, los
+expertos no necesariamente dominan los detalles técnicos y teóricos de cómo funcionan 
+los modelos de Deep Learning. Es por ello que la capacidad de auditar el razonamiento
+fue fundamental para la construcción de STELLAR, y de cualquier otro sistema que se 
+propuesiera para resolver este problema. En ese sentido, los modelos de redes neuronales,
+los modelos de lenguaje a gran escala, y algunas otras arquitecturas de Inteligencia 
+Artificial, pueden llegar a ser denominados como "cajas negras", no porque no se pueda
+entender su funcionamiento, sino porque la toma de decisiones no es tan transparente
+para un investigador que no esté familiarizado con su funcionamiento. 
+
+El corpus de trabajo de este proyecto se construye precisamente sobre este
+acervo: un conjunto curado de \num{498} estrellas de Gaia DR3, con su
+metadata tabular escalar (astrometría, fotometría, química y física derivada).
+El catálogo respeta de forma estricta las convenciones del archivo, incluyendo
+la convención de signo del pipeline ESP-ELS para H$\alpha$, en la que los
+valores positivos indican absorción y los negativos emisión real.
+
+\subsubsection{Modelos de lenguaje especializados en astronomía}
+
+Paralelamente, los \textit{Large Language Models} (LLM), conocidos en español como
+modelos de lenguaje a gran escala, han demostrado capacidad
+de razonamiento sobre dominios técnicos cuando se les ajusta (\emph{fine-tuning})
+con corpus especializados. En astronomía, modelos como \AstroSage{} (un LLM de
+\num{8} mil millones de parámetros afinado sobre literatura astronómica),
+abren la posibilidad de emitir diagnósticos en lenguaje natural que no sólo
+asignan una etiqueta, sino que articulan el razonamiento astrofísico que la
+sustenta. Esta capacidad de explicación es especialmente valiosa en un dominio
+donde la confianza del experto depende de poder auditar el porqué de cada
+clasificación.
+
+Sin embargo, emplear un LLM como clasificador directo sobre datos crudos tiene
+riesgos bien documentados: alucinaciones, sensibilidad al formato de entrada y
+sesgos \emph{a priori} hacia las clases más frecuentes en su corpus de
+entrenamiento. En las observaciones preliminares de este trabajo se identificó
+precisamente un sesgo fuerte del modelo hacia el tipo G (estrellas similares al
+Sol), que distorsiona la clasificación cuando el modelo opera sin restricciones.
+
+\subsubsection{Hacia una arquitectura híbrida HC + SC}
+
+Estos antecedentes motivan la propuesta central de este reporte: una
+arquitectura híbrida de dos capas que combina \emph{Hard Computing} (HC) y
+\emph{Soft Computing} (SC). La capa HC aplica algoritmos deterministas basados
+en física clásica y estadística para extraer parámetros limpios y generar un
+conjunto de \emph{banderas lógicas} (una ``predigestión'' de la evidencia
+observacional: paralaje confiable, candidato a binaria, baja metalicidad,
+etc.). La capa SC entrega ese contrato estructurado al modelo \AstroSage{}, que
+produce la clasificación MK final y una descripción en lenguaje natural. De
+este modo, el anclaje determinista del HC acota el espacio de respuestas del LLM
+y corrige su sesgo \emph{a priori}, mientras que el SC aporta la capacidad de
+razonamiento y explicación. El sistema resultante, denominado \STELLAR{}
+(\emph{Spectral Type Estimation via Language Learning and Astronomical
+Reasoning}), es el objeto de estudio de este reporte.
+
+
+% TODO: cita formal de Gaia DR3 (Gaia Collaboration et al. 2023) en referencias.bib
+% TODO: cita formal del sistema MK (Morgan, Keenan \& Kellman 1943)
+% TODO: cita formal de AstroSage-8B (pendiente verificar referencia exacta)
+
+\subsection{Planteamiento del Problema}
+\label{sec:problema}
+
+El problema que aborda este trabajo puede enunciarse de la siguiente manera:
+\emph{dado el vector de metadata tabular de una estrella de Gaia DR3
+(astrometría, fotometría, química y parámetros físicos derivados),
+producir de forma automática (i)~una clasificación espectral MK , i.e. tipo,
+subtipo y clase de luminosidad; (ii)~una caracterización de su población
+galáctica, y (iii)~una justificación astrofísica en lenguaje natural, de manera
+precisa, reproducible y auditable.}
+
+Resolver este problema con un único paradigma de cómputo conduce a soluciones
+insatisfactorias en ambos extremos del espectro Hard Computing--Soft Computing:
+
+\begin{itemize}
+  \item \textbf{Enfoque puramente determinista (sólo HC).} Codificar todo el
+  conocimiento experto de la clasificación MK en reglas y umbrales rígidos
+  resulta frágil ante datos reales. Las fronteras entre tipos espectrales
+  adyacentes son difusas (la separación B$\leftrightarrow$A ocurre cerca de
+  $T_\mathrm{eff}\approx\SI{10000}{\kelvin}$, donde un corte duro genera errores
+  sistemáticos), y un sistema de reglas no produce, por construcción, la
+  explicación en lenguaje natural que demanda el experto. Además, debe absorber
+  toda la suciedad del dato: valores \texttt{NaN}, paralajes negativas, banderas
+  de calidad o campos químicos vacíos.
+
+  \item \textbf{Enfoque puramente generativo (sólo SC).} Entregar los datos
+  crudos directamente a un modelo de lenguaje hereda los riesgos conocidos de
+  los LLM: alucinaciones, sensibilidad al formato de la entrada y, de manera
+  crítica para este dominio, un sesgo \emph{a priori} hacia las clases más
+  frecuentes en su corpus de entrenamiento. En las pruebas preliminares se
+  observó un prior fuerte hacia el tipo G (estrellas solares), que sesga las
+  predicciones y degrada la exactitud sobre los extremos calientes y fríos de
+  la secuencia. El LLM tampoco garantiza, por sí solo, el respeto de
+  convenciones técnicas como el signo de H$\alpha$ en el pipeline ESP-ELS.
+\end{itemize}
+
+De esta tensión se desprende el problema metodológico central: \emph{¿cómo
+combinar el rigor determinista del Hard Computing con la capacidad de razonamiento y
+explicación del Soft Computing, de modo que el primero ancle y acote al segundo 
+sin anular su flexibilidad?} En concreto, el trabajo busca responder:
+
+\begin{enumerate}
+  \item \textbf{Anclaje.} ¿Puede una capa HC determinista, que predigiere la
+  evidencia observacional en un contrato estructurado con banderas lógicas,
+  corregir el sesgo \emph{a priori} del LLM y elevar la exactitud de la
+  clasificación MK?
+  \item \textbf{Calidad de la clasificación.} ¿Qué nivel de exactitud, acuerdo
+  (Cohen $\kappa$) y cercanía (\emph{near-miss}) alcanza el sistema híbrido
+  frente a las etiquetas de referencia de SIMBAD, y cómo se distribuyen sus
+  errores entre clases espectrales?
+  \item \textbf{Consistencia física.} ¿Son los parámetros inferidos (\teff,
+  \logg) consistentes con catálogos de alta resolución de la literatura
+  (PASTEL)?
+  \item \textbf{Calidad de la explicación.} ¿Son las descripciones en lenguaje
+  natural coherentes con la clasificación emitida y semánticamente fieles a
+  descripciones de referencia?
+\end{enumerate}
+
+La validación se realiza sobre el corpus completo de \num{498} estrellas de
+Gaia DR3, evaluando de forma iterativa siete versiones del \emph{system prompt}
+de la capa SC (V1--V7) para aislar el efecto de cada decisión de diseño sobre
+las métricas anteriores.
+
+\subsection{Justificación}
+\label{sec:justificacion}
+
+La pertinencia de \STELLAR{} se sostiene sobre cuatro ejes: la escala del
+problema astronómico, la necesidad de explicabilidad, el valor metodológico del sistema 
+híbrido (HC+SC), y los resultados empíricos obtenidos.
+
+\paragraph{Escala y automatización.} Los sondeos masivos como Gaia han
+desplazado el cuello de botella de la astronomía estelar desde la obtención de
+datos hacia su interpretación. Con parámetros astrofísicos publicados para
+cientos de millones de fuentes, la clasificación visual experta, estrella por
+estrella, es claramente inviable. Un sistema automático que opere directamente sobre 
+la metadata tabular de Gaia DR3, y que tolere de forma robusta sus anomalías
+(\texttt{NaN}, paralajes negativas, banderas de calidad, campos químicos
+vacíos), responde a una necesidad concreta y creciente de la disciplina.
+
+\paragraph{Explicabilidad como requisito.} En astrofísica la
+confianza del especialista depende de poder auditar el razonamiento detrás de
+cada etiqueta. Un clasificador de ``caja negra'' que sólo emite ``tipo K'' aporta
+poco frente a uno que justifica la decisión en términos de temperatura,
+gravedad, metalicidad y posición en el diagrama HR. Al situar un LLM
+especializado (\AstroSage{}) en la capa de decisión, \STELLAR{} produce, junto
+a la clasificación MK, una descripción en lenguaje natural auditable. Esto
+convierte al sistema en una herramienta de apoyo a la decisión y no en un mero
+predictor de etiquetas.
+
+\paragraph{Aporte metodológico de la hibridación.} La contribución central de
+este trabajo no es un nuevo algoritmo aislado, sino una \emph{arquitectura} que
+articula dos paradigmas habitualmente disjuntos. La capa HC determinista
+predigiere la evidencia en un contrato estructurado y un conjunto de banderas
+lógicas que \emph{anclan} al modelo de lenguaje, acotando su espacio de
+respuestas y corrigiendo su sesgo \emph{a priori} hacia el tipo G. El patrón
+resultante (HC como ancla verificable, SC como motor de razonamiento y
+explicación), es transferible a otros problemas científicos donde coexisten
+reglas físicas duras y la necesidad de interpretación flexible. Lo anterior constituye en
+sí mismo un resultado reutilizable más allá del caso estelar y astronómico.
+
+\paragraph{Evidencia empírica.} La justificación no es sólo conceptual: el
+sistema alcanza una exactitud de clasificación MK de \num{0.7951} con un acuerdo
+Cohen $\kappa = \num{0.7529}$ y una exactitud \emph{near-miss} ($d\le 1$) de
+\num{0.998} sobre las \num{498} estrellas del corpus, manteniendo una desviación
+media de \teff{} frente a PASTEL del orden de \SI{200}{\kelvin}.\footnote{Cifras
+de la validación V7; el detalle por versión y por clase se presenta en la
+Sección~\ref{sec:resultados}.} Estos números confirman que el anclaje
+determinista eleva la calidad de la clasificación respecto al uso directo del
+LLM, validando la hipótesis de diseño.
+
+\paragraph{Reproducibilidad.} Finalmente, el proyecto se ciñe a una práctica de
+reproducibilidad explícita: corpus de tamaño fijo y documentado ($n=498$),
+convenciones de datos declaradas (signo de H$\alpha$ ESP-ELS, tratamiento de
+\texttt{NaN} y del artefacto $\mathrm{fe\_h}=0.0$), versionado de los
+\emph{prompts} (V1--V7), métricas reportadas con intervalos de confianza
+\emph{bootstrap} e infraestructura de cómputo especificada. Esto permite que los
+resultados sean verificables y que el sistema pueda ser extendido a muestras
+mayores de Gaia DR3/DR4.
