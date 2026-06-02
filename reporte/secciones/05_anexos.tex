@@ -1,0 +1,75 @@
+\section{Anexos}
+\label{sec:anexos}
+
+\subsection{Código fuente}
+\label{sec:codigo}
+
+El código completo del proyecto está disponible en el repositorio público:
+
+\begin{center}
+  \url{https://github.com/CesarArcano97/stellar-llm-classifier}
+\end{center}
+
+La estructura principal del repositorio es la siguiente:
+
+\begin{description}
+  \item[\texttt{scripts/Hard\_Computing/}]
+    Pipeline HC~2.0. Punto de entrada:
+    \texttt{hc\_pipeline\_orchestrator\_v2.py}, que invoca secuencialmente los
+    cuatro agentes (\texttt{gaia\_dataset\_builder.py},
+    \texttt{gaia\_dr3\_pipeline\_ingesta\_v2.py},
+    \texttt{ground\_truth\_cleaner.py}) y produce
+    \texttt{cluster/Data/hc\_contracts.json}.
+
+  \item[\texttt{cluster/scripts/}]
+    Módulo SC versión~V7 (producción). Archivos clave:
+    \begin{itemize}
+      \item \texttt{corpus\_builder\_v7.py} — construye el corpus de inferencia
+        a partir de los contratos HC.
+      \item \texttt{pre\_encode\_queries.py} — codifica \emph{a priori} las
+        consultas RAG con \texttt{all-MiniLM-L6-v2}.
+      \item \texttt{system\_prompt\_v7.py} — define el \emph{system prompt}
+        final con anclaje HC e inyección RAG.
+      \item \texttt{inference\_manager\_v7.py} — gestiona la inferencia en
+        lotes sobre el clúster GPU.
+      \item \texttt{validator\_v7.py} — calcula las métricas de los cinco
+        niveles de validación.
+    \end{itemize}
+
+  \item[\texttt{cluster/SLURM/}]
+    Scripts SLURM para el clúster Lab-SB de CIMAT:
+    \texttt{run\_inference\_v7.slurm} y \texttt{run\_validation\_v7.slurm}.
+
+  \item[\texttt{cluster/knowledge\_base/}]
+    Base de conocimiento RAG: cinco guías en Markdown
+    (\texttt{mk\_classification\_rules.md},
+    \texttt{luminosity\_class\_guide.md},
+    \texttt{population\_classification\_guide.md},
+    \texttt{subtype\_calibration\_guide.md},
+    \texttt{quality\_flags\_interpretation.md}).
+
+  \item[\texttt{cluster/Data/}]
+    Datos de entrada y salida del pipeline:
+    \texttt{catalog.csv} (498 estrellas Gaia~DR3),
+    \texttt{hc\_contracts.json} (contratos HC~2.0),
+    \texttt{ground\_truth\_final.csv} (etiquetas SIMBAD/PASTEL).
+
+  \item[\texttt{cluster/outputs/validation\_v7/}]
+    Resultados completos de la validación V7:
+    \texttt{validation\_report\_v7.json},
+    \texttt{validation\_summary\_v7.txt},
+    \texttt{bertscore\_v7.json},
+    \texttt{rag\_impact\_v7.json}.
+
+  \item[\texttt{cluster/scripts/archive/}] y \texttt{cluster/SLURM/archive/}]
+    Versiones anteriores (V1--V6) conservadas para trazabilidad histórica.
+
+  \item[\texttt{Queries/}]
+    Scripts de consulta ADQL a Gaia~DR3 y cruce con GALAH.
+
+  \item[\texttt{reporte/}]
+    Fuente \LaTeX{} de este documento.
+\end{description}
+
+Las instrucciones de instalación del entorno y reproducción completa del
+experimento se encuentran en \texttt{cluster/README\_cluster.md}.

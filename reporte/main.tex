@@ -130,7 +130,25 @@
 % RESUMEN
 % ==========================================================
 \begin{abstract}
-% TODO: Resumen ejecutivo (se redacta al final).
+Se presenta \STELLAR{} (\emph{Spectral Type Estimation via Language Learning
+and Astronomical Reasoning}), un clasificador estelar híbrido que combina un
+módulo de Hard Computing (HC) determinista con el modelo de lenguaje
+\AstroSage{} para asignar tipos espectrales MK y generar descripciones en
+lenguaje natural sobre \num{498} estrellas de Gaia~DR3. El módulo HC~2.0
+ejecuta cuatro agentes especializados —astrómetro, continuo, líneas y detector
+de binarias— que producen un contrato JSON por estrella con la letra espectral,
+la clase de luminosidad, la población y un indicador de calidad; dicho contrato
+actúa como ancla determinista que corrige el sesgo del modelo de lenguaje hacia
+el tipo~G. El módulo de Soft Computing incorpora un sistema de recuperación
+aumentada (RAG) con \texttt{all-MiniLM-L6-v2} y una base de conocimiento de
+cinco guías especializadas. La versión final (V7) alcanza una exactitud de
+\num{0.7951} ($\kappa=0.751$, Macro~F1$=0.694$) sobre \num{488} estrellas con
+etiqueta SIMBAD, una exactitud \emph{near-miss} ($d\le1$) de \num{0.998}, y un
+error medio de \SI{212}{\kelvin} en temperatura efectiva respecto al catálogo
+PASTEL. Las descripciones generadas obtienen un BERTScore~F1 de \num{0.866}.
+El análisis muestra que el mecanismo de anclaje HC es el factor de mayor impacto
+en la exactitud, mientras que el módulo RAG contribuye principalmente a la
+coherencia de las descripciones mediante \emph{context priming}.
 \end{abstract}
 
 \tableofcontents
@@ -159,7 +177,7 @@
 % ==========================================================
 % 5. ANEXOS
 % ==========================================================
-% \input{secciones/05_anexos}
+\input{secciones/05_anexos}
 
 \bibliographystyle{plainnat}
 \bibliography{referencias}
