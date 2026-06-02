@@ -130,9 +130,98 @@ las confianzas que puede emitir la capa SC. En la corrida HC se generaron los
 \num{498}/\num{498} contratos con éxito (100\%); la distribución de banderas y de
 calidad espectral se detalla en la Sección~\ref{sec:datos}.
 
-% AQUÍ QUEDARÍA DE LUJO UN EJEMPLO DE LOS CONTRATOS JSON, 
-% TANTO DE ENTRADA (HC) COMO DE SALIDA (SC)
-% HABRÁ QUE COLCOARLO
+Los Listados~\ref{lst:hc-contract} y~\ref{lst:sc-output} muestran el par
+completo de entrada/salida para Gaia~DR3~\texttt{5945941905576552064}
+(\emph{$\mu$~Ara}, HD~160691), una enana solar-análoga con tipo real G3\,IV--V
+según PASTEL y \texttt{quality\_score}~$=1.0$.
+
+\begin{lstlisting}[style=json,caption={Contrato HC-2.0 para \emph{mu~Ara}
+  (HD~160691, \texttt{source\_id}~5945941905576552064). Todos los campos son
+  generados por los cuatro agentes deterministas sin intervencion del LLM.},
+  label=lst:hc-contract,float=ht]
+{
+  "source_id": "5945941905576552064",
+  "pipeline_version": "HC-2.0",
+  "astrometry_status": "success",
+  "binary_status": "success",
+  "physical_vector": {
+    "abs_mag":    3.9765,
+    "teff_k":     5590,
+    "metallicity":-0.023,
+    "fe_h":      -0.14,
+    "alpha_fe":  -0.03,
+    "logg":       4.22,
+    "v_tan":      14.16,
+    "extinction_ag": 0.0
+  },
+  "logical_flags": {
+    "is_reliable_parallax":  true,
+    "is_giant":              false,
+    "is_metal_poor":         false,
+    "is_binary_candidate":   false,
+    "is_high_velocity":      false,
+    "has_emission":          false
+  },
+  "binary_diagnostics": {
+    "ruwe":               0.858,
+    "rv_error_km_s":      0.127,
+    "rv_nb_transits":     18,
+    "nss_solution":       null,
+    "adaptive_rv_threshold": 5.0
+  },
+  "spectral_summary": {
+    "halpha_catalog": { "ew_aa": 0.075, "flag": 0 },
+    "cat_triplet": [
+      { "line_nm": 849.802, "ew_aa": 1.373, "fwhm_nm": 0.201,
+        "status": "success", "high_quality_fit": true },
+      { "line_nm": 854.209, "ew_aa": 3.505, "fwhm_nm": 0.453,
+        "status": "success", "high_quality_fit": true },
+      { "line_nm": 866.214, "ew_aa": 2.841, "fwhm_nm": 0.360,
+        "status": "success", "high_quality_fit": true }
+    ],
+    "bprp_continuum": { "status": "success", "snr": 26.0,
+                        "stable": true, "high_snr": true },
+    "rvs_continuum":  { "status": "success", "snr": 123.6,
+                        "stable": true, "high_snr": true }
+  },
+  "quality_score": 1.0
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=json,caption={Respuesta de AstroSage-8B (V7) para
+  \emph{mu~Ara}. La clasificacion G\,IV coincide con el tipo de referencia
+  G3\,IV--V de PASTEL.},
+  label=lst:sc-output,float=ht]
+{
+  "source_id": "5945941905576552064",
+  "prompt_version": "v7",
+  "classification": {
+    "spectral_type":    "G",
+    "sub_type_range":   "3-5",
+    "luminosity_class": "IV",
+    "population_group": "Thin Disk"
+  },
+  "confidence_scores": {
+    "spectral_type_confidence": 0.9,
+    "luminosity_confidence":    0.9,
+    "population_confidence":    0.9
+  },
+  "stellar_description": {
+    "physical_profile": "A mid G-type star with Teff near 5820 K consistent
+      with a slightly evolved solar analog. Surface gravity logg ~4.2 dex
+      places it near the main-sequence/subgiant boundary, warranting a IV-V
+      luminosity assignment. Mildly supersolar metallicity suggests a
+      metal-rich Thin Disk star.",
+    "population_context": "Supersolar metallicity ([M/H] = +0.30) is
+      characteristic of the young Thin Disk.",
+    "notable_features": "None identified."
+  },
+  "technical_reasoning": "Teff ~5820 K maps to G3 subtype; logg ~4.2 dex
+    supports IV-V luminosity class; supersolar metallicity confirms Thin
+    Disk membership; no active flags detected.",
+  "rag_top_chunk": "mk_classification_rules.md -- G-type criteria"
+}
+\end{lstlisting}
 
 \subsubsection{Capa SC: AstroSage-8B y arquitectura del \emph{prompt}}
 \label{sec:sc-arquitectura}
