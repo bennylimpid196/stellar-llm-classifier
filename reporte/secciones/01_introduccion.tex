@@ -5,7 +5,7 @@
 \label{sec:antecedentes}
 
 La clasificación espectral es uno de los pilares de la astrofísica estelar
-moderna. El sistema de Morgan--Keenan (MK) ordena a las estrellas en una
+moderna. El sistema de Morgan--Keenan (MK) \citep{morgan1943} ordena a las estrellas en una
 secuencia de tipos espectrales (O, B, A, F, G, K, M), de las más calientes y
 azules a las más frías y rojas, complementada por una clase de luminosidad
 (I--V) que distingue gigantes de estrellas de secuencia principal. Cada tipo se
@@ -55,7 +55,7 @@ entender su funcionamiento, sino porque la toma de decisiones no es tan transpar
 para un investigador que no esté familiarizado con su funcionamiento. 
 
 El corpus de trabajo de este proyecto se construye precisamente sobre este
-acervo: un conjunto curado de \num{498} estrellas de Gaia DR3, con su
+acervo: un conjunto curado de \num{498} estrellas de Gaia DR3 \citep{gaiadr3}, con su
 metadata tabular escalar (astrometría, fotometría, química y física derivada).
 El catálogo respeta de forma estricta las convenciones del archivo, incluyendo
 la convención de signo del pipeline ESP-ELS para H$\alpha$, en la que los
@@ -66,7 +66,7 @@ valores positivos indican absorción y los negativos emisión real.
 Paralelamente, los \textit{Large Language Models} (LLM), conocidos en español como
 modelos de lenguaje a gran escala, han demostrado capacidad
 de razonamiento sobre dominios técnicos cuando se les ajusta (\emph{fine-tuning})
-con corpus especializados. En astronomía, modelos como \AstroSage{} (un LLM de
+con corpus especializados. En astronomía, modelos como \AstroSage{} \citep{astrosage} (un LLM de
 \num{8} mil millones de parámetros afinado sobre literatura astronómica),
 abren la posibilidad de emitir diagnósticos en lenguaje natural que no sólo
 asignan una etiqueta, sino que articulan el razonamiento astrofísico que la
@@ -98,9 +98,6 @@ razonamiento y explicación. El sistema resultante, denominado \STELLAR{}
 Reasoning}), es el objeto de estudio de este reporte.
 
 
-% TODO: cita formal de Gaia DR3 (Gaia Collaboration et al. 2023) en referencias.bib
-% TODO: cita formal del sistema MK (Morgan, Keenan \& Kellman 1943)
-% TODO: cita formal de AstroSage-8B (pendiente verificar referencia exacta)
 
 \subsection{Planteamiento del Problema}
 \label{sec:problema}

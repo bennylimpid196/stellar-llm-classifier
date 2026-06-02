@@ -226,10 +226,9 @@ según PASTEL y \texttt{quality\_score}~$=1.0$.
 \subsubsection{Capa SC: AstroSage-8B y arquitectura del \emph{prompt}}
 \label{sec:sc-arquitectura}
 
-La capa SC emplea \AstroSage{} (\texttt{AstroLlama/AstroSage-8B}), un modelo de
-lenguaje de \num{8}\,mil millones de parámetros afinado sobre literatura
-astronómica. La
-inferencia se estructura con dos mensajes por estrella:
+La capa SC emplea \AstroSage{} \citep{astrosage} (\texttt{AstroLlama/AstroSage-8B}),
+un modelo de lenguaje de \num{8}\,mil millones de parámetros afinado sobre literatura
+astronómica. La inferencia se estructura con dos mensajes por estrella:
 
 \begin{itemize}
   \item \textbf{\emph{System prompt}.} Fija el rol del modelo, le recuerda que la
@@ -513,10 +512,7 @@ G3–G5: 5 500–5 800 K
 El modelo recibe así, en su ventana de contexto inmediato, rangos numéricos
 calibrados y ejemplos de razonamiento que le permiten producir subtipos,
 clases de luminosidad y descripciones físicamente ancladas, sin necesidad de
-re-entrenamiento.
-
-% TODO: cita RAG original: Lewis et al. (2020) — Retrieval-Augmented Generation
-%       for Knowledge-Intensive NLP Tasks. ArXiv:2005.11401
+re-entrenamiento \citep{lewis2020rag}.
 
 \subsubsection{Evolución del \emph{system prompt} (V1--V7)}
 \label{sec:prompt-evol}
@@ -551,9 +547,6 @@ Sección~\ref{sec:resultados}.
   \end{tabularx}
 \end{table}
 
-% TODO: cita Thompson et al. (1987) — FWHM Voigt
-% TODO: cita Lindegren et al. (2021) — RUWE
-% TODO: cita AstroSage-8B
 
 \subsection{Conjuntos de Datos}
 \label{sec:datos}
